@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class Local {
 
 	//Atributos de clase
-	private static String nombre;
-	private static TipoLocal tipo;
-	private static String direccion;
-	private static int telefono;
-	private static ArrayList<Oferta> ListaOfertas;
+	private String nombre;
+	private TipoLocal tipo;
+	private String direccion;
+	private int telefono;
+	private ArrayList<Oferta> ListaOfertas;
 	
 	/** Constructor de clase Bar
 	 * @param nombre --> nombre del Local
@@ -44,35 +44,52 @@ public class Local {
 		}
 	}
 
-	public static String getNombre() {
+	
+	public String getNombre() {
 		return nombre;
 	}
 
-	public static void setNombre(String nombre) {
-		Local.nombre = nombre;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public static TipoLocal getTipo() {
+	public TipoLocal getTipo() {
 		return tipo;
 	}
 
-	public static void setTipo(TipoLocal tipo) {
-		Local.tipo = tipo;
+	public void setTipo(TipoLocal tipo) {
+		this.tipo = tipo;
 	}
 
-	public static String getDireccion() {
+	public  String getDireccion() {
 		return direccion;
 	}
 
-	public static void setDireccion(String direccion) {
-		Local.direccion = direccion;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 
-	public static int getTelefono() {
+	public int getTelefono() {
 		return telefono;
 	}
 
-	public static void setTelefono(int telefono) {
-		Local.telefono = telefono;
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
+	}
+
+	@Override
+	public String toString() {
+		return nombre + " " + tipo + " " + direccion;
+	}
+	
+	public static void main(String[] args) {
+
+		Local l1 = new Local("Zubialde","Bar", "1", 10);
+		Local l2 = new Local("Café","Bar", "1", 10);
+		Local l3 = new Local("Terraza","Bar", "1", 10);
+
+		System.out.println(l1.toString());
+		System.out.println(l2.toString());
+		System.out.println(l3.toString());
 	}
 }

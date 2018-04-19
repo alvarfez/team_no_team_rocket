@@ -6,8 +6,9 @@ import javax.swing.*;
 public class VentanaPrincipal extends JFrame{
 	
 	//Atributos de ventana
+	public static DefaultListModel<Object> dlmSeleccionar;
 	private static JPanel pBotonera = new JPanel();
-	private static JList<Local> lListaBares = new JList();
+	private static JList<Object> lListaBares;
 	private static JButton bAjustes = new JButton("Ajustes");
 	private static JButton bRanking = new JButton("Ranking");
 	private static JButton bInicio = new JButton("Inicio");
@@ -31,11 +32,19 @@ public class VentanaPrincipal extends JFrame{
 	pBotonera.add(bPerfil);
 	getContentPane().add(pBotonera, "South");
 	
-	
+	getContentPane().add(lListaBares, "Center");
+	dlmSeleccionar = new DefaultListModel<>();
+	lListaBares = new JList<Object>(dlmSeleccionar);
 	}
 	
 	public static void main(String[] args) {
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
+		
+		Local l1 = new Local("Zubialde","Bar", "1", 10);
+		Local l2 = new Local("Café","Bar", "1", 10);
+		Local l3 = new Local("Terraza","Bar", "1", 10);
+		
+		
 	}
 }
