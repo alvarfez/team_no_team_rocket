@@ -31,13 +31,13 @@ public class Local {
 	 * @return --> devuelve el TipoLocal correspondiente
 	 */
 	public static TipoLocal convertirATipoLocal(String tipo){
-		if (tipo == "Bar" || tipo == "bar" || tipo == "BAR"){
+		if (tipo.toLowerCase() == "bar"){
 			return TipoLocal.BAR_CAFETERIA;
-		} else if (tipo == "Restaurante" || tipo == "restaurante" || tipo == "RESTAURANTE"){
+		} else if (tipo.toLowerCase() == "restaurante"){
 			return TipoLocal.RESTAURANTE;
-		} else if (tipo == "Pub" || tipo == "pub" || tipo == "PUB"){
+		} else if (tipo.toLowerCase() == "pub"){
 			return TipoLocal.PUB;
-		} else if (tipo == "Taberna" || tipo == "taberna" || tipo == "TABERNA"){
+		} else if (tipo.toLowerCase() == "taberna"){
 			return TipoLocal.TABERNA;
 		} else {
 			return null;

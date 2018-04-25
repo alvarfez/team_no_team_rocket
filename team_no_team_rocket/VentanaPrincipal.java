@@ -31,10 +31,10 @@ public class VentanaPrincipal extends JFrame{
 	pBotonera.add(bBuscar);
 	pBotonera.add(bPerfil);
 	getContentPane().add(pBotonera, "South");
-	
-	getContentPane().add(lListaBares, "Center");
 	dlmSeleccionar = new DefaultListModel<>();
 	lListaBares = new JList<Object>(dlmSeleccionar);
+	getContentPane().add(lListaBares, "Center");
+	
 	}
 	
 	public static void main(String[] args) {
