@@ -21,6 +21,7 @@ public class Local {
 		super();
 		this.nombre = nombre;
 		this.tipo = convertirATipoLocal(tipo);
+		//this.tipo = tipo;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		
@@ -79,17 +80,19 @@ public class Local {
 
 	@Override
 	public String toString() {
-		return nombre + " " + tipo + " " + direccion;
+		return nombre + " " + tipo.name() + " " + direccion;
 	}
 	
 	public static void main(String[] args) {
 
-		Local l1 = new Local("Zubialde","Bar", "1", 10);
-		Local l2 = new Local("Café","Bar", "1", 10);
-		Local l3 = new Local("Terraza","Bar", "1", 10);
-
+		Local l1 = new Local("Zubialde","bar", "1", 10);
+		Local l2 = new Local("Café","pub", "1", 10);
+		Local l3 = new Local("Terraza","restaurante", "1", 10);
+		
 		System.out.println(l1.toString());
 		System.out.println(l2.toString());
 		System.out.println(l3.toString());
+		
+		
 	}
 }
