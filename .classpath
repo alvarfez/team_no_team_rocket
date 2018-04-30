@@ -2,11 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/ALVAR/Desktop/Universidad/Programacion3/poi-3.17/poi-3.17.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ALVAR/Desktop/Universidad/Programacion3/poi-3.17/poi-examples-3.17.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ALVAR/Desktop/Universidad/Programacion3/poi-3.17/poi-excelant-3.17.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ALVAR/Desktop/Universidad/Programacion3/poi-3.17/poi-ooxml-3.17.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ALVAR/Desktop/Universidad/Programacion3/poi-3.17/poi-ooxml-schemas-3.17.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ALVAR/Desktop/Universidad/Programacion3/poi-3.17/poi-scratchpad-3.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
