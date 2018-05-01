@@ -32,7 +32,7 @@ public class Util {
 	 * @param dni --> String del dni 
 	 * @return
 	 */
-	public static boolean EntradaDNI( String dni ){
+	public static boolean entradaDNI( String dni ){
 		String letraMayuscula = "";
 		if (dni.length()!=9||Character.isLetter(dni.charAt(8))==false){
 			return false;
@@ -72,4 +72,18 @@ public class Util {
 			return true;
 		}
 	}
+	
+	/** Método que lo único que hace es devolver la hora si está entre 0 y 24 y si no devuelve -1
+	 * @param hora
+	 * @return
+	 */
+	public static int entradaHoras(int hora){
+		if (hora < 24 && hora >= 0){
+			return hora;
+		} else {
+			return -1;
+		}
+	}
+	
+		
 }
