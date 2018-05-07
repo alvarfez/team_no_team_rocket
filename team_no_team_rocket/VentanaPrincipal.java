@@ -44,6 +44,8 @@ public class VentanaPrincipal extends JFrame{
 	pBotonera.add(bBuscar);
 	pBotonera.add(bPerfil);
 	
+	//Tenemos tres bares por pantalla
+	
 	pSuperior.setLayout(new GridLayout(2,2));
 	pMedio.setLayout(new GridLayout(2,2));
 	pInferior.setLayout(new GridLayout(2,2));
