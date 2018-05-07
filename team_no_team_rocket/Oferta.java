@@ -7,15 +7,18 @@ public class Oferta {
 	private String codigo;
 	private String descripcion;
 	private Horario horario;
+	private Local local;
 	
 	private static int numCod = 0;
 	
-	public Oferta(String nombre, double precio, String descripcion) {
+	public Oferta(Local local, String nombre, double precio, String descripcion, Horario horario) {
 		super();
+		this.local = local;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.codigo = obtenerCodigo(nombre);
 		this.descripcion = descripcion;
+		this.setHorario(horario);
 	}
 
 	/** Método que genera un código particular para cada oferta con las 3 primeras letras del nombre y un numero
@@ -62,6 +65,22 @@ public class Oferta {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
+	public Horario getHorario() {
+		return horario;
+	}
+
+	public void setHorario(Horario horario) {
+		this.horario = horario;
 	}
 	
 	

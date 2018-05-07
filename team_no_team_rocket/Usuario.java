@@ -7,11 +7,19 @@ package team_no_team_rocket;
  */
 public abstract class Usuario {
 
+	private String categoria;
 	private String nombre;
 	private String codigo;
+	private String contraseña;
 	
 	
 	
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -23,6 +31,11 @@ public abstract class Usuario {
 	}
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}public String getContraseña() {
+		return contraseña;
+	}
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
 	}
 	
 	
