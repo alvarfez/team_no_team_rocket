@@ -2,9 +2,20 @@ package team_no_team_rocket;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.ListUI;
+
+import com.sun.glass.events.MouseEvent;
+import com.sun.glass.events.WindowEvent;
 
 public class VentanaPrincipal extends JFrame{
 	
@@ -18,6 +29,10 @@ public class VentanaPrincipal extends JFrame{
 	private static JPanel pInferior = new JPanel();
 	
 	private static JList<Object> lListaBares;
+	private static int posicionActual;
+	private static int posicionSeleccion;
+	
+	
 	private static JButton bAjustes = new JButton("Ajustes");
 	private static JButton bRanking = new JButton("Ranking");
 	private static JButton bInicio = new JButton("Inicio");
@@ -35,6 +50,36 @@ public class VentanaPrincipal extends JFrame{
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setSize(410,600);
 	setLocation(120,0);
+	
+	// Creamos la lista y el modelo de lista
+	
+	dlmSeleccionar = new DefaultListModel<>();
+	lListaBares = new JList<Object>(dlmSeleccionar);
+	
+	// Modificamos la lista para que tenga las características que deseamos
+	
+//	ListUI lUI = new ListUI();
+	
+	lListaBares.setBackground(Color.cyan);
+//	lListaBares.setUI();
+	lListaBares.setFixedCellHeight(50);
+	lListaBares.setFixedCellWidth(100);
+	// PRUEBA DE JLIST
+	Local l1 = new Local("Zubialde","bar", "1", 10);
+	Local l2 = new Local("Café","bar", "1", 10);
+	Local l3 = new Local("Terraza","bar", "1", 10);
+	
+	ArrayList<Local> locales = new ArrayList<>();
+	locales.add(l1);locales.add(l2);locales.add(l3);
+
+	for (Local l : locales){
+		dlmSeleccionar.addElement(l.toString());
+	}
+	
+	
+	// FIN PRUEBA
+	
+	
 	
 	//Asignamos los botones a la botonera y la botonera al sur del panel principal
 	
@@ -60,12 +105,58 @@ public class VentanaPrincipal extends JFrame{
 	pCentral.add(pMedio);
 	
 	
-	getContentPane().add(pCentral,"Center");
+	getContentPane().add(lListaBares, "Center");  // metemos la lista de locales/ofertas en el panel central
+//	getContentPane().add(pCentral,"Center");
 	getContentPane().add(pBotonera, "South");
 	
-//	dlmSeleccionar = new DefaultListModel<>();
-//	lListaBares = new JList<Object>(dlmSeleccionar);
-//	getContentPane().add(lListaBares, "Center");
+	
+	
+		// Eventos de JList
+	lListaBares.addMouseListener(new MouseListener() {
+
+	@Override
+	public void mouseClicked(java.awt.event.MouseEvent e) {
+
+		if (e.getClickCount()==1){
+			posicionSeleccion = lListaBares.locationToIndex(e.getPoint());
+		}
+		if (e.getClickCount()==2){
+			if (lListaBares.getSelectedIndex()!= -1) {
+				posicionActual = lListaBares.locationToIndex(e.getPoint());
+			}
+		}
+	}
+	@Override
+	public void mouseEntered(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	});	
+	lListaBares.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+			}
+		});
+		
 	
 	}
 	
@@ -74,13 +165,6 @@ public class VentanaPrincipal extends JFrame{
 		vp.setVisible(true);
 		
 		
-		
-		
-		Local l1 = new Local("Zubialde","Bar", "1", 10);
-		Local l2 = new Local("Café","Bar", "1", 10);
-		Local l3 = new Local("Terraza","Bar", "1", 10);
-		
-	
 		
 		
 	}
