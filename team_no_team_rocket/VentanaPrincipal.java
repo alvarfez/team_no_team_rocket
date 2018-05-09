@@ -33,10 +33,9 @@ public class VentanaPrincipal extends JFrame{
 	private static int posicionSeleccion;
 	
 	
-	private static JButton bAjustes = new JButton("Ajustes");
 	private static JButton bRanking = new JButton("Ranking");
 	private static JButton bInicio = new JButton("Inicio");
-	private static JButton bBuscar = new JButton("Buscar");
+	private static JButton bMapa= new JButton("Mapa");
 	private static JButton bPerfil = new JButton("Perfil");
 	
 	private static JTextArea b1 = new JTextArea("Bar1");
@@ -83,11 +82,11 @@ public class VentanaPrincipal extends JFrame{
 	
 	//Asignamos los botones a la botonera y la botonera al sur del panel principal
 	
-	pBotonera.add(bAjustes);
+	pBotonera.add(bPerfil);
 	pBotonera.add(bRanking);
 	pBotonera.add(bInicio);
-	pBotonera.add(bBuscar);
-	pBotonera.add(bPerfil);
+	pBotonera.add(bMapa);
+	
 	
 	//Tenemos tres bares por pantalla
 	
@@ -107,7 +106,7 @@ public class VentanaPrincipal extends JFrame{
 	
 	getContentPane().add(lListaBares, "Center");  // metemos la lista de locales/ofertas en el panel central
 //	getContentPane().add(pCentral,"Center");
-	getContentPane().add(pBotonera, "South");
+	getContentPane().add(pBotonera, "North");
 	
 	
 	
