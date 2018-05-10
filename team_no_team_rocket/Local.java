@@ -114,7 +114,7 @@ public class Local {
 
 	@Override
 	public String toString() {
-		return nombre + " " + tipo.name() + " " + direccion;
+		return nombre + " " + tipo.name().toLowerCase() + " " + direccion;
 	}
 	
 	public static void main(String[] args) {

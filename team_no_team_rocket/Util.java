@@ -1,5 +1,11 @@
 package team_no_team_rocket;
 
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
+
 public class Util {
 	
 	
@@ -82,7 +88,44 @@ public class Util {
 			return hora;
 		} else {
 			return -1;
+		}		
+	}
+	
+	/** Metodo que comprueba si el usuario introducido existe (en un futuro) y si la 
+	 * contraseña es correcta
+	 * @return True si es correcta o False si es incorrecta
+	 * @throws SQLException
+	 */
+	public static boolean comprobarUsuario() throws SQLException{
+		//USUARIO: admin PASSWORD: admin
+		Connection connection = null;
+		//Obtenemos el nombre de usuario 
+		String usuario_input = JOptionPane.showInputDialog("Introduce el nombre de usuario");
+		//Obtenemos la contraseña del usuario
+		String password_input = JOptionPane.showInputDialog("Introduce la contraseña");
+		try{
+			//Generamos la conexion --> VER: BD.getConnection (aunque es un coñazo)(funciona)
+			 connection = BD.getConnection();	
+		} catch (SQLException ex){
+			ex.printStackTrace();
+			System.err.println(ex.getClass().getName()+ ": " + ex.getMessage());
+			System.out.println("Ha fallado la conexion. Comprueba el error en la consola");
 		}
+		//Creamos el statement con la consulta:
+		// select nombre, password from usuario where usuario.nombre = 'admin'
+		Statement stmt = connection.createStatement(); 
+		ResultSet rs = stmt.executeQuery("select nombre, password from usuario where "
+				+ "usuario.nombre = '" + usuario_input + "'");
+		
+		//hacemos un registro por todas las respuestas y las imprimimos en pantalla
+		while(rs.next()){
+			//Imprime perfectamente "admin" 
+			System.out.println(rs.getString("password"));
+		}
+		return false;
+		
+		
+		
 	}
 	
 		

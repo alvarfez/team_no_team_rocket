@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -42,7 +43,7 @@ public class VentanaPrincipal extends JFrame{
 	private static JTextArea b2 = new JTextArea("Bar2");
 	private static JTextArea b3 = new JTextArea("Bar3");
 	
-	public VentanaPrincipal(){
+	public VentanaPrincipal() throws SQLException{
 	
 	//Aquí configuramos lo básico de la ventana
 	this.setTitle("BilboPintxo");
@@ -159,9 +160,15 @@ public class VentanaPrincipal extends JFrame{
 	
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
+		//COMPROBAMOS EL USUARIO ANTES DE INICIAR LA VENTANA
+		Util.comprobarUsuario();
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
+		
+//		System.out.println("select nombre, contraseña from usuario where "
+//				+ "usuario.nombre = '" + "alvar"+ "'");
+//		
 		
 		
 		
