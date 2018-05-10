@@ -120,7 +120,13 @@ public class Util {
 		//hacemos un registro por todas las respuestas y las imprimimos en pantalla
 		while(rs.next()){
 			//Imprime perfectamente "admin" 
-			System.out.println(rs.getString("password"));
+			//System.out.println(rs.getString("password"));
+			if(rs.getString(2) == password_input){
+				System.out.println("Eureka");
+				return true;
+			}else{System.out.println("Contraseña incorrecta");return false;}
+			
+			
 		}
 		return false;
 		
