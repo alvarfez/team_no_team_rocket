@@ -118,11 +118,12 @@ public class Util {
 		Statement stmt = connection.createStatement(); 
 		ResultSet rs = stmt.executeQuery("select nombre, password from usuario where "
 				+ "usuario.nombre = '" + usuario_input + "'");
-		System.out.println(password_input);
+		
 		//hacemos un registro por todas las respuestas y las imprimimos en pantalla
 		while(rs.next()){
 			//Imprime perfectamente "admin" 
 			String s = rs.getString("password");
+			System.out.println(rs.getString("nombre"));
 			System.out.println(s);
 			if(s.equals(password_input) ){
 				System.out.println("Contraseña correcta");
@@ -131,15 +132,10 @@ public class Util {
 				System.out.println("Contraseña incorrecta");
 				return false;
 			}
-//			if(rs.getString("password") == password_input){
-//				System.out.println("Eureka");
-//				return true;
-//			}else{System.out.println("Contraseña incorrecta");return false;}
-//			
-			
+	
 		}
-		return false;
 		
+		return false;		
 		
 		
 	}

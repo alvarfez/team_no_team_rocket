@@ -163,9 +163,10 @@ public class VentanaPrincipal extends JFrame{
 	public static void main(String[] args) throws SQLException {
 		//COMPROBAMOS EL USUARIO ANTES DE INICIAR LA VENTANA
 		boolean correcto = false;
-		while (!correcto){
-			correcto = Util.comprobarUsuario();
-		}
+//		while (!correcto){
+//			correcto = Util.comprobarUsuario();
+//		}
+		Util.comprobarUsuario();
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
 		
