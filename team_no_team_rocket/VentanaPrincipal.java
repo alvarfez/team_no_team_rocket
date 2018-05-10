@@ -68,13 +68,33 @@ public class VentanaPrincipal extends JFrame{
 	Local l2 = new Local("Café","bar", "1", 10);
 	Local l3 = new Local("Terraza","bar", "1", 10);
 	
-	ArrayList<Local> locales = new ArrayList<>();
-	locales.add(l1);locales.add(l2);locales.add(l3);
+	Local l4 = new Local("Badulaque","bar", "1", 10);
+	Local l5 = new Local("El bar de Moe","bar", "1", 10);
+	Local l6 = new Local("La tasca","bar", "1", 10);
 
-	for (Local l : locales){
-		dlmSeleccionar.addElement(l.toString());
-	}
+	JPanel p1 = new JPanel();
+	JPanel p2 = new JPanel();
+	JPanel p3 = new JPanel();
 	
+	p1.setLayout(new GridLayout(2,3));
+	p2.setLayout(new GridLayout(2,3));
+	p3.setLayout(new GridLayout(2,3));
+	
+	p1.add(new JTextArea(l1.getNombre()));
+	System.out.println(p1.toString());
+	
+	dlmSeleccionar.addElement(p1);
+	dlmSeleccionar.addElement(p1);
+	dlmSeleccionar.addElement(p1);
+	
+	
+//	ArrayList<Local> locales = new ArrayList<>();
+//	locales.add(l1);locales.add(l2);locales.add(l3);
+//
+//	for (Local l : locales){
+//		dlmSeleccionar.addElement(l.toString());
+//	}
+//	
 	
 	// FIN PRUEBA
 	
