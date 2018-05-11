@@ -60,7 +60,7 @@ public class VentanaPrincipal extends JFrame{
 	
 //	ListUI lUI = new ListUI();
 	
-	lListaBares.setBackground(Color.cyan);
+	lListaBares.setBackground(Color.LIGHT_GRAY);
 //	lListaBares.setUI();
 	lListaBares.setFixedCellHeight(50);
 	lListaBares.setFixedCellWidth(100);
@@ -73,20 +73,26 @@ public class VentanaPrincipal extends JFrame{
 	Local l5 = new Local("El bar de Moe","bar", "1", 10);
 	Local l6 = new Local("La tasca","bar", "1", 10);
 
-	JPanel p1 = new JPanel();
-	JPanel p2 = new JPanel();
-	JPanel p3 = new JPanel();
+//	JPanel p1 = new JPanel();
+//	JPanel p2 = new JPanel();
+//	JPanel p3 = new JPanel();
+//	
+//	p1.setLayout(new GridLayout(2,3));
+//	p2.setLayout(new GridLayout(2,3));
+//	p3.setLayout(new GridLayout(2,3));
+//
+//	
+//	p1.add(new JTextArea(l1.getNombre()));
+//	System.out.println(p1.toString());
 	
-	p1.setLayout(new GridLayout(2,3));
-	p2.setLayout(new GridLayout(2,3));
-	p3.setLayout(new GridLayout(2,3));
+	ImageIcon i1 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
+	ImageIcon i2 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
+	ImageIcon i3 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	
-	p1.add(new JTextArea(l1.getNombre()));
-	System.out.println(p1.toString());
 	
-	dlmSeleccionar.addElement(p1);
-	dlmSeleccionar.addElement(p1);
-	dlmSeleccionar.addElement(p1);
+	dlmSeleccionar.addElement(l1);
+	dlmSeleccionar.addElement(l2);
+	dlmSeleccionar.addElement(l3);
 	
 	
 //	ArrayList<Local> locales = new ArrayList<>();
