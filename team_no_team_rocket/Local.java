@@ -2,6 +2,8 @@ package team_no_team_rocket;
 
 import java.util.ArrayList;
 
+import com.sun.java.accessibility.util.java.awt.ListTranslator;
+
 public class Local {
 
 	//Atributos de clase
@@ -9,7 +11,7 @@ public class Local {
 	private TipoLocal tipo;
 	private String direccion;
 	private int telefono;
-	private ArrayList<Oferta> ListaOfertas;
+	private ArrayList<Oferta> listaOfertas;
 	
 	/** Constructor de clase Bar
 	 * @param nombre --> nombre del Local
@@ -44,7 +46,39 @@ public class Local {
 			return null;
 		}
 	}
+	
+	/**	Añade una oferta a Local, si no tiene ninguna, se crea la lista primero
+	 * @param o Oferta a añadir
+	 */
+	public void anyadirOferta(Oferta o){
+		
+		if (o != null && this.listaOfertas.equals(null) ){
+			listaOfertas = new ArrayList<>();
+			listaOfertas.add(o);
+		} else {
+			listaOfertas.add(o);
+		}
+		System.out.println("Tu oferta " + o.getNombre() + " ha sido correctamente añadida.");
+	}
+	
+	/** Dada una oferta o, si existe en la listaOFertas del objeto Local, la elimina.
+	 * @param o
+	 */
+	public void eliminarOferta(Oferta o){
+		
+		if ( o != null ){
+			for (Oferta of : listaOfertas){
+				if (of.equals(o)){
+					listaOfertas.remove(of);
+					System.out.println("Tu oferta " + of.getNombre() + " ha sido correctamente eliminada.");
+				}
+			}
+		}
+	}
 
+	/* Aquí vienen todos los setters y getters
+	 * 
+	 */
 	
 	public String getNombre() {
 		return nombre;
@@ -80,7 +114,7 @@ public class Local {
 
 	@Override
 	public String toString() {
-		return nombre + " " + tipo.name() + " " + direccion;
+		return nombre + " " + tipo.name().toLowerCase() + " " + direccion;
 	}
 	
 	public static void main(String[] args) {
