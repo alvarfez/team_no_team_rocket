@@ -7,13 +7,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class BD {
-	private static final String HOST = "ec2-54-235-90-200.compute-1.amazonaws.com";
+	//datos obtenidos en mi Heroku view Settings
+	private static final String HOST = "ec2-54-235-90-200.compute-1.amazonaws.com"; 
 	private static final String DATABASE = "d1d78lhtepp4ur";
 	private static final String USERNAME = "neytofbzjlytrh";
 	private static final String PASSWORD = "f90c526f893be259ef79626e262b31e7e8b668d5c1d789017b1fc814b13245d9";
 	private static final String PORT = "5432";
 	private static final String DBURL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE + "?sslmode=require";
 	
+	//Genera la conexión con la base de datos de Heroku
 	public static Connection getConnection() throws SQLException{
 		Connection conn = null;
 		try{

@@ -121,20 +121,18 @@ public class Util {
 		
 		//hacemos un registro por todas las respuestas y las imprimimos en pantalla
 		while(rs.next()){
-			//Imprime perfectamente "admin" 
 			String s = rs.getString("password");
-			System.out.println(rs.getString("nombre"));
-			System.out.println(s);
+			//Si el string es igual que la contraseña introducida devuelve true
 			if(s.equals(password_input) ){
 				System.out.println("Contraseña correcta");
 				return true;
 			}else{
 				System.out.println("Contraseña incorrecta");
-				return false;
+				return false; //sino devuelve false
 			}
 	
 		}
-		
+		//TODO introducir manera de saber si el usuario no está creado y de permitir registrarse
 		return false;		
 		
 		

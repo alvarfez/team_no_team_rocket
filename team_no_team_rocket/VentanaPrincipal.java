@@ -3,7 +3,10 @@ package team_no_team_rocket;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -25,10 +28,6 @@ public class VentanaPrincipal extends JFrame{
 	private static JPanel pBotonera = new JPanel();
 	private static JPanel pCentral = new JPanel();
 	
-	private static JPanel pSuperior = new JPanel();
-	private static JPanel pMedio = new JPanel();
-	private static JPanel pInferior = new JPanel();
-	
 	private static JList<Object> lListaBares;
 	private static int posicionActual;
 	private static int posicionSeleccion;
@@ -38,10 +37,6 @@ public class VentanaPrincipal extends JFrame{
 	private static JButton bInicio = new JButton("Inicio");
 	private static JButton bMapa= new JButton("Mapa");
 	private static JButton bPerfil = new JButton("Perfil");
-	
-	private static JTextArea b1 = new JTextArea("Bar1");
-	private static JTextArea b2 = new JTextArea("Bar2");
-	private static JTextArea b3 = new JTextArea("Bar3");
 	
 	public VentanaPrincipal() throws SQLException{
 	
@@ -63,7 +58,7 @@ public class VentanaPrincipal extends JFrame{
 	lListaBares.setBackground(Color.LIGHT_GRAY);
 //	lListaBares.setUI();
 	lListaBares.setFixedCellHeight(50);
-	lListaBares.setFixedCellWidth(100);
+	lListaBares.setFixedCellWidth(390);
 	// PRUEBA DE JLIST
 	Local l1 = new Local("Zubialde","bar", "1", 10);
 	Local l2 = new Local("Café","bar", "1", 10);
@@ -72,18 +67,6 @@ public class VentanaPrincipal extends JFrame{
 	Local l4 = new Local("Badulaque","bar", "1", 10);
 	Local l5 = new Local("El bar de Moe","bar", "1", 10);
 	Local l6 = new Local("La tasca","bar", "1", 10);
-
-//	JPanel p1 = new JPanel();
-//	JPanel p2 = new JPanel();
-//	JPanel p3 = new JPanel();
-//	
-//	p1.setLayout(new GridLayout(2,3));
-//	p2.setLayout(new GridLayout(2,3));
-//	p3.setLayout(new GridLayout(2,3));
-//
-//	
-//	p1.add(new JTextArea(l1.getNombre()));
-//	System.out.println(p1.toString());
 	
 	ImageIcon i1 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	ImageIcon i2 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
@@ -93,47 +76,20 @@ public class VentanaPrincipal extends JFrame{
 	dlmSeleccionar.addElement(l1);
 	dlmSeleccionar.addElement(l2);
 	dlmSeleccionar.addElement(l3);
-	
-	
-//	ArrayList<Local> locales = new ArrayList<>();
-//	locales.add(l1);locales.add(l2);locales.add(l3);
-//
-//	for (Local l : locales){
-//		dlmSeleccionar.addElement(l.toString());
-//	}
-//	
-	
-	// FIN PRUEBA
+
 	
 	
 	
 	//Asignamos los botones a la botonera y la botonera al sur del panel principal
+	pCentral.add(lListaBares);
 	
 	pBotonera.add(bPerfil);
 	pBotonera.add(bRanking);
 	pBotonera.add(bInicio);
 	pBotonera.add(bMapa);
-	
-	
-	//Tenemos tres bares por pantalla
-	
-	pSuperior.setLayout(new GridLayout(2,2));
-	pMedio.setLayout(new GridLayout(2,2));
-	pInferior.setLayout(new GridLayout(2,2));
-	
-	pSuperior.add(b1);
-	pMedio.add(b2);
-	pInferior.add(b3);
-	
-	pCentral.setLayout(new GridLayout(3,1));
-	pCentral.add(pSuperior, "North");
-	pCentral.add(pInferior, "South");
-	pCentral.add(pMedio);
-	
-	
-	getContentPane().add(lListaBares, "Center");  // metemos la lista de locales/ofertas en el panel central
-//	getContentPane().add(pCentral,"Center");
+		
 	getContentPane().add(pBotonera, "North");
+	add(pCentral, "Center");
 	
 	
 	
@@ -183,8 +139,39 @@ public class VentanaPrincipal extends JFrame{
 			}
 		});
 		
+	bInicio.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			pCentral.removeAll();
+			getContentPane().remove(pCentral);
+			pCentral.add(lListaBares);
+			getContentPane().add(pCentral, BorderLayout.CENTER);
+			getContentPane().revalidate();	
+			getContentPane().repaint();
+			
 	
+		}
+	});
+	bMapa.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			PanelMapa vm = new PanelMapa();
+			pCentral.removeAll();
+			getContentPane().remove(pCentral);
+			pCentral.add(vm);
+			getContentPane().add(pCentral, BorderLayout.CENTER);
+			getContentPane().revalidate();
+			getContentPane().repaint();
+		}
+		
+	});
+	
+		
 	}
+	
+	
 	
 	public static void main(String[] args) throws SQLException {
 		//COMPROBAMOS EL USUARIO ANTES DE INICIAR LA VENTANA
@@ -192,7 +179,7 @@ public class VentanaPrincipal extends JFrame{
 //		while (!correcto){
 //			correcto = Util.comprobarUsuario();
 //		}
-		Util.comprobarUsuario();
+		//Util.comprobarUsuario();
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
 		
