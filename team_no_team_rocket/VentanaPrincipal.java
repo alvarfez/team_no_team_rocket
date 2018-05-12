@@ -59,7 +59,9 @@ public class VentanaPrincipal extends JFrame{
 	lListaBares.setBackground(Color.LIGHT_GRAY);
 	lListaBares.setFixedCellHeight(50);
 	lListaBares.setFixedCellWidth(390);
-	// PRUEBA DE JLIST
+
+// PRUEBA DE JLIST
+	// Creación locales
 	Local l1 = new Local("Zubialde","bar", "1", 10);
 	Local l2 = new Local("Café","bar", "1", 10);
 	Local l3 = new Local("Terraza","bar", "1", 10);
@@ -67,22 +69,31 @@ public class VentanaPrincipal extends JFrame{
 	Local l4 = new Local("Badulaque","bar", "1", 10);
 	Local l5 = new Local("El bar de Moe","bar", "1", 10);
 	Local l6 = new Local("La tasca","bar", "1", 10);
-	
+	// Creación imágenes
 	ImageIcon i1 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	ImageIcon i2 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	ImageIcon i3 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
-	
-	
+	// Creación y adición de ofertas
+	Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , 3600);
+	Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , 3600);
+	Oferta o3 = new Oferta("2x1", 2.0, "2 pintxos por 1" , 3600);
+	Oferta o4 = new Oferta("PintxoPote", 3.0, "Pintxo + pote" , 3600);
+	l1.anyadirOferta(o1);
+	l1.anyadirOferta(o2);
+	l2.anyadirOferta(o3);
+	l3.anyadirOferta(o4);
+	//Añadimos los locales a la lista
 	dlmSeleccionar.addElement(l1);
 	dlmSeleccionar.addElement(l2);
 	dlmSeleccionar.addElement(l3);
+	
+	//Añadimos las ofertas a la lista [ASÍ ES COMO DEBIERA SER PERO DE MOMENTO VAMOS A DEJARLO COMO ESTABA HASTA QUE TENGAMOS EL ListCellRenderer
+//	dlmSeleccionar.addElement(l1.getListaOfertas().get(0));
+//	dlmSeleccionar.addElement(l2.getListaOfertas().get(0));
+//	dlmSeleccionar.addElement(l3.getListaOfertas().get(0));
 
-	
-	
-	
 	//Asignamos los botones a la botonera y la botonera al sur del panel principal
-	pCentral.add(lListaBares);
-	
+	pCentral.add(lListaBares);	
 	pBotonera.add(bPerfil);
 	pBotonera.add(bRanking);
 	pBotonera.add(bInicio);

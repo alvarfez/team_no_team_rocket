@@ -56,7 +56,7 @@ public class Local {
 	 */
 	public void anyadirOferta(Oferta o){
 		
-		if (o != null && this.listaOfertas.equals(null) ){
+		if (o != null && this.listaOfertas == null ){
 			listaOfertas = new ArrayList<>();
 			listaOfertas.add(o);
 		} else {
@@ -83,6 +83,13 @@ public class Local {
 	/* Aquí vienen todos los setters y getters
 	 * 
 	 */
+	public ArrayList<Oferta> getListaOfertas(){
+		return listaOfertas;
+	}
+	
+	public void setOfertas( ArrayList<Oferta> lOfertas){
+		this.listaOfertas = lOfertas;
+	}
 	
 	public String getNombre() {
 		return nombre;
