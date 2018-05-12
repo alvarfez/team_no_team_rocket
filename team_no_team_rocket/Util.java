@@ -16,12 +16,9 @@ public class Util {
 	 * aleatoriamente como nosotros queremos.
 	 * @param telefono 
 	 */
-<<<<<<< HEAD
 	public static void LimitarCaracteres(){
-<<<<<<< HEAD
 		
 	}
-=======
 	public static boolean EntradaTlfno(Integer telefono){
 		if(telefono == null){
 			//TODO generar lista bares para ir sumando +1
@@ -40,7 +37,6 @@ public class Util {
 			
 	 		
 	 	}
->>>>>>> origin/master
 
 	/** MÉTODO BASADO EN CÓDIGO DE WEB: https://medium.com/@manuelmato/c%C3%B3mo-validar-un-dni-en-java-6d7ce7d764aa
 	 * Entrada robusta para DNIs, devuelve true el dni introducido tiene una letra y 8 numeros, false si no
@@ -74,8 +70,6 @@ public class Util {
 		
 		for (i=0; i<dni.length()-1;i++){
 			numero = dni.substring(i, i+1);
-=======
->>>>>>> parent of 71fc6ec... Util 2.0
 		
 			for (j=0; j<nums.length;j++){
 				if (numero.equals(nums[j])){
@@ -89,14 +83,9 @@ public class Util {
 			return true;
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-}
-=======
 
-}
->>>>>>> parent of 71fc6ec... Util 2.0
-=======
+
+
 	
 	/** Método que lo único que hace es devolver la hora si está entre 0 y 24 y si no devuelve -1
 	 * @param hora
@@ -155,6 +144,4 @@ public class Util {
 		
 	}
 	
-		
-}
->>>>>>> origin/master
+}		
