@@ -32,11 +32,11 @@ public class Util {
 			else{
 				System.out.println("Dato introducido correctamente");
 				return true;
-				}
 			}
-			
-	 		
-	 	}
+		}
+
+
+	}
 
 	/** MÉTODO BASADO EN CÓDIGO DE WEB: https://medium.com/@manuelmato/c%C3%B3mo-validar-un-dni-en-java-6d7ce7d764aa
 	 * Entrada robusta para DNIs, devuelve true el dni introducido tiene una letra y 8 numeros, false si no

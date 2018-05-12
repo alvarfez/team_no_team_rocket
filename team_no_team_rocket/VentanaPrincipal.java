@@ -23,20 +23,22 @@ import com.sun.glass.events.WindowEvent;
 
 public class VentanaPrincipal extends JFrame{
 	
-	//Atributos de ventana
-	public static DefaultListModel<Object> dlmSeleccionar;
+//Atributos de ventana
+
+	//Paneles
 	private static JPanel pBotonera = new JPanel();
 	private static JPanel pCentral = new JPanel();
-	
+	//Lista y posiciones
+	public static DefaultListModel<Object> dlmSeleccionar;
 	private static JList<Object> lListaBares;
 	private static int posicionActual;
 	private static int posicionSeleccion;
-	
-	
+	//Botones	
 	private static JButton bRanking = new JButton("Ranking");
 	private static JButton bInicio = new JButton("Inicio");
 	private static JButton bMapa= new JButton("Mapa");
 	private static JButton bPerfil = new JButton("Perfil");
+	private static JButton bVolver = new JButton( "Volver" );
 	
 	public VentanaPrincipal() throws SQLException{
 	
@@ -53,10 +55,8 @@ public class VentanaPrincipal extends JFrame{
 	
 	// Modificamos la lista para que tenga las características que deseamos
 	
-//	ListUI lUI = new ListUI();
 	
 	lListaBares.setBackground(Color.LIGHT_GRAY);
-//	lListaBares.setUI();
 	lListaBares.setFixedCellHeight(50);
 	lListaBares.setFixedCellWidth(390);
 	// PRUEBA DE JLIST
@@ -94,7 +94,7 @@ public class VentanaPrincipal extends JFrame{
 	
 	
 		// Eventos de JList
-	lListaBares.addMouseListener(new MouseListener() {
+	lListaBares.addMouseListener(new MouseAdapter() {
 
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -105,39 +105,11 @@ public class VentanaPrincipal extends JFrame{
 		if (e.getClickCount()==2){
 			if (lListaBares.getSelectedIndex()!= -1) {
 				posicionActual = lListaBares.locationToIndex(e.getPoint());
+				abrirOferta(posicionActual, VentanaPrincipal.this); // abre Oferta seleccionada 
 			}
 		}
 	}
-	@Override
-	public void mouseEntered(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	});	
-	lListaBares.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-			}
-		});
 		
 	bInicio.addActionListener(new ActionListener() {
 		
@@ -167,7 +139,17 @@ public class VentanaPrincipal extends JFrame{
 		}
 		
 	});
-	
+	bVolver.addActionListener(new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			pCentral.removeAll();
+			getContentPane().remove(pCentral);
+			pCentral.add(lListaBares);
+			getContentPane().add(pCentral, BorderLayout.CENTER);
+			getContentPane().revalidate();	
+			getContentPane().repaint();
+		}
+	});
 		
 	}
 	
@@ -186,8 +168,27 @@ public class VentanaPrincipal extends JFrame{
 //		System.out.println("select nombre, contraseña from usuario where "
 //				+ "usuario.nombre = '" + "alvar"+ "'");
 //		
-		
-		
+				
+	}
+	
+	/** Método que abre el local y la oferta correspondiente en la ventana 
+	 * @param posActual recibe la posiciónActual de la JList en la que se clica 2 veces
+	 */
+	public static void abrirOferta( int posActual, VentanaPrincipal vp ){
+		JLabel lOferta = new JLabel();
+		if (dlmSeleccionar.getElementAt(posActual) instanceof Local){
+			Local l = (Local) dlmSeleccionar.getElementAt(posActual);
+			lOferta.setText(l.getNombre());
+//			lOferta.setIcon(l.getFoto());
+			pCentral.removeAll();
+			vp.getContentPane().remove(pCentral);
+			pCentral.add(bVolver);
+			pCentral.add(lOferta);
+			vp.getContentPane().add(pCentral, BorderLayout.CENTER);
+			vp.getContentPane().revalidate();
+			vp.getContentPane().repaint();
+			
+		}
 		
 		
 	}
