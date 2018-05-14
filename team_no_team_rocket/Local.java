@@ -16,7 +16,9 @@ public class Local {
 	private int telefono;
 	private ArrayList<Oferta> listaOfertas;
 	private ImageIcon foto;
+	private Puntuacion puntuacion;
 	
+
 	/** Constructor de clase Bar
 	 * @param nombre --> nombre del Local
 	 * @param tipo --> tipo de servicio = ENUM { BAR_CAFETERIA, RESTAURANTE, TABERNA, PUB }
@@ -27,10 +29,9 @@ public class Local {
 		super();
 		this.nombre = nombre;
 		this.tipo = convertirATipoLocal(tipo);
-		//this.tipo = tipo;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		
+		this.puntuacion = new Puntuacion();
 	}
 	
 	/** Método que pasa un string a un enum de TipoLocal
@@ -122,6 +123,22 @@ public class Local {
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
 	}
+	
+	public Puntuacion getPuntuacion() {
+		return puntuacion;
+	}
+
+	/** Método que devuelve el puntaje actual sobre 5 del local deseado
+	 * @return 
+	 */
+	public double getPuntosSobre5() {
+		return puntuacion.getPuntosSobreCinco();
+	}
+
+	public void setPuntuacion(Puntuacion puntuacion) {
+		if (puntuacion.getPuntosSobreCinco() >= 0.0 && puntuacion.getPuntosSobreCinco() <= 5.0 ) {this.puntuacion = puntuacion;}else{System.out.println("Puntuación fuera de los límites establecidos");}
+	}
+	
 
 	public ImageIcon getFoto(){
 		if (this.foto.equals(null)){
@@ -131,6 +148,11 @@ public class Local {
 			return this.foto;
 		}
 	}
+	
+	public void setFoto( ImageIcon ii){
+		this.foto = ii;
+	}
+	
 	@Override
 	public String toString() {
 		return nombre + " " + tipo.name().toLowerCase() + " " + direccion;
