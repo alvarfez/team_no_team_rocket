@@ -23,20 +23,22 @@ import com.sun.glass.events.WindowEvent;
 
 public class VentanaPrincipal extends JFrame{
 	
+
 	//Atributos de ventana
 	public static DefaultListModel<Object> dlmSeleccionar;
 	private static JPanel pBotonera = new JPanel();
 	private static JPanel pCentral = new JPanel();
-	
+	//Lista y posiciones
+	//public static DefaultListModel<Object> dlmSeleccionar;
 	private static JList<Object> lListaBares;
 	private static int posicionActual;
 	private static int posicionSeleccion;
-	
-	
+	//Botones	
 	private static JButton bRanking = new JButton("Ranking");
 	private static JButton bInicio = new JButton("Inicio");
 	private static JButton bMapa= new JButton("Mapa");
 	private static JButton bPerfil = new JButton("Perfil");
+	private static JButton bVolver = new JButton( "Volver" );
 	
 	public VentanaPrincipal() throws SQLException{
 	
@@ -53,13 +55,13 @@ public class VentanaPrincipal extends JFrame{
 	
 	// Modificamos la lista para que tenga las características que deseamos
 	
-//	ListUI lUI = new ListUI();
 	
 	lListaBares.setBackground(Color.LIGHT_GRAY);
-//	lListaBares.setUI();
 	lListaBares.setFixedCellHeight(50);
 	lListaBares.setFixedCellWidth(390);
-	// PRUEBA DE JLIST
+
+// PRUEBA DE JLIST
+	// Creación locales
 	Local l1 = new Local("Zubialde","bar", "1", 10);
 	Local l2 = new Local("Café","bar", "1", 10);
 	Local l3 = new Local("Terraza","bar", "1", 10);
@@ -143,6 +145,7 @@ public class VentanaPrincipal extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {	
+			//Borramos lo que hay en la aplicación y pintamos el panel de INICIO
 			pCentral.removeAll();
 			getContentPane().remove(pCentral);
 			pCentral.add(lListaBares);
@@ -157,6 +160,7 @@ public class VentanaPrincipal extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			//Borramos lo que hay en el centro y ponemos el panel de MAPA
 			PanelMapa vm = new PanelMapa();
 			pCentral.removeAll();
 			getContentPane().remove(pCentral);
@@ -167,7 +171,17 @@ public class VentanaPrincipal extends JFrame{
 		}
 		
 	});
-	
+	bVolver.addActionListener(new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			pCentral.removeAll();
+			getContentPane().remove(pCentral);
+			pCentral.add(lListaBares);
+			getContentPane().add(pCentral, BorderLayout.CENTER);
+			getContentPane().revalidate();	
+			getContentPane().repaint();
+		}
+	});
 		
 	}
 	
@@ -183,9 +197,31 @@ public class VentanaPrincipal extends JFrame{
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
 		
+
 //		System.out.println("select nombre, contraseña from usuario where "
 //				+ "usuario.nombre = '" + "alvar"+ "'");
 //		
+				
+	}
+	
+	/** Método que abre el local y la oferta correspondiente en la ventana 
+	 * @param posActual recibe la posiciónActual de la JList en la que se clica 2 veces
+	 */
+	public static void abrirOferta( int posActual, VentanaPrincipal vp ){
+		JLabel lOferta = new JLabel();
+		if (dlmSeleccionar.getElementAt(posActual) instanceof Local){
+			Local l = (Local) dlmSeleccionar.getElementAt(posActual);
+			lOferta.setText(l.getNombre());
+//			lOferta.setIcon(l.getFoto());
+			pCentral.removeAll();
+			vp.getContentPane().remove(pCentral);
+			pCentral.add(bVolver);
+			pCentral.add(lOferta);
+			vp.getContentPane().add(pCentral, BorderLayout.CENTER);
+			vp.getContentPane().revalidate();
+			vp.getContentPane().repaint();
+			
+		}
 		
 		
 		
