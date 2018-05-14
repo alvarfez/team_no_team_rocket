@@ -2,7 +2,10 @@ package team_no_team_rocket;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 import com.sun.java.accessibility.util.java.awt.ListTranslator;
+import com.sun.prism.Image;
 
 public class Local {
 
@@ -12,6 +15,7 @@ public class Local {
 	private String direccion;
 	private int telefono;
 	private ArrayList<Oferta> listaOfertas;
+	private ImageIcon foto;
 	
 	/** Constructor de clase Bar
 	 * @param nombre --> nombre del Local
@@ -52,7 +56,7 @@ public class Local {
 	 */
 	public void anyadirOferta(Oferta o){
 		
-		if (o != null && this.listaOfertas.equals(null) ){
+		if (o != null && this.listaOfertas == null ){
 			listaOfertas = new ArrayList<>();
 			listaOfertas.add(o);
 		} else {
@@ -79,6 +83,13 @@ public class Local {
 	/* Aquí vienen todos los setters y getters
 	 * 
 	 */
+	public ArrayList<Oferta> getListaOfertas(){
+		return listaOfertas;
+	}
+	
+	public void setOfertas( ArrayList<Oferta> lOfertas){
+		this.listaOfertas = lOfertas;
+	}
 	
 	public String getNombre() {
 		return nombre;
@@ -112,10 +123,19 @@ public class Local {
 		this.telefono = telefono;
 	}
 
+	public ImageIcon getFoto(){
+		if (this.foto.equals(null)){
+			ImageIcon ii = new ImageIcon("team_no_team_rocket/image.jpg");
+			return ii;
+		} else {
+			return this.foto;
+		}
+	}
 	@Override
 	public String toString() {
 		return nombre + " " + tipo.name().toLowerCase() + " " + direccion;
 	}
+
 	
 	public static void main(String[] args) {
 

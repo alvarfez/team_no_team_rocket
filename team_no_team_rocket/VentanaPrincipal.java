@@ -23,13 +23,13 @@ import com.sun.glass.events.WindowEvent;
 
 public class VentanaPrincipal extends JFrame{
 	
+//Atributos de ventana
 
-	//Atributos de ventana
-	public static DefaultListModel<Object> dlmSeleccionar;
+	//Paneles
 	private static JPanel pBotonera = new JPanel();
 	private static JPanel pCentral = new JPanel();
 	//Lista y posiciones
-	//public static DefaultListModel<Object> dlmSeleccionar;
+	public static DefaultListModel<Object> dlmSeleccionar;
 	private static JList<Object> lListaBares;
 	private static int posicionActual;
 	private static int posicionSeleccion;
@@ -69,22 +69,31 @@ public class VentanaPrincipal extends JFrame{
 	Local l4 = new Local("Badulaque","bar", "1", 10);
 	Local l5 = new Local("El bar de Moe","bar", "1", 10);
 	Local l6 = new Local("La tasca","bar", "1", 10);
-	
+	// Creación imágenes
 	ImageIcon i1 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	ImageIcon i2 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	ImageIcon i3 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
-	
-	
+	// Creación y adición de ofertas
+	Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , 3600);
+	Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , 3600);
+	Oferta o3 = new Oferta("2x1", 2.0, "2 pintxos por 1" , 3600);
+	Oferta o4 = new Oferta("PintxoPote", 3.0, "Pintxo + pote" , 3600);
+	l1.anyadirOferta(o1);
+	l1.anyadirOferta(o2);
+	l2.anyadirOferta(o3);
+	l3.anyadirOferta(o4);
+	//Añadimos los locales a la lista
 	dlmSeleccionar.addElement(l1);
 	dlmSeleccionar.addElement(l2);
 	dlmSeleccionar.addElement(l3);
+	
+	//Añadimos las ofertas a la lista [ASÍ ES COMO DEBIERA SER PERO DE MOMENTO VAMOS A DEJARLO COMO ESTABA HASTA QUE TENGAMOS EL ListCellRenderer
+//	dlmSeleccionar.addElement(l1.getListaOfertas().get(0));
+//	dlmSeleccionar.addElement(l2.getListaOfertas().get(0));
+//	dlmSeleccionar.addElement(l3.getListaOfertas().get(0));
 
-	
-	
-	
 	//Asignamos los botones a la botonera y la botonera al sur del panel principal
-	pCentral.add(lListaBares);
-	
+	pCentral.add(lListaBares);	
 	pBotonera.add(bPerfil);
 	pBotonera.add(bRanking);
 	pBotonera.add(bInicio);
@@ -96,7 +105,7 @@ public class VentanaPrincipal extends JFrame{
 	
 	
 		// Eventos de JList
-	lListaBares.addMouseListener(new MouseListener() {
+	lListaBares.addMouseListener(new MouseAdapter() {
 
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -107,45 +116,16 @@ public class VentanaPrincipal extends JFrame{
 		if (e.getClickCount()==2){
 			if (lListaBares.getSelectedIndex()!= -1) {
 				posicionActual = lListaBares.locationToIndex(e.getPoint());
+				abrirOferta(posicionActual, VentanaPrincipal.this); // abre Oferta seleccionada 
 			}
 		}
 	}
-	@Override
-	public void mouseEntered(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	});	
-	lListaBares.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-			}
-		});
 		
 	bInicio.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {	
-			//Borramos lo que hay en la aplicación y pintamos el panel de INICIO
 			pCentral.removeAll();
 			getContentPane().remove(pCentral);
 			pCentral.add(lListaBares);
@@ -160,7 +140,6 @@ public class VentanaPrincipal extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			//Borramos lo que hay en el centro y ponemos el panel de MAPA
 			PanelMapa vm = new PanelMapa();
 			pCentral.removeAll();
 			getContentPane().remove(pCentral);
@@ -197,7 +176,6 @@ public class VentanaPrincipal extends JFrame{
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
 		
-
 //		System.out.println("select nombre, contraseña from usuario where "
 //				+ "usuario.nombre = '" + "alvar"+ "'");
 //		
@@ -224,7 +202,7 @@ public class VentanaPrincipal extends JFrame{
 		}
 		
 		
-		
-		
 	}
 }
+
+

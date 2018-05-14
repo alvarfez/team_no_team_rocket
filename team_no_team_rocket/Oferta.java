@@ -1,27 +1,30 @@
 package team_no_team_rocket;
 
+import java.time.Duration;
+import java.time.Period;
+
 public class Oferta {
 	
 	
 	//C:\Users\ALVAR\git\team_no_team_rocket\team_no_team_rocket\drivers
 	
+	private String codigo;
 	private String nombre;
 	private double precio;
-	private String codigo;
 	private String descripcion;
-	private Horario horario;
 	private Local local;
+	private int duracion;
+	
 	
 	private static int numCod = 0;
 	
-	public Oferta(Local local, String nombre, double precio, String descripcion, Horario horario) {
+	public Oferta(String nombre, double precio, String descripcion, int duracion) {
 		super();
-		this.local = local;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.codigo = obtenerCodigo(nombre);
 		this.descripcion = descripcion;
-		this.setHorario(horario);
+		this.duracion = duracion;
 	}
 
 	/** Método que genera un código particular para cada oferta con las 3 primeras letras del nombre y un numero
@@ -78,14 +81,16 @@ public class Oferta {
 		this.local = local;
 	}
 
-	public Horario getHorario() {
-		return horario;
-	}
-
-	public void setHorario(Horario horario) {
-		this.horario = horario;
+	public int getDuracion() {
+		return duracion;
 	}
 	
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
+	}
 	
+	public String toString(){
+		return this.nombre +" " + this.precio + " €";
+	}
 
 }
