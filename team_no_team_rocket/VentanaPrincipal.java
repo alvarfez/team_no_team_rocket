@@ -98,9 +98,10 @@ public class VentanaPrincipal extends JFrame{
 	pBotonera.add(bRanking);
 	pBotonera.add(bInicio);
 	pBotonera.add(bMapa);
-		
+
+	JScrollPane spListas = new JScrollPane(pCentral);
 	getContentPane().add(pBotonera, "North");
-	add(pCentral, "Center");
+	add(spListas, "Center");
 	
 	
 	
