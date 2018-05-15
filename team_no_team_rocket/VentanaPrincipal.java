@@ -39,11 +39,12 @@ public class VentanaPrincipal extends JFrame{
 	private static JButton bMapa= new JButton("Mapa");
 	private static JButton bPerfil = new JButton("Perfil");
 	private static JButton bVolver = new JButton( "Volver" );
-
+	//Paneles de tab
 	private static JTabbedPane tab = new JTabbedPane(); //Creacion del contenedor de pestañas
 	private static PanelMapa panelMapa = new PanelMapa(); //Pestaña del mapa
 	private static JPanel usuario = new JPanel(); //TODO pestaña del usuario
 	private static JPanel ranking = new JPanel(); //TODO pestaña del ranking
+	private static JPanel inicio = new JPanel(); //TODO pestaña del ranking
 	
 	public VentanaPrincipal() throws SQLException{
 	
@@ -100,8 +101,9 @@ public class VentanaPrincipal extends JFrame{
 	//Asignamos la lista al panel central y añadimos en el contenedor de pestañas
 	pCentral.add(lListaBares);	
 	JScrollPane spListas = new JScrollPane(pCentral);
+	inicio.add(spListas);
 	tab.addTab("Usuario", null, usuario, "No hace nada");
-	tab.addTab("Inicio", null, spListas, "Lista de bares en tiempo real");
+	tab.addTab("Inicio", null, inicio, "Lista de bares en tiempo real");
 	tab.addTab("Ranking", null, ranking, "No hace nada");
 	tab.addTab("Mapa", null, panelMapa, "Mapa de Deusto");
 
@@ -123,22 +125,22 @@ public class VentanaPrincipal extends JFrame{
 		if (e.getClickCount()==2){
 			if (lListaBares.getSelectedIndex()!= -1) {
 				posicionActual = lListaBares.locationToIndex(e.getPoint());
-				abrirOferta(posicionActual, VentanaPrincipal.this); // abre Oferta seleccionada 
+				abrirOferta(posicionActual, VentanaPrincipal.inicio); // abre Oferta seleccionada 
 			}
 		}
 	}
 	});	
 		
-// Este boton no sirve pero lo dejo para un futuro
+// Vuelve desde la oferta al panel inicio
 	bVolver.addActionListener(new ActionListener(){
 		@Override
 		public void actionPerformed(ActionEvent e) {	
 			pCentral.removeAll();
-			getContentPane().remove(pCentral);
+			inicio.remove(pCentral);
 			pCentral.add(lListaBares);
-			getContentPane().add(pCentral, BorderLayout.CENTER);
-			getContentPane().revalidate();	
-			getContentPane().repaint();
+			inicio.add(pCentral, BorderLayout.CENTER);
+			inicio.revalidate();	
+			inicio.repaint();
 		}
 	});
 		
@@ -165,19 +167,19 @@ public class VentanaPrincipal extends JFrame{
 	/** Método que abre el local y la oferta correspondiente en la ventana 
 	 * @param posActual recibe la posiciónActual de la JList en la que se clica 2 veces
 	 */
-	public static void abrirOferta( int posActual, VentanaPrincipal vp ){
+	public static void abrirOferta( int posActual, JPanel panel ){
 		JLabel lOferta = new JLabel();
 		if (dlmSeleccionar.getElementAt(posActual) instanceof Local){
 			Local l = (Local) dlmSeleccionar.getElementAt(posActual);
 			lOferta.setText(l.getNombre());
 //			lOferta.setIcon(l.getFoto());
 			pCentral.removeAll();
-			vp.getContentPane().remove(pCentral);
+			panel.remove(pCentral);
 			pCentral.add(bVolver);
 			pCentral.add(lOferta);
-			vp.getContentPane().add(pCentral, BorderLayout.CENTER);
-			vp.getContentPane().revalidate();
-			vp.getContentPane().repaint();
+			panel.add(pCentral, BorderLayout.CENTER);
+			panel.revalidate();
+			panel.repaint();
 			
 		}
 		
