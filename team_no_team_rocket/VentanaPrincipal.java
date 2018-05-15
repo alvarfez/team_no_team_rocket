@@ -99,13 +99,14 @@ public class VentanaPrincipal extends JFrame{
 
 	//Asignamos la lista al panel central y añadimos en el contenedor de pestañas
 	pCentral.add(lListaBares);	
+	JScrollPane spListas = new JScrollPane(pCentral);
 	tab.addTab("Usuario", null, usuario, "No hace nada");
-	tab.addTab("Inicio", null, pCentral, "Lista de bares en tiempo real");
+	tab.addTab("Inicio", null, spListas, "Lista de bares en tiempo real");
 	tab.addTab("Ranking", null, ranking, "No hace nada");
 	tab.addTab("Mapa", null, panelMapa, "Mapa de Deusto");
 
-	JScrollPane spListas = new JScrollPane(pCentral);
-	add(spListas, "Center");
+	
+	
 
 	this.getContentPane().add(tab);
 	
