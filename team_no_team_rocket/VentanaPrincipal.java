@@ -39,6 +39,11 @@ public class VentanaPrincipal extends JFrame{
 	private static JButton bMapa= new JButton("Mapa");
 	private static JButton bPerfil = new JButton("Perfil");
 	private static JButton bVolver = new JButton( "Volver" );
+
+	private static JTabbedPane tab = new JTabbedPane(); //Creacion del contenedor de pestañas
+	private static PanelMapa panelMapa = new PanelMapa(); //Pestaña del mapa
+	private static JPanel usuario = new JPanel(); //TODO pestaña del usuario
+	private static JPanel ranking = new JPanel(); //TODO pestaña del ranking
 	
 	public VentanaPrincipal() throws SQLException{
 	
@@ -92,16 +97,14 @@ public class VentanaPrincipal extends JFrame{
 //	dlmSeleccionar.addElement(l2.getListaOfertas().get(0));
 //	dlmSeleccionar.addElement(l3.getListaOfertas().get(0));
 
-	//Asignamos los botones a la botonera y la botonera al sur del panel principal
+	//Asignamos la lista al panel central y añadimos en el contenedor de pestañas
 	pCentral.add(lListaBares);	
-	pBotonera.add(bPerfil);
-	pBotonera.add(bRanking);
-	pBotonera.add(bInicio);
-	pBotonera.add(bMapa);
-		
-	getContentPane().add(pBotonera, "North");
-	add(pCentral, "Center");
+	tab.addTab("Usuario", null, usuario, "No hace nada");
+	tab.addTab("Inicio", null, pCentral, "Lista de bares en tiempo real");
+	tab.addTab("Ranking", null, ranking, "No hace nada");
+	tab.addTab("Mapa", null, panelMapa, "Mapa de Deusto");
 	
+	this.getContentPane().add(tab);
 	
 	
 		// Eventos de JList
@@ -122,34 +125,7 @@ public class VentanaPrincipal extends JFrame{
 	}
 	});	
 		
-	bInicio.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {	
-			pCentral.removeAll();
-			getContentPane().remove(pCentral);
-			pCentral.add(lListaBares);
-			getContentPane().add(pCentral, BorderLayout.CENTER);
-			getContentPane().revalidate();	
-			getContentPane().repaint();
-			
-	
-		}
-	});
-	bMapa.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			PanelMapa vm = new PanelMapa();
-			pCentral.removeAll();
-			getContentPane().remove(pCentral);
-			pCentral.add(vm);
-			getContentPane().add(pCentral, BorderLayout.CENTER);
-			getContentPane().revalidate();
-			getContentPane().repaint();
-		}
-		
-	});
+// Este boton no sirve pero lo dejo para un futuro
 	bVolver.addActionListener(new ActionListener(){
 		@Override
 		public void actionPerformed(ActionEvent e) {	
