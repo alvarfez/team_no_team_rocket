@@ -103,7 +103,10 @@ public class VentanaPrincipal extends JFrame{
 	tab.addTab("Inicio", null, pCentral, "Lista de bares en tiempo real");
 	tab.addTab("Ranking", null, ranking, "No hace nada");
 	tab.addTab("Mapa", null, panelMapa, "Mapa de Deusto");
-	
+
+	JScrollPane spListas = new JScrollPane(pCentral);
+	add(spListas, "Center");
+
 	this.getContentPane().add(tab);
 	
 	
