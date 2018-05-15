@@ -16,7 +16,8 @@ public class Local {
 	private int telefono;
 	private ArrayList<Oferta> listaOfertas;
 	private ImageIcon foto;
-	
+	private Puntuacion puntuacion;
+
 	/** Constructor de clase Bar
 	 * @param nombre --> nombre del Local
 	 * @param tipo --> tipo de servicio = ENUM { BAR_CAFETERIA, RESTAURANTE, TABERNA, PUB }
@@ -123,6 +124,12 @@ public class Local {
 		this.telefono = telefono;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return nombre + " " + tipo.name().toLowerCase() + " " + direccion;
+	}
 	public ImageIcon getFoto(){
 		if (this.foto.equals(null)){
 			ImageIcon ii = new ImageIcon("team_no_team_rocket/image.jpg");
@@ -131,11 +138,13 @@ public class Local {
 			return this.foto;
 		}
 	}
-	@Override
-	public String toString() {
-		return nombre + " " + tipo.name().toLowerCase() + " " + direccion;
+	
+	public void setFoto( ImageIcon ii){
+		this.foto = ii;
 	}
+	
 
+	
 	
 	public static void main(String[] args) {
 
