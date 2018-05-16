@@ -9,7 +9,7 @@ public class Oferta {
 	
 	//C:\Users\ALVAR\git\team_no_team_rocket\team_no_team_rocket\drivers
 	
-	private String codigo;
+	private String codOferta;
 	private String nombre;
 	private double precio;
 	private String descripcion;
@@ -31,7 +31,7 @@ public class Oferta {
 	public Oferta(String nombre, double precio, String descripcion,
 			String f_h_inicio, String f_h_fin) {
 		super();
-		this.codigo = Util.obtenerCodigo(nombre);
+		this.codOferta = Util.obtenerCodigo(nombre);
 		this.nombre = nombre;
 		this.precio = precio;
 		this.descripcion = descripcion;
@@ -60,11 +60,11 @@ public class Oferta {
 	}
 
 	public String getCodigo() {
-		return codigo;
+		return codOferta;
 	}
 
 	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+		this.codOferta = codigo;
 	}
 
 	public String getDescripcion() {

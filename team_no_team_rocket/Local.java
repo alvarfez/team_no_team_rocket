@@ -10,7 +10,7 @@ import com.sun.prism.Image;
 public class Local {
 
 	//Atributos de clase
-	private int cod_bar;
+	private String codLocal;
 	private String nombre;
 	private TipoLocal tipo;
 	private String direccion;
@@ -26,12 +26,11 @@ public class Local {
 	 * @param direccion --> calle y numero = String 
 	 * @param telefono --> tlfno del local
 	 */
-	public Local( int cod_bar, String nombre, String tipo, String direccion, int telefono){
+	public Local( String nombre, String tipo, String direccion, int telefono){
 		super();
-		this.setCod_bar(cod_bar);
+		this.codLocal = Util.obtenerCodigo(nombre);
 		this.nombre = nombre;
 		this.tipo = convertirATipoLocal(tipo);
-		//this.tipo = tipo;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		
@@ -87,10 +86,19 @@ public class Local {
 	/* Aquí vienen todos los setters y getters
 	 * 
 	 */
+	
+	public String getCodBar() {
+		return codLocal;
+	}
+
+	public void setCodBar(String codBar) {
+		this.codLocal = codBar;
+	}
+	
 	public ArrayList<Oferta> getListaOfertas(){
 		return listaOfertas;
 	}
-	
+
 	public void setOfertas( ArrayList<Oferta> lOfertas){
 		this.listaOfertas = lOfertas;
 	}
@@ -144,13 +152,6 @@ public class Local {
 		this.foto = ii;
 	}	
 	
-	public int getCod_bar() {
-		return cod_bar;
-	}
-
-	public void setCod_bar(int cod_bar) {
-		this.cod_bar = cod_bar;
-	}
 
 	public Puntuacion getPuntuacion() {
 		return puntuacion;
@@ -166,9 +167,9 @@ public class Local {
 
 	public static void main(String[] args) {
 
-		Local l1 = new Local(0001, "Zubialde","bar", "1", 10);
-		Local l2 = new Local(0002,"Café","pub", "1", 10);
-		Local l3 = new Local(0003, "Terraza","restaurante", "1", 10);
+		Local l1 = new Local("Zubialde","bar", "1", 10);
+		Local l2 = new Local("Café","pub", "1", 10);
+		Local l3 = new Local("Terraza","restaurante", "1", 10);
 		
 		System.out.println(l1.toString());
 		System.out.println(l2.toString());
