@@ -68,22 +68,22 @@ public class VentanaPrincipal extends JFrame{
 
 // PRUEBA DE JLIST
 	// Creación locales
-	Local l1 = new Local("Zubialde","bar", "1", 10);
-	Local l2 = new Local("Café","bar", "1", 10);
-	Local l3 = new Local("Terraza","bar", "1", 10);
+	Local l1 = new Local(0001, "Zubialde","bar", "1", 10);
+	Local l2 = new Local(0002, "Café","bar", "1", 10);
+	Local l3 = new Local(0003, "Terraza","bar", "1", 10);
 	
-	Local l4 = new Local("Badulaque","bar", "1", 10);
-	Local l5 = new Local("El bar de Moe","bar", "1", 10);
-	Local l6 = new Local("La tasca","bar", "1", 10);
+	Local l4 = new Local(0004,"Badulaque","bar", "1", 10);
+	Local l5 = new Local(0005,"El bar de Moe","bar", "1", 10);
+	Local l6 = new Local(0006, "La tasca","bar", "1", 10);
 	// Creación imágenes
 	ImageIcon i1 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	ImageIcon i2 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	ImageIcon i3 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
 	// Creación y adición de ofertas
-	Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , 3600);
-	Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , 3600);
-	Oferta o3 = new Oferta("2x1", 2.0, "2 pintxos por 1" , 3600);
-	Oferta o4 = new Oferta("PintxoPote", 3.0, "Pintxo + pote" , 3600);
+	Oferta o1 = new Oferta(0001, "3x2", 3.0, "3 pintxos por 2" , "2018/05/16 08:31", "2018/05/16 13:30" );
+	Oferta o2 = new Oferta(0002, "Desayuno", 4.0, "3 pintxos por 2" , "2018/05/16 08:31", "2018/05/16 13:30");
+	Oferta o3 = new Oferta(0003, "2x1", 2.0, "2 pintxos por 1" , "2018/05/16 08:31", "2018/05/16 13:30");
+	Oferta o4 = new Oferta(0004, "PintxoPote", 3.0, "Pintxo + pote" , "2018/05/16 08:31", "2018/05/16 13:30");
 	l1.anyadirOferta(o1);
 	l1.anyadirOferta(o2);
 	l2.anyadirOferta(o3);

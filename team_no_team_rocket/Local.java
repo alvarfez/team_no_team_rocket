@@ -10,6 +10,7 @@ import com.sun.prism.Image;
 public class Local {
 
 	//Atributos de clase
+	private int cod_bar;
 	private String nombre;
 	private TipoLocal tipo;
 	private String direccion;
@@ -19,13 +20,15 @@ public class Local {
 	private Puntuacion puntuacion;
 
 	/** Constructor de clase Bar
+	 * @param cod_bar --> codigo del Local
 	 * @param nombre --> nombre del Local
 	 * @param tipo --> tipo de servicio = ENUM { BAR_CAFETERIA, RESTAURANTE, TABERNA, PUB }
 	 * @param direccion --> calle y numero = String 
 	 * @param telefono --> tlfno del local
 	 */
-	public Local( String nombre, String tipo, String direccion, int telefono){
+	public Local( int cod_bar, String nombre, String tipo, String direccion, int telefono){
 		super();
+		this.setCod_bar(cod_bar);
 		this.nombre = nombre;
 		this.tipo = convertirATipoLocal(tipo);
 		//this.tipo = tipo;
@@ -123,13 +126,12 @@ public class Local {
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
 	}
-
-
-
+	
 	@Override
 	public String toString() {
 		return nombre + " " + tipo.name().toLowerCase() + " " + direccion;
 	}
+	
 	public ImageIcon getFoto(){
 		if (this.foto.equals(null)){
 			ImageIcon ii = new ImageIcon("team_no_team_rocket/image.jpg");
@@ -138,19 +140,35 @@ public class Local {
 			return this.foto;
 		}
 	}
-	
 	public void setFoto( ImageIcon ii){
 		this.foto = ii;
+	}	
+	
+	public int getCod_bar() {
+		return cod_bar;
 	}
-	
 
-	
-	
+	public void setCod_bar(int cod_bar) {
+		this.cod_bar = cod_bar;
+	}
+
+	public Puntuacion getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(Puntuacion puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+
+	public void setListaOfertas(ArrayList<Oferta> listaOfertas) {
+		this.listaOfertas = listaOfertas;
+	}
+
 	public static void main(String[] args) {
 
-		Local l1 = new Local("Zubialde","bar", "1", 10);
-		Local l2 = new Local("Café","pub", "1", 10);
-		Local l3 = new Local("Terraza","restaurante", "1", 10);
+		Local l1 = new Local(0001, "Zubialde","bar", "1", 10);
+		Local l2 = new Local(0002,"Café","pub", "1", 10);
+		Local l3 = new Local(0003, "Terraza","restaurante", "1", 10);
 		
 		System.out.println(l1.toString());
 		System.out.println(l2.toString());
@@ -158,4 +176,6 @@ public class Local {
 		
 		
 	}
+
+
 }
