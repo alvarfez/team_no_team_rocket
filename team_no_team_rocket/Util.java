@@ -10,6 +10,7 @@ import com.sun.scenario.effect.impl.sw.sse.SSEBlend_COLOR_BURNPeer;
 
 public class Util {
 	
+	private static int numCod = 0;
 	
 	/** Metodo que comprueba si el numero de caracteres del telefono es correcto y devuelve 
 	 * true. En caso de ser incorrecto devuelve False y en caso de ser null lo completa 
@@ -36,6 +37,15 @@ public class Util {
 		}
 
 
+	}
+	/** Método que genera un código particular para cada oferta con las 3 primeras letras del nombre y un numero
+	 * @param str el nombre de la oferta
+	 * @return el código
+	 */
+	public static String obtenerCodigo(String str){
+		String provisional = str.substring(0,3) + numCod;
+		numCod ++;
+		return provisional;
 	}
 
 	/** MÉTODO BASADO EN CÓDIGO DE WEB: https://medium.com/@manuelmato/c%C3%B3mo-validar-un-dni-en-java-6d7ce7d764aa
