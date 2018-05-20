@@ -15,8 +15,8 @@ public class Oferta {
 	private String descripcion;
 	private Local local;
 	private int duracion;
-	private String f_h_inicio;
-	private String f_h_fin;
+	private String fchaHraInicio;
+	private String fchaHraFin;
 	
 	
 
@@ -25,18 +25,18 @@ public class Oferta {
 	 * @param nombre de la oferta
 	 * @param precio que tiene la oferta
 	 * @param descripcion detallada de como va a ser la oferta
-	 * @param f_h_inicio Fecha de inicio de la oferta con formato YYYY/MM/DD HH:MM:SS
-	 * @param f_h_fin Fecha de fin de la oferta con formato YYYY/MM/DD HH:MM:SS	
+	 * @param fchaHraInicio Fecha de inicio de la oferta con formato YYYY/MM/DD HH:MM:SS
+	 * @param fchaHraFin Fecha de fin de la oferta con formato YYYY/MM/DD HH:MM:SS	
 	 */
 	public Oferta(String nombre, double precio, String descripcion,
-			String f_h_inicio, String f_h_fin) {
+			String fchaHraInicio, String fchaHraFin) {
 		super();
 		this.codOferta = Util.obtenerCodigo(nombre);
 		this.nombre = nombre;
 		this.precio = precio;
 		this.descripcion = descripcion;
-		this.f_h_inicio = f_h_inicio;
-		this.f_h_fin = f_h_fin;
+		this.fchaHraInicio = fchaHraInicio;
+		this.fchaHraFin = fchaHraFin;
 	}
 	
 	/* Getters y setters
@@ -95,20 +95,20 @@ public class Oferta {
 		return this.nombre +" " + this.precio + " €";
 	}
 
-	public String getF_h_inicio() {
-		return f_h_inicio;
+	public String getFchaHraInicio() {
+		return fchaHraInicio;
 	}
 
-	public void setF_h_inicio(String f_h_inicio) {
-		this.f_h_inicio = f_h_inicio;
+	public void setF_h_inicio(String fchaHraInicio) {
+		this.fchaHraInicio = fchaHraInicio;
 	}
 
 	public String getF_h_fin() {
-		return f_h_fin;
+		return fchaHraFin;
 	}
 
-	public void setF_h_fin(String f_h_fin) {
-		this.f_h_fin = f_h_fin;
+	public void setF_h_fin(String fchaHraFin) {
+		this.fchaHraFin = fchaHraFin;
 	}
 
 }

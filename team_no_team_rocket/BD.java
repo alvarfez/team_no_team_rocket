@@ -38,7 +38,7 @@ public class BD {
         Statement stmt = connection.createStatement();
         // stmt.executeUpdate("DROP TABLE IF EXISTS ticks");  // Si se quiere iniciar la tabla desde 0
         try {
-        	stmt.executeUpdate("create table usuario (nombre varchar(15), password varchar(10))");
+        	stmt.executeUpdate("create table local (nombre varchar(15), password varchar(10))");
         	stmt.executeUpdate("insert into usuario values('admin', 'admin')");
         } catch (SQLException e) {
         	e.printStackTrace();
