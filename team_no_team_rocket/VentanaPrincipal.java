@@ -3,8 +3,10 @@ package team_no_team_rocket;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -65,6 +67,7 @@ public class VentanaPrincipal extends JFrame{
 	lListaBares.setBackground(Color.LIGHT_GRAY);
 	lListaBares.setFixedCellHeight(50);
 	lListaBares.setFixedCellWidth(390);
+	cambiaRenderer(lListaBares);
 
 // PRUEBA DE JLIST
 	// Creación locales
@@ -154,7 +157,7 @@ public class VentanaPrincipal extends JFrame{
 //		while (!correcto){
 //			correcto = Util.comprobarUsuario();
 //		}
-		Util.comprobarUsuario();
+//		Util.comprobarUsuario();
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
 		
@@ -179,11 +182,57 @@ public class VentanaPrincipal extends JFrame{
 			pCentral.add(lOferta);
 			panel.add(pCentral, BorderLayout.CENTER);
 			panel.revalidate();
-			panel.repaint();
-			
+			panel.repaint();	
 		}
-		
-		
+	}
+	
+	public void cambiaRenderer(JList<?> lista){
+		lista.setCellRenderer(new DefaultListCellRenderer(){
+			JPanel p = null;
+			JLabel lFoto = null;
+			JLabel lNomLocal = null;
+			JLabel lNomOferta = null;
+			JLabel lDistancia = null;
+			@Override
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+					boolean cellHasFocus) {
+				//Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				// Creamos el panel que queramos que tenga el display deseado, necesitaremos método probablemente
+				if (p==null) p = creaPanelLista();
+				// Este es el local que pasamos cada vez
+				Local l = (Local) value;
+				//Aquí insertamos los datos personalizadosç
+//				int nom = 0;
+//				for (Component c : p.getComponents()){
+//					c.add(new PopupMenu("comp"+nom));
+//					nom+=1;
+//				}
+				lFoto.setIcon( l.getFoto());
+				lNomLocal.setText(l.getNombre());
+				lNomOferta.setText(l.getCodBar());
+				
+				//Aquí pone el background a negro cuando se selecciona
+				if (isSelected) p.setBackground( Color.black );
+				// Meter un Border
+				return p;
+			}
+			public JPanel creaPanelLista(){
+				
+				JPanel p = new JPanel();
+				lNomLocal = new JLabel();
+				lNomOferta = new JLabel();
+				JPanel panelPartido = new JPanel();
+				JPanel pParaFoto = new JPanel();
+				p.setLayout(new GridLayout(1,3));
+				panelPartido.setLayout(new GridLayout(2,1));
+				p.add(pParaFoto);
+				p.add(panelPartido);
+				lFoto = new JLabel();
+				p.add(lFoto, -1);
+				p.setOpaque( true );
+				return p;
+			}
+		});
 	}
 }
 
