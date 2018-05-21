@@ -1,9 +1,5 @@
 package team_no_team_rocket;
 
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import com.mongodb.BasicDBObject;
@@ -36,38 +32,16 @@ public class BDMongo {
 
 			//Crea una tabla si no existe y agrega datos
 			DBCollection table = db.getCollection("Local");
-
+			
+			
 			//Crea los objectos básicos
-			BasicDBObject document1 = new BasicDBObject();
-			document1.put("nombre", "Zubialde");
-			document1.put("direccion", "Puente de Deusto");
-			document1.put("puntuacion", 4);
+			BasicDBObject document1 = anyadirDocumento("Zubialde", "Puente de Deusto", 4);
+			BasicDBObject document2 = anyadirDocumento("Cafe", "Lehendakari Aguirre", 3);
+			BasicDBObject document3 = anyadirDocumento("Terraza", "Puente de Deusto", 2);
+			BasicDBObject document4 = anyadirDocumento("Badulaque", "Springfield", 4);
+			BasicDBObject document5 = anyadirDocumento("El bar de Moe", "Springfield", 4);
+			BasicDBObject document6 = anyadirDocumento("La Tasca", "Lehendakari Aguirre", 5);
 			
-
-			BasicDBObject document2 = new BasicDBObject();
-			document1.put("nombre", "Cafe");
-			document1.put("direccion", "Lendakari Aguirre");
-			document1.put("puntuacion", 3);
-
-			BasicDBObject document3 = new BasicDBObject();
-			document1.put("nombre", "Terraza");
-			document1.put("direccion", "Puente de Deusto");
-			document1.put("puntuacion", 2);
-			
-			BasicDBObject document4 = new BasicDBObject();
-			document1.put("nombre", "Badulaque");
-			document1.put("direccion", "Springfield");
-			document1.put("puntuacion", 4);
-			
-			BasicDBObject document5 = new BasicDBObject();
-			document1.put("nombre", "El bar de Moe");
-			document1.put("direccion", "Springfield");
-			document1.put("puntuacion", 4);
-			
-			BasicDBObject document6 = new BasicDBObject();
-			document1.put("nombre", "La Tasca");
-			document1.put("direccion", "Lendakari Aguirre");
-			document1.put("puntuacion", 5);
 
 			//Insertar tablas
 			table.insert(document1);
@@ -109,6 +83,20 @@ public class BDMongo {
 			System.out.println("Error: Conexión no establecida");
 		}
 	}
+
+	private static BasicDBObject anyadirDocumento(String nombreLoc,
+			String direccion, int puntuacion) {
+		
+		BasicDBObject b = new BasicDBObject();
+		b.put("nombre", nombreLoc);
+		b.put("direccion", direccion);
+		b.put("puntuacion", puntuacion);
+		return b;
+		
+		
+	}
 }
+
+
 
 

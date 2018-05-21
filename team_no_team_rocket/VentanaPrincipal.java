@@ -157,7 +157,7 @@ public class VentanaPrincipal extends JFrame{
 //		while (!correcto){
 //			correcto = Util.comprobarUsuario();
 //		}
-//		Util.comprobarUsuario();
+		//Util.comprobarUsuario();
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
 		
