@@ -50,6 +50,20 @@ public class VentanaPrincipal extends JFrame{
 	private static JPanel usuario = new PanelUsuario(); //TODO pestaña del usuario
 	private static JPanel ranking = new JPanel(); //TODO pestaña del ranking
 	private static JPanel inicio = new JPanel(); //TODO pestaña del ranking
+	//Atributos Oferta pulsada
+	private static JPanel pOferta = new JPanel();
+	private static JLabel lNomLocal = new JLabel();
+	private static JLabel lNomOferta = new JLabel();
+	private static JLabel lDescOferta = new JLabel();
+	private static JLabel lPrecio = new JLabel();
+	private static JLabel lFoto = new JLabel();
+	private static JLabel lDistOferta = new JLabel();
+	// Labels para indicación en oferta
+	private static JLabel atr1 = new JLabel("Local: ");
+	private static JLabel atr2 = new JLabel("Oferta: ");
+	private static JLabel atr3 = new JLabel("Descripción: ");
+	private static JLabel atr4 = new JLabel("Precio: ");
+	private static JLabel atr5 = new JLabel("Distancia: ");
 	
 	public VentanaPrincipal() throws SQLException{
 	
@@ -177,15 +191,33 @@ public class VentanaPrincipal extends JFrame{
 	 * @param posActual recibe la posiciónActual de la JList en la que se clica 2 veces
 	 */
 	public static void abrirOferta( int posActual, JPanel panel ){
-		JLabel lOferta = new JLabel();
 		if (dlmSeleccionar.getElementAt(posActual) instanceof Local){
 			Local l = (Local) dlmSeleccionar.getElementAt(posActual);
-			lOferta.setText(l.getNombre());
-//			lOferta.setIcon(l.getFoto());
+			// preparamos panel Oferta
+			lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
+			lDescOferta.setText(l.getListaOfertas().get(0).getDescripcion());
+			lPrecio.setText(l.getListaOfertas().get(0).getPrecio()+" €");
+			// FALTA POR IMPLEMENTAR
+			lDistOferta.setText("'Distancia hasta usuario'");
+			// lDistOferta.setText(getOferta().getDistAUser());
+			// Hacemos el display de la oferta
+			pOferta.setLayout(new GridLayout(6, 2));
+			pOferta.add(atr1);pOferta.add(lNomLocal);
+			pOferta.add(atr2);pOferta.add(lNomOferta);
+			pOferta.add(atr3);pOferta.add(lDescOferta);
+			pOferta.add(atr4);pOferta.add(lPrecio);
+			pOferta.add(atr5);pOferta.add(lDistOferta);
+			pOferta.add(bVolver);
+			// preparamos la foto y el nombre del local
+			lFoto.setIcon((l.getFoto()));
+			lNomLocal.setText(l.getNombre());
+			//Borramos lo que había en el panel
 			pCentral.removeAll();
 			panel.remove(pCentral);
-			pCentral.add(bVolver);
-			pCentral.add(lOferta);
+			//Lo llenamos con nuevo Layout
+			pCentral.setLayout(new GridLayout(2, 1));
+			pCentral.add(lFoto);
+			pCentral.add(pOferta);
 			panel.add(pCentral, BorderLayout.CENTER);
 			panel.revalidate();
 			panel.repaint();	
@@ -215,7 +247,7 @@ public class VentanaPrincipal extends JFrame{
 
 				lFoto.setIcon( l.getFoto());
 				lNomLocal.setText(l.getNombre());
-				lNomOferta.setText(l.getCodBar());
+				lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
 				lDistancia.setText("Distancia a usuario");
 		          
 
