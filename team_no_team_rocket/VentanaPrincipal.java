@@ -82,9 +82,9 @@ public class VentanaPrincipal extends JFrame{
 	Local l5 = new Local("El bar de Moe","bar", "1", 10);
 	Local l6 = new Local( "La tasca","bar", "1", 10);
 	// Creación imágenes
-	ImageIcon i1 = new ImageIcon("team_no_team_rocket/bin/team_no_team_rocket/fotos/3escobas.jpg");
-	ImageIcon i2 = new ImageIcon("team_no_team_rocket/bin/team_no_team_rocket/fotos/3escobas.jpg");
-	ImageIcon i3 = new ImageIcon("team_no_team_rocket/bin/team_no_team_rocket/fotos/3escobas.jpg");
+	ImageIcon i1 = new ImageIcon("bin/team_no_team_rocket/fotos/3escobas.jpg");
+	ImageIcon i2 = new ImageIcon("bin/team_no_team_rocket/fotos/badulaque.jpg");
+	ImageIcon i3 = new ImageIcon("bin/team_no_team_rocket/fotos/barDeMoe.jpg");
 	l1.setFoto(i1);
 	l2.setFoto(i2);
 	l3.setFoto(i3);
@@ -224,7 +224,6 @@ public class VentanaPrincipal extends JFrame{
 					pParaFoto.setBackground(Color.blue);
 					panelPartido.setBackground(Color.blue);
 					p.setBackground(Color.blue);
-					System.out.println("Pasa por aquí");
 				} else if (!isSelected){
 					pParaFoto.setBackground(Color.white);
 					panelPartido.setBackground(Color.white);
