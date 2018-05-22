@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -36,6 +38,7 @@ public class PanelUsuario extends JPanel {
 	
 	public PanelUsuario(){
 		
+		//Paneles para dejar todo bonito
 		blogin.setBackground(new Color(82,69,242));
 		bregister.setBackground(new Color(82,69,242));
 		this.setLayout(new GridLayout(2,1));
@@ -87,9 +90,33 @@ public class PanelUsuario extends JPanel {
 		pInferior.add(new JPanel(), "West");
 		pInferior.add(pInfCentral, "Center");
 		
-		
+		cbCategoria.addItem("Usuario");
+		cbCategoria.addItem("Local");
 		this.add(pSuperior);
 		this.add(pInferior);
+		
+		
+		/**Cada vez que se clicka el boton de registro comprueba y si se puede registra 
+		 * un usuario en la base de datos de Mongo de Usuarios
+		 */
+		bregister.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BDMongo m = new BDMongo();
+				boolean b = m.anyadirUsuario(nombreTA2.getText(), passwordTA.getText() , cbCategoria.getSelectedIndex());
+				if(b){
+				
+					JOptionPane.showMessageDialog(null, "El usuario se ha registrado correctamente");
+				}else{
+					System.out.println(nombre2.getText());
+					JOptionPane.showMessageDialog(null, "No se ha podido registrar el usuario. "
+							+ "Ya existe un usuario con ese nombre");
+				}
+			}
+		});
+		
+		
 		
 		
 		

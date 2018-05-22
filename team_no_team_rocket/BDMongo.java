@@ -1,13 +1,23 @@
 package team_no_team_rocket;
 
-import java.util.Set;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.ServerAddress;
+
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+
+import org.bson.Document;
+import java.util.Arrays;
+import com.mongodb.Block;
+
+import com.mongodb.client.MongoCursor;
+import static com.mongodb.client.model.Filters.*;
+import com.mongodb.client.result.DeleteResult;
+import static com.mongodb.client.model.Updates.*;
+import com.mongodb.client.result.UpdateResult;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Prueba para realizar conexión con MongoDB.
@@ -15,84 +25,125 @@ import com.mongodb.MongoClient;
  *
  */
 public class BDMongo {
+	public  MongoCollection<Document> collection;
+	public  MongoDatabase database;
+	public  MongoClient mongoClient;
+	
+	public BDMongo(){
+		mongoClient = new MongoClient( "localhost" , 27017 );
+		//Si no existe la base de datos la crea
+		 
+		
+	}
+	
+	
+	/**Metodo que añade un usuario en la base de datos de usuarios de Mongo si no existe 
+	 * previamente
+	 * @param nombre del usuario
+	 * @param pass contraseña del usuario
+	 * @param categoria 0 si es un usuario y 1 si es un local
+	 * @return true si no existe previamente y false si existe
+	 */
+	public boolean anyadirUsuario(String nombre, String pass, int categoria){
+		database = mongoClient.getDatabase("Usuarios");
+		collection = database.getCollection("usuario");
+		ArrayList<String> array = new ArrayList<>();
+		
+		MongoCursor<Document> cursor = collection.find().iterator();
+		try {
+		    while (cursor.hasNext()) {
+		       array.add(cursor.next().getString("nombre"));
+		    }
+		} finally {
+		    cursor.close();
+		}
+		System.out.println(array);
+		boolean escribir = true;
+		for(String s : array){
+			if (s.equals(nombre)){
+				escribir = false;
+			}
+		}
+		if(escribir){
+			Document doc = new Document("nombre", nombre)
+					.append("password", pass)
+					.append("categoria", categoria);
+			
+			collection.insertOne(doc);
+			System.out.println("Eureka");
+			return true;
+		}else{
+			System.out.println("El usuario ya existe");
+			return false;
+		}
+		
+		
+		
+		
+	}
+	
+	
+	
+	/** Metodo que añade un local en la base de datos de puntuaciones de Mongo si no existe 
+	 * previamente
+	 * @param cod_Local codigo del Local a añadir
+	 * @param puntuacion puntuación del bar
+	 * @return true si no existe previamente y false si existe
+	 */
+	public boolean anyadirLocal(String cod_Local, int puntuacion){
+		database = mongoClient.getDatabase("Locales");
+		collection = database.getCollection("local");
+
+		ArrayList<String> array = new ArrayList<>();
+
+		MongoCursor<Document> cursor = collection.find().iterator();
+		try {
+			while (cursor.hasNext()) {
+				array.add(cursor.next().getString("codigoLocal"));
+			}
+		} finally {
+			cursor.close();
+		}
+		System.out.println(array);
+		boolean escribir = true;
+		for(String s : array){
+			if (s.equals(cod_Local)){
+				escribir = false;
+			}
+		}
+		if(escribir){
+			Document doc = new Document("codigoLocal", cod_Local)
+					.append("puntuacion", puntuacion);
+			
+			collection.insertOne(doc);
+			return true;
+		}else{
+			System.out.println("El local ya existe");
+			return false;
+		}
+		
+	}
+	
 	/**
 	 * Main del proyecto.
 	 * @param args
 	 */
-	@SuppressWarnings({ "deprecation", "resource", "unused" })
+
 	public static void main(String[] args) {
-		System.out.println("Prueba conexión MongoDB");
-		MongoClient mongo = null;
-		mongo = new MongoClient("localhost", 27017);
-
-		if (mongo != null) {
-
-			//Si no existe la base de datos la crea
-			DB db = new Mongo().getDB("Locales");
-
-			//Crea una tabla si no existe y agrega datos
-			DBCollection table = db.getCollection("Local");
-			
-			
-			//Crea los objectos básicos
-			BasicDBObject document1 = anyadirDocumento("Zubialde", "Puente de Deusto", 4);
-			BasicDBObject document2 = anyadirDocumento("Cafe", "Lehendakari Aguirre", 3);
-			BasicDBObject document3 = anyadirDocumento("Terraza", "Puente de Deusto", 2);
-			BasicDBObject document4 = anyadirDocumento("Badulaque", "Springfield", 4);
-			BasicDBObject document5 = anyadirDocumento("El bar de Moe", "Springfield", 4);
-			BasicDBObject document6 = anyadirDocumento("La Tasca", "Lehendakari Aguirre", 5);
-			
-
-			//Insertar tablas
-			table.insert(document1);
-			table.insert(document2);
-			table.insert(document3);
-			table.insert(document4);
-			table.insert(document5);
-			table.insert(document6);
-
-			//Actualiza la puntuacion de los bares con el nombre "Cafe"
-			BasicDBObject updateScore = new BasicDBObject();
-			updateScore.append("$set", new BasicDBObject().append("puntuacion", 5));
-
-			BasicDBObject searchById = new BasicDBObject();
-			searchById.append("nombre", "Cafe");
-
-			table.updateMulti(searchById, updateScore);
-
-			//Listar la tabla "local"
-			System.out.println("Listar los registros de la tabla: ");
-			DBCursor cur = table.find();
-			while (cur.hasNext()) {
-				System.out.println(" - " + cur.next().get("nombre") + " " + cur.curr().get("direccion") + " -- " + cur.curr().get("puntuacion") + ")");
-			}
-			System.out.println();
-
-			//Listar de la tabla "local" aquellos que tengan un 4
-			System.out.println("Listar los registros de la tabla cuyo nombre sea Jose: ");
-			BasicDBObject query = new BasicDBObject();
-			query.put("puntuacion", "4");
-
-			DBCursor cur2 = table.find(query);
-			while (cur2.hasNext()) {
-				System.out.println(" - " + cur2.next().get("nombre") + " " + cur2.curr().get("direccion") + " -- " + cur2.curr().get("puntuacion") + ")");
-			}
-			System.out.println();
-
-		} else {
-			System.out.println("Error: Conexión no establecida");
-		}
-	}
-
-	private static BasicDBObject anyadirDocumento(String nombreLoc,
-			String direccion, int puntuacion) {
-		
-		BasicDBObject b = new BasicDBObject();
-		b.put("nombre", nombreLoc);
-		b.put("direccion", direccion);
-		b.put("puntuacion", puntuacion);
-		return b;
-		
+		BDMongo m = new BDMongo();
+		boolean b = m.anyadirUsuario("Alfonso", "perro", 1);
+//		database = mongoClient.getDatabase("Usuarios");
+//		collection = database.getCollection("usuario");
+//		try{
+//			Document myDoc = collection.find(eq("nombre", "Alvar")).first();
+//			System.out.println(myDoc.get("nombre").toString());
+//			String s = "Alvar";
+//			if(s.equals(myDoc.getString("nombre"))) System.out.println("Si");
+//		}catch(NullPointerException e){
+//			
+//		}
+//		
+				
 		
 	}
 }
