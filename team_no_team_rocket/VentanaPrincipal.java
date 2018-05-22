@@ -16,12 +16,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.ListUI;
 
 import com.sun.glass.events.MouseEvent;
 import com.sun.glass.events.WindowEvent;
+
+import javafx.scene.layout.Border;
 
 public class VentanaPrincipal extends JFrame{
 	
@@ -79,9 +82,12 @@ public class VentanaPrincipal extends JFrame{
 	Local l5 = new Local("El bar de Moe","bar", "1", 10);
 	Local l6 = new Local( "La tasca","bar", "1", 10);
 	// Creación imágenes
-	ImageIcon i1 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
-	ImageIcon i2 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
-	ImageIcon i3 = new ImageIcon("team_no_team_rocket.fotos/3escobas.jpg");
+	ImageIcon i1 = new ImageIcon("team_no_team_rocket/bin/team_no_team_rocket/fotos/3escobas.jpg");
+	ImageIcon i2 = new ImageIcon("team_no_team_rocket/bin/team_no_team_rocket/fotos/3escobas.jpg");
+	ImageIcon i3 = new ImageIcon("team_no_team_rocket/bin/team_no_team_rocket/fotos/3escobas.jpg");
+	l1.setFoto(i1);
+	l2.setFoto(i2);
+	l3.setFoto(i3);
 	// Creación y adición de ofertas
 	Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , "2018/05/16 08:31", "2018/05/16 13:30" );
 	Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , "2018/05/16 08:31", "2018/05/16 13:30");
@@ -157,7 +163,7 @@ public class VentanaPrincipal extends JFrame{
 //		while (!correcto){
 //			correcto = Util.comprobarUsuario();
 //		}
-		//Util.comprobarUsuario();
+//		Util.comprobarUsuario();
 		VentanaPrincipal vp = new VentanaPrincipal();
 		vp.setVisible(true);
 		
@@ -185,55 +191,67 @@ public class VentanaPrincipal extends JFrame{
 			panel.repaint();	
 		}
 	}
-	
 	public void cambiaRenderer(JList<?> lista){
 		lista.setCellRenderer(new DefaultListCellRenderer(){
 			JPanel p = null;
+			JPanel panelPartido = null;
+			JPanel pParaFoto = null;
 			JLabel lFoto = null;
 			JLabel lNomLocal = null;
 			JLabel lNomOferta = null;
 			JLabel lDistancia = null;
+
 			@Override
 			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 					boolean cellHasFocus) {
 				//Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 				// Creamos el panel que queramos que tenga el display deseado, necesitaremos método probablemente
 				if (p==null) p = creaPanelLista();
+				p.setOpaque(true);
+				p.setBorder(new LineBorder(Color.BLUE));
 				// Este es el local que pasamos cada vez
 				Local l = (Local) value;
 				//Aquí insertamos los datos personalizadosç
-//				int nom = 0;
-//				for (Component c : p.getComponents()){
-//					c.add(new PopupMenu("comp"+nom));
-//					nom+=1;
-//				}
+
 				lFoto.setIcon( l.getFoto());
 				lNomLocal.setText(l.getNombre());
 				lNomOferta.setText(l.getCodBar());
+				lDistancia.setText("Distancia a usuario");
+		          
+
+				//Aquí pone el background a COLOR cuando se selecciona y cuando NO a BLANCO
+				if (isSelected){
+					pParaFoto.setBackground(Color.blue);
+					panelPartido.setBackground(Color.blue);
+					p.setBackground(Color.blue);
+					System.out.println("Pasa por aquí");
+				} else if (!isSelected){
+					pParaFoto.setBackground(Color.white);
+					panelPartido.setBackground(Color.white);
+					p.setBackground(Color.white);
+				}
 				
-				//Aquí pone el background a negro cuando se selecciona
-				if (isSelected) p.setBackground( Color.black );
-				// Meter un Border
 				return p;
 			}
 			public JPanel creaPanelLista(){
-				
-				JPanel p = new JPanel();
+
+				p = new JPanel();
 				lNomLocal = new JLabel();
 				lNomOferta = new JLabel();
-				JPanel panelPartido = new JPanel();
-				JPanel pParaFoto = new JPanel();
+				lFoto = new JLabel();
+				lDistancia = new JLabel();
+				panelPartido = new JPanel();
+				pParaFoto = new JPanel();
 				p.setLayout(new GridLayout(1,3));
 				panelPartido.setLayout(new GridLayout(2,1));
+				pParaFoto.add(lFoto);		
 				p.add(pParaFoto);
+				panelPartido.add(lNomLocal);
+				panelPartido.add(lNomOferta);
 				p.add(panelPartido);
-				lFoto = new JLabel();
-				p.add(lFoto, -1);
-				p.setOpaque( true );
+				p.add(lDistancia);
 				return p;
 			}
 		});
 	}
 }
-
-
