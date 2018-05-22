@@ -47,7 +47,7 @@ public class VentanaPrincipal extends JFrame{
 	//Paneles de tab
 	private static JTabbedPane tab = new JTabbedPane(); //Creacion del contenedor de pestañas
 	private static PanelMapa panelMapa = new PanelMapa(); //Pestaña del mapa
-	private static JPanel usuario = new JPanel(); //TODO pestaña del usuario
+	private static JPanel usuario = new PanelUsuario(); //TODO pestaña del usuario
 	private static JPanel ranking = new JPanel(); //TODO pestaña del ranking
 	private static JPanel inicio = new JPanel(); //TODO pestaña del ranking
 	
