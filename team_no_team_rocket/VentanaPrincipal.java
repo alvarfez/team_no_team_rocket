@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -103,10 +104,10 @@ public class VentanaPrincipal extends JFrame{
 	l2.setFoto(i2);
 	l3.setFoto(i3);
 	// Creación y adición de ofertas
-	Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , "2018/05/16 08:31", "2018/05/16 13:30" );
-	Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , "2018/05/16 08:31", "2018/05/16 13:30");
-	Oferta o3 = new Oferta("2x1", 2.0, "2 pintxos por 1" , "2018/05/16 08:31", "2018/05/16 13:30");
-	Oferta o4 = new Oferta("PintxoPote", 3.0, "Pintxo + pote" , "2018/05/16 08:31", "2018/05/16 13:30");
+	Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , new Date(), new Date() );
+	Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , new Date(), new Date() );
+	Oferta o3 = new Oferta("2x1", 2.0, "2 pintxos por 1" , new Date(), new Date() );
+	Oferta o4 = new Oferta("PintxoPote", 3.0, "Pintxo + pote" , new Date(), new Date() );
 	l1.anyadirOferta(o1);
 	l1.anyadirOferta(o2);
 	l2.anyadirOferta(o3);
