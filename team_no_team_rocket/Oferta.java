@@ -1,8 +1,10 @@
 package team_no_team_rocket;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Period;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Oferta {
 	
@@ -15,8 +17,9 @@ public class Oferta {
 	private String descripcion;
 	private Local local;
 	private int duracion;
-	private String fchaHraInicio;
-	private String fchaHraFin;
+	private Date fchaHraInicio;
+	private Date fchaHraFin;
+	private boolean[] diasActiva;
 	
 	
 
@@ -29,7 +32,7 @@ public class Oferta {
 	 * @param fchaHraFin Fecha de fin de la oferta con formato YYYY/MM/DD HH:MM:SS	
 	 */
 	public Oferta(String nombre, double precio, String descripcion,
-			String fchaHraInicio, String fchaHraFin) {
+			Date fchaHraInicio, Date fchaHraFin) {
 		super();
 		this.codOferta = Util.obtenerCodigo(nombre);
 		this.nombre = nombre;
@@ -37,6 +40,7 @@ public class Oferta {
 		this.descripcion = descripcion;
 		this.fchaHraInicio = fchaHraInicio;
 		this.fchaHraFin = fchaHraFin;
+		this.diasActiva = new boolean[7];
 	}
 	
 	/* Getters y setters
@@ -95,20 +99,66 @@ public class Oferta {
 		return this.nombre +" " + this.precio + " €";
 	}
 
-	public String getFchaHraInicio() {
+	public Date getFchaHraInicio() {
 		return fchaHraInicio;
 	}
 
-	public void setF_h_inicio(String fchaHraInicio) {
+	public void setFchaHraInicio(Date fchaHraInicio) {
 		this.fchaHraInicio = fchaHraInicio;
 	}
 
-	public String getF_h_fin() {
+	public Date getFchaHraFin() {
 		return fchaHraFin;
 	}
 
-	public void setF_h_fin(String fchaHraFin) {
+	public void setFchaHraFin(Date fchaHraFin) {
 		this.fchaHraFin = fchaHraFin;
 	}
 
+	public boolean[] getDiasActiva() {
+		return diasActiva;
+	}
+
+	public void setDiasActiva(boolean[] diasActiva) {
+		this.diasActiva = diasActiva;
+	}
+	
+	/** Método que devuelve un booleano según si la oferta dada está activa o no
+	 * @return boolean 
+	 */
+	public boolean isActiva(){
+		Date d1 = new Date();
+		GregorianCalendar gcHoy = new GregorianCalendar();
+		GregorianCalendar gcOfertaInicio = new GregorianCalendar();
+		GregorianCalendar gcOfertaFin = new GregorianCalendar();
+		gcHoy.setTime(d1);
+		gcOfertaInicio.setTime(fchaHraInicio);
+		gcOfertaFin.setTime(fchaHraFin);
+		int diaDeHoy = gcHoy.get(GregorianCalendar.DAY_OF_WEEK);
+		int horaDeHoy = gcHoy.get(GregorianCalendar.HOUR_OF_DAY);
+		int horaOfertaInicio = gcOfertaInicio.get(GregorianCalendar.HOUR_OF_DAY);
+		int horaOfertaFin = gcOfertaInicio.get(GregorianCalendar.HOUR_OF_DAY);
+		
+		if (horaDeHoy>=horaOfertaInicio && horaDeHoy<horaOfertaFin ){
+			if(diasActiva[diaDeHoy] || diasActiva == null){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+		
+	}
+	public static void main(String[] args) {
+		Date d1 = new Date();
+		long dia2 = d1.getTime() + 10000;
+		Date d2 = new Date(dia2);
+		boolean[] misDias = new boolean[7];
+		misDias[3] = true;
+		Oferta o = new Oferta("ejemplo",42,"Comprobar si funciona isActiva()", d1,d2);
+		o.setDiasActiva(misDias);
+		System.out.println(o.isActiva());
+	}
 }
+	
