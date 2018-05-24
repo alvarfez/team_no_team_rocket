@@ -49,7 +49,7 @@ public class VentanaPrincipal extends JFrame{
 	private static JTabbedPane tab = new JTabbedPane(); //Creacion del contenedor de pestañas
 	private static PanelMapa panelMapa = new PanelMapa(); //Pestaña del mapa
 	private static JPanel usuario = new PanelUsuario(); //TODO pestaña del usuario
-	private static JPanel ranking = new JPanel(); //TODO pestaña del ranking
+	private static JPanel ranking; //TODO pestaña del ranking
 	private static JPanel inicio = new JPanel(); //TODO pestaña del ranking
 	//Atributos Oferta pulsada
 	private static JPanel pOferta = new JPanel();
@@ -89,9 +89,9 @@ public class VentanaPrincipal extends JFrame{
 
 // PRUEBA DE JLIST
 	// Creación locales
-	Local l1 = new Local( "Zubialde","bar", "1", 10);
-	Local l2 = new Local("Café","bar", "1", 10);
-	Local l3 = new Local( "Terraza","bar", "1", 10);
+	Local l1 = new Local( "Zubialde","bar", "1", 1);
+	Local l2 = new Local("Café","bar", "1", 2);
+	Local l3 = new Local( "Terraza","bar", "1", 3);
 	
 	Local l4 = new Local("Badulaque","bar", "1", 10);
 	Local l5 = new Local("El bar de Moe","bar", "1", 10);
@@ -112,11 +112,13 @@ public class VentanaPrincipal extends JFrame{
 	l1.anyadirOferta(o2);
 	l2.anyadirOferta(o3);
 	l3.anyadirOferta(o4);
+	
 	//Añadimos los locales a la lista
 	dlmSeleccionar.addElement(l1);
 	dlmSeleccionar.addElement(l2);
 	dlmSeleccionar.addElement(l3);
 	
+	ranking = new PanelRanking(lListaBares);
 	//Añadimos las ofertas a la lista [ASÍ ES COMO DEBIERA SER PERO DE MOMENTO VAMOS A DEJARLO COMO ESTABA HASTA QUE TENGAMOS EL ListCellRenderer
 //	dlmSeleccionar.addElement(l1.getListaOfertas().get(0));
 //	dlmSeleccionar.addElement(l2.getListaOfertas().get(0));
