@@ -134,10 +134,11 @@ public class Oferta {
 		gcHoy.setTime(d1);
 		gcOfertaInicio.setTime(fchaHraInicio);
 		gcOfertaFin.setTime(fchaHraFin);
+
 		int diaDeHoy = gcHoy.get(GregorianCalendar.DAY_OF_WEEK);
 		int horaDeHoy = gcHoy.get(GregorianCalendar.HOUR_OF_DAY);
 		int horaOfertaInicio = gcOfertaInicio.get(GregorianCalendar.HOUR_OF_DAY);
-		int horaOfertaFin = gcOfertaInicio.get(GregorianCalendar.HOUR_OF_DAY);
+		int horaOfertaFin = gcOfertaFin.get(GregorianCalendar.HOUR_OF_DAY);
 		
 		if (horaDeHoy>=horaOfertaInicio && horaDeHoy<horaOfertaFin ){
 			if(diasActiva[diaDeHoy] || diasActiva == null){
@@ -152,10 +153,10 @@ public class Oferta {
 	}
 	public static void main(String[] args) {
 		Date d1 = new Date();
-		long dia2 = d1.getTime() + 10000;
+		long dia2 = d1.getTime() + 10000000;
 		Date d2 = new Date(dia2);
 		boolean[] misDias = new boolean[7];
-		misDias[3] = true;
+		misDias[5] = true;
 		Oferta o = new Oferta("ejemplo",42,"Comprobar si funciona isActiva()", d1,d2);
 		o.setDiasActiva(misDias);
 		System.out.println(o.isActiva());
