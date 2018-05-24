@@ -8,11 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
-public class PanelUsuario extends JPanel {
+public class VentanaComprobacion extends JFrame {
 	
+	private JFrame v = this;
 	private JPanel pSuperior = new JPanel();
 	private JPanel pSupCentral = new JPanel();
 	private JPanel pInferior = new JPanel();
@@ -38,7 +40,7 @@ public class PanelUsuario extends JPanel {
 	private JButton bregister = new JButton("Registrar");
 
 	
-	public PanelUsuario(){
+	public VentanaComprobacion(){
 		
 		//Paneles para dejar todo bonito
 		blogin.setBackground(new Color(82,69,242));
@@ -108,7 +110,16 @@ public class PanelUsuario extends JPanel {
 				BDMongo m = new BDMongo();
 				boolean b = m.anyadirUsuario(nombreTA2.getText(), passwordTA.getText() , cbCategoria.getSelectedIndex());
 				if(b){
-				
+					try {
+						VentanaPrincipal ventPrincp = new VentanaPrincipal();
+						v.dispose();
+						ventPrincp.setVisible(true);
+						
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(null, "El usuario se ha registrado correctamente");
 				}else{
 					System.out.println(nombre2.getText());
@@ -124,8 +135,20 @@ public class PanelUsuario extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				BDMongo m = new BDMongo();
 				boolean b = m.comprobarUsuario(nombreTA.getText(), passwordfield.getText());
-				if(b){
+				if(b){ 
+					try {
+						VentanaPrincipal ventPrincp = new VentanaPrincipal();
+						v.dispose();
+						ventPrincp.setVisible(true);
+						
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(null, "Los datos son correctos");
+					
+		
 				}else{
 					System.out.println(passwordfield.getText());
 					JOptionPane.showMessageDialog(null, "Los datos son incorrectos, intentelo de nuevo");
@@ -198,12 +221,9 @@ public class PanelUsuario extends JPanel {
 	
 	
 	public static void main(String[] args) {
-		JFrame v = new JFrame();
+		VentanaComprobacion v = new VentanaComprobacion();
 		v.setSize(410,600);
-		v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		PanelUsuario p = new PanelUsuario();
-		v.add(p);
-		
+		v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
 		v.setVisible(true);
 	}
 }

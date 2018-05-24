@@ -124,6 +124,21 @@ public class BDMongo {
 		
 	}
 	
+	public boolean comprobarUsuario(String nombre, String password){
+		database = mongoClient.getDatabase("Usuarios");
+		collection = database.getCollection("usuario");
+		
+		Document myDoc = collection.find(eq("nombre", nombre)).first();
+		if( password.equals(myDoc.getString("password"))){
+			System.out.println("Si");
+			return true;
+		}else System.out.println("No");return false;
+		
+		
+
+	
+	}
+	
 	/**
 	 * Main del proyecto.
 	 * @param args
@@ -131,7 +146,7 @@ public class BDMongo {
 
 	public static void main(String[] args) {
 		BDMongo m = new BDMongo();
-		boolean b = m.anyadirUsuario("Alfonso", "perro", 1);
+		boolean b = m.comprobarUsuario("Ander", "loco");
 //		database = mongoClient.getDatabase("Usuarios");
 //		collection = database.getCollection("usuario");
 //		try{
