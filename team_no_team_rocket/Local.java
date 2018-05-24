@@ -142,7 +142,7 @@ public class Local {
 	
 	public ImageIcon getFoto(){
 		if (this.foto==null){
-			ImageIcon ii = new ImageIcon("team_no_team_rocket/bin/team_no_team_rocket/fotos/3escobas.jpg");
+			ImageIcon ii = new ImageIcon("bin/team_no_team_rocket/fotos/3escobas.jpg");
 			return ii;
 		} else {
 			return this.foto;
