@@ -1,13 +1,14 @@
 package team_no_team_rocket;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.ImageIcon;
 
 import com.sun.java.accessibility.util.java.awt.ListTranslator;
 import com.sun.prism.Image;
 
-public class Local {
+public class Local implements Comparator {
 
 	//Atributos de clase
 	private String codLocal;
@@ -176,6 +177,16 @@ public class Local {
 		System.out.println(l3.toString());
 		
 		
+	}
+
+	@Override
+	public int compare(Object arg0, Object arg1) {
+		if (((Local)arg0).puntuacion.getPuntosSobreCinco() < ((Local)arg1).puntuacion.getPuntosSobreCinco()){
+			return 1;
+		} else if (((Local)arg0).puntuacion.getPuntosSobreCinco() >= ((Local)arg1).puntuacion.getPuntosSobreCinco()){
+			return -1;
+		}
+		return 0;
 	}
 
 
