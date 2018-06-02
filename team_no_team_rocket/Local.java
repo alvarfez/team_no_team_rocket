@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import com.sun.java.accessibility.util.java.awt.ListTranslator;
 import com.sun.prism.Image;
 
-public class Local implements Comparator {
+public class Local implements Comparable {
 
 	//Atributos de clase
 	private String codLocal;
@@ -34,6 +34,7 @@ public class Local implements Comparator {
 		this.tipo = convertirATipoLocal(tipo);
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.puntuacion = new Puntuacion();
 		
 	}
 	
@@ -168,24 +169,36 @@ public class Local implements Comparator {
 
 	public static void main(String[] args) {
 
-		Local l1 = new Local("Zubialde","bar", "1", 10);
-		Local l2 = new Local("Café","pub", "1", 10);
+		Local l1 = new Local("Zubialde","bar", "1", 5);
+		Local l2 = new Local("Café","pub", "1", 4);
 		Local l3 = new Local("Terraza","restaurante", "1", 10);
 		
 		System.out.println(l1.toString());
 		System.out.println(l2.toString());
 		System.out.println(l3.toString());
-		
+		l1.puntuacion.sumaPuntuacion(4);
+		l2.puntuacion.sumaPuntuacion(5);
+		System.out.println(l1.compareTo(l2));
 		
 	}
 
+//	@Override
+//	public int compare(Object arg0, Object arg1) {
+//		if (((Local)arg0).puntuacion.getPuntosSobreCinco() < ((Local)arg1).puntuacion.getPuntosSobreCinco()){
+//			return 1;
+//		} else if (((Local)arg0).puntuacion.getPuntosSobreCinco() >= ((Local)arg1).puntuacion.getPuntosSobreCinco()){
+//			return -1;
+//		}
+//		return 0;
+//	}
+
 	@Override
-	public int compare(Object arg0, Object arg1) {
-		if (((Local)arg0).puntuacion.getPuntosSobreCinco() < ((Local)arg1).puntuacion.getPuntosSobreCinco()){
-			return 1;
-		} else if (((Local)arg0).puntuacion.getPuntosSobreCinco() >= ((Local)arg1).puntuacion.getPuntosSobreCinco()){
+	public int compareTo(Object arg0) {
+		if (this.puntuacion.getPuntosSobreCinco()<((Local)arg0).puntuacion.getPuntosSobreCinco()){
 			return -1;
-		}
+			} else if (this.puntuacion.getPuntosSobreCinco() >= ((Local)arg0).puntuacion.getPuntosSobreCinco()){
+			return 1;
+			}
 		return 0;
 	}
 
