@@ -9,6 +9,8 @@ import com.mongodb.client.MongoCollection;
 
 import org.bson.Document;
 import java.util.Arrays;
+import java.util.Collections;
+
 import com.mongodb.Block;
 
 import com.mongodb.client.MongoCursor;
@@ -18,6 +20,7 @@ import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Prueba para realizar conexión con MongoDB.
@@ -90,7 +93,7 @@ public class BDMongo {
 	 * @param puntuacion puntuación del bar
 	 * @return true si no existe previamente y false si existe
 	 */
-	public boolean anyadirLocal(String cod_Local, int puntuacion){
+	public boolean anyadirLocal(String cod_Local, Double puntuacion){
 		database = mongoClient.getDatabase("Locales");
 		collection = database.getCollection("local");
 
@@ -124,6 +127,11 @@ public class BDMongo {
 		
 	}
 	
+	/** Metodo que comprueba la validacion de datos de usuario
+	 * @param nombre del usuario
+	 * @param password del usuario
+	 * @return true si el par nombre-password es correcto / false en caso contrario
+	 */
 	public boolean comprobarUsuario(String nombre, String password){
 		database = mongoClient.getDatabase("Usuarios");
 		collection = database.getCollection("usuario");
@@ -138,6 +146,44 @@ public class BDMongo {
 
 	
 	}
+	
+	/** Metodo que obtiene la categoría del usuario
+	 * @param nombre del usuario a buscar su categoria
+	 * @return String "local" si el usuario es un local y String "usuario" si es un usuario
+	 */
+	public String obtenerCategoria(String nombre){
+		database = mongoClient.getDatabase("Usuarios");
+		collection = database.getCollection("usuario");
+		
+		Document myDoc = collection.find(eq("nombre", nombre)).first();
+		Integer res = myDoc.getInteger("categoria");
+		if(res == 0) return "usuario";
+		else return "local";
+		
+	}
+	
+	/**Metodo que devuelve un ranking de los bares que hay en la base de Datos
+	 * @return TreeMap<Puntuacion, codigoLocal> ordenador de mayor puntuacion a menor
+	 */
+	public TreeMap<Double, String> obtenerRankingBares(){
+		database = mongoClient.getDatabase("Locales");
+		collection = database.getCollection("local");
+
+		TreeMap<Double, String> array = new TreeMap<>(Collections.reverseOrder());
+
+		MongoCursor<Document> cursor = collection.find().iterator();
+		try {
+			while (cursor.hasNext()) {
+				System.out.println(array);
+				Document mydoc = cursor.next();
+				array.put(mydoc.getDouble("puntuacion"), mydoc.getString("codigoLocal"));
+			}
+		} finally {
+			cursor.close();
+		}
+		return array;
+	}
+		
 	
 	/**
 	 * Main del proyecto.
@@ -158,7 +204,9 @@ public class BDMongo {
 //			
 //		}
 //		
-			System.out.println("");	
+		System.out.println(m.obtenerRankingBares());
+		System.out.println(m.obtenerCategoria("Ander"));
+		System.out.println("");	
 		
 	}
 }

@@ -157,58 +157,58 @@ public class VentanaComprobacion extends JFrame {
 			}
 		});
 		
-		nombreTA.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				nombreTA.setText("Introduce el nombre ");
-				revalidate();
-				
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				nombreTA.setText("");
-				revalidate();
-				
-			}
-		});
-		
-		nombreTA2.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				nombreTA2.setText("Introduce el nombre ");
-				revalidate();
-
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				nombreTA2.setText("");
-				revalidate();
-
-			}
-		});
-		passwordTA.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				passwordTA.setText("Introduce la contraseña ");
-				revalidate();
-				
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-				passwordTA.setText("");
-				revalidate();
-				
-			}
-		});
-		
-		
+//		nombreTA.addFocusListener(new FocusListener() {
+//			
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//				nombreTA.setText("Introduce el nombre ");
+//				revalidate();
+//				
+//			}
+//			
+//			@Override
+//			public void focusGained(FocusEvent e) {
+//				nombreTA.setText("");
+//				revalidate();
+//				
+//			}
+//		});
+//		
+//		nombreTA2.addFocusListener(new FocusListener() {
+//
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//				nombreTA2.setText("Introduce el nombre ");
+//				revalidate();
+//
+//			}
+//
+//			@Override
+//			public void focusGained(FocusEvent e) {
+//				nombreTA2.setText("");
+//				revalidate();
+//
+//			}
+//		});
+//		passwordTA.addFocusListener(new FocusListener() {
+//			
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//				passwordTA.setText("Introduce la contraseña ");
+//				revalidate();
+//				
+//			}
+//			
+//			@Override
+//			public void focusGained(FocusEvent e) {
+//				
+//				passwordTA.setText("");
+//				revalidate();
+//				
+//			}
+//		});
+//		
+//		
 		
 		
 		
