@@ -184,16 +184,6 @@ public class PanelUsuario extends JPanel {
 //			}
 //		});
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
 	}
 	
 	

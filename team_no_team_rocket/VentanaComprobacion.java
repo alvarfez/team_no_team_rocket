@@ -111,7 +111,7 @@ public class VentanaComprobacion extends JFrame {
 				boolean b = m.anyadirUsuario(nombreTA2.getText(), passwordTA.getText() , cbCategoria.getSelectedIndex());
 				if(b){
 					try {
-						VentanaPrincipal ventPrincp = new VentanaPrincipal();
+						VentanaPrincipal ventPrincp = new VentanaPrincipal(nombreTA2.getText());
 						v.dispose();
 						ventPrincp.setVisible(true);
 						
@@ -137,7 +137,7 @@ public class VentanaComprobacion extends JFrame {
 				boolean b = m.comprobarUsuario(nombreTA.getText(), passwordfield.getText());
 				if(b){ 
 					try {
-						VentanaPrincipal ventPrincp = new VentanaPrincipal();
+						VentanaPrincipal ventPrincp = new VentanaPrincipal(nombreTA.getText());
 						v.dispose();
 						ventPrincp.setVisible(true);
 						

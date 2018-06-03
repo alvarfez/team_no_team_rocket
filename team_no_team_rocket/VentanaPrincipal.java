@@ -48,7 +48,8 @@ public class VentanaPrincipal extends JFrame{
 	//Paneles de tab
 	private static JTabbedPane tab = new JTabbedPane(); //Creacion del contenedor de pestañas
 	private static PanelMapa panelMapa = new PanelMapa(); //Pestaña del mapa
-	private static JPanel usuario = new JPanel(); //TODO pestaña del usuario
+	private static JPanel ajustesLocal = new PanelAjustes(1); //TODO pestaña del usuario
+	private static JPanel ajustesUsuario = new PanelAjustes(0); //TODO pestaña del usuario
 	private static JPanel ranking; //TODO pestaña del ranking
 	private static JPanel inicio = new JPanel(); //TODO pestaña del ranking
 	//Atributos Oferta pulsada
@@ -66,7 +67,7 @@ public class VentanaPrincipal extends JFrame{
 	private static JLabel atr4 = new JLabel("Precio: ");
 	private static JLabel atr5 = new JLabel("Distancia: ");
 	
-	public VentanaPrincipal() throws SQLException{
+	public VentanaPrincipal( String nombreUsuario ) throws SQLException{
 	
 	//Aquí configuramos lo básico de la ventana
 	this.setTitle("BilboPintxo");
@@ -118,7 +119,7 @@ public class VentanaPrincipal extends JFrame{
 	dlmSeleccionar.addElement(l2);
 	dlmSeleccionar.addElement(l3);
 	
-	ranking = new PanelRanking(lListaBares);
+	ranking = new PanelRanking(dlmSeleccionar);
 	//Añadimos las ofertas a la lista [ASÍ ES COMO DEBIERA SER PERO DE MOMENTO VAMOS A DEJARLO COMO ESTABA HASTA QUE TENGAMOS EL ListCellRenderer
 //	dlmSeleccionar.addElement(l1.getListaOfertas().get(0));
 //	dlmSeleccionar.addElement(l2.getListaOfertas().get(0));
@@ -128,13 +129,15 @@ public class VentanaPrincipal extends JFrame{
 	pCentral.add(lListaBares);	
 	JScrollPane spListas = new JScrollPane(pCentral);
 	inicio.add(spListas);
-	tab.addTab("Usuario", null, usuario, "No hace nada");
 	tab.addTab("Inicio", null, inicio, "Lista de bares en tiempo real");
 	tab.addTab("Ranking", null, ranking, "No hace nada");
 	tab.addTab("Mapa", null, panelMapa, "Mapa de Deusto");
-
-	
-	
+	if (new BDMongo().obtenerCategoria(nombreUsuario).equals("local")){
+		tab.addTab("Ajustes", null, ajustesLocal, "Ajustes de local");
+	}else{
+		tab.addTab("Ajustes", null, ajustesUsuario, "Ajustes de usuario");
+		//TODO meter panel ajustes de usuario normal
+	}
 
 	this.getContentPane().add(tab);
 	
@@ -170,24 +173,6 @@ public class VentanaPrincipal extends JFrame{
 		}
 	});
 		
-	}
-	
-	
-	
-	public static void main(String[] args) throws SQLException {
-		//COMPROBAMOS EL USUARIO ANTES DE INICIAR LA VENTANA
-		boolean correcto = false;
-//		while (!correcto){
-//			correcto = Util.comprobarUsuario();
-//		}
-//		Util.comprobarUsuario();
-		VentanaPrincipal vp = new VentanaPrincipal();
-		vp.setVisible(true);
-		
-//		System.out.println("select nombre, contraseña from usuario where "
-//				+ "usuario.nombre = '" + "alvar"+ "'");
-//		
-				
 	}
 	
 	/** Método que abre el local y la oferta correspondiente en la ventana 
@@ -288,4 +273,18 @@ public class VentanaPrincipal extends JFrame{
 			}
 		});
 	}
+	
+	public static void main(String[] args) throws SQLException {
+		//COMPROBAMOS EL USUARIO ANTES DE INICIAR LA VENTANA
+		boolean correcto = false;
+
+		VentanaPrincipal vp = new VentanaPrincipal("usuario");
+		vp.setVisible(true);
+		
+//		System.out.println("select nombre, contraseña from usuario where "
+//				+ "usuario.nombre = '" + "alvar"+ "'");
+//		
+				
+	}
+
 }
