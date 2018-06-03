@@ -33,13 +33,10 @@ public class BDMongo {
 	public  MongoClient mongoClient;
 	
 	public BDMongo(){
-		mongoClient = new MongoClient( "localhost" , 27017 );
-		//Si no existe la base de datos la crea
-		 
+		mongoClient = new MongoClient( "localhost" , 27017 ); 
 		
 	}
-	
-	
+
 	/**Metodo que añade un usuario en la base de datos de usuarios de Mongo si no existe 
 	 * previamente
 	 * @param nombre del usuario
@@ -192,6 +189,9 @@ public class BDMongo {
 
 	public static void main(String[] args) {
 		BDMongo m = new BDMongo();
+		
+		
+		
 		boolean b = m.comprobarUsuario("Ander", "loco");
 //		database = mongoClient.getDatabase("Usuarios");
 //		collection = database.getCollection("usuario");
