@@ -86,7 +86,7 @@ public class VentanaPrincipal extends JFrame{
 	lListaBares.setBackground(Color.LIGHT_GRAY);
 	lListaBares.setFixedCellHeight(50);
 	lListaBares.setFixedCellWidth(390);
-	cambiaRenderer(lListaBares);
+	Util.cambiaRenderer(lListaBares, 0);
 
 // PRUEBA DE JLIST
 	// Creación locales
@@ -210,68 +210,6 @@ public class VentanaPrincipal extends JFrame{
 			panel.revalidate();
 			panel.repaint();	
 		}
-	}
-	public void cambiaRenderer(JList<?> lista){
-		lista.setCellRenderer(new DefaultListCellRenderer(){
-			JPanel p = null;
-			JPanel panelPartido = null;
-			JPanel pParaFoto = null;
-			JLabel lFoto = null;
-			JLabel lNomLocal = null;
-			JLabel lNomOferta = null;
-			JLabel lDistancia = null;
-
-			@Override
-			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
-					boolean cellHasFocus) {
-				//Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				// Creamos el panel que queramos que tenga el display deseado, necesitaremos método probablemente
-				if (p==null) p = creaPanelLista();
-				p.setOpaque(true);
-				p.setBorder(new LineBorder(Color.BLUE));
-				// Este es el local que pasamos cada vez
-				Local l = (Local) value;
-				//Aquí insertamos los datos personalizadosç
-
-				lFoto.setIcon( l.getFoto());
-				lNomLocal.setText(l.getNombre());
-				lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
-				lDistancia.setText("Distancia a usuario");
-		          
-
-				//Aquí pone el background a COLOR cuando se selecciona y cuando NO a BLANCO
-				if (isSelected){
-					pParaFoto.setBackground(Color.blue);
-					panelPartido.setBackground(Color.blue);
-					p.setBackground(Color.blue);
-				} else if (!isSelected){
-					pParaFoto.setBackground(Color.white);
-					panelPartido.setBackground(Color.white);
-					p.setBackground(Color.white);
-				}
-				
-				return p;
-			}
-			public JPanel creaPanelLista(){
-
-				p = new JPanel();
-				lNomLocal = new JLabel();
-				lNomOferta = new JLabel();
-				lFoto = new JLabel();
-				lDistancia = new JLabel();
-				panelPartido = new JPanel();
-				pParaFoto = new JPanel();
-				p.setLayout(new GridLayout(1,3));
-				panelPartido.setLayout(new GridLayout(2,1));
-				pParaFoto.add(lFoto);		
-				p.add(pParaFoto);
-				panelPartido.add(lNomLocal);
-				panelPartido.add(lNomOferta);
-				p.add(panelPartido);
-				p.add(lDistancia);
-				return p;
-			}
-		});
 	}
 	
 	public static void main(String[] args) throws SQLException {

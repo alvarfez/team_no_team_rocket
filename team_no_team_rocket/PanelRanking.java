@@ -1,5 +1,6 @@
 package team_no_team_rocket;
 
+import java.awt.Color;
 import java.util.TreeMap;
 
 import javax.swing.JLabel;
@@ -10,7 +11,7 @@ import javax.swing.ListModel;
 
 public class PanelRanking extends JPanel {
 
-	private static JList panel;
+	private static JList lpanel;
 	private static JScrollPane spListas;
 	private static TreeMap rankingBares;
 	
@@ -20,8 +21,12 @@ public class PanelRanking extends JPanel {
 		rankingBares = bdMongo.obtenerRankingBares();
 	// AQUÍ CON EL TREEMAP SE SACAN LOS LOCALES DE NEO4J 
 		
-		panel = new JList<Object>(lista);
-		spListas = new JScrollPane(panel);
+		lpanel = new JList<Object>(lista);
+		lpanel.setBackground(Color.white);
+		lpanel.setFixedCellHeight(50);
+		lpanel.setFixedCellWidth(390);
+		Util.cambiaRenderer(lpanel,1);
+		spListas = new JScrollPane(lpanel);
 		this.add(spListas);
 		this.validate();
 		this.repaint();

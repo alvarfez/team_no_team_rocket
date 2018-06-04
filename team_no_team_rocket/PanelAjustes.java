@@ -34,6 +34,7 @@ public class PanelAjustes extends JPanel {
 			lOfertas = new JList<Object>(); //TODO aquí hay q meter la lista de ofertas del local
 			this.add(lOfertas);
 			this.add(bAnyadirOf);
+			this.revalidate();
 
 			bAnyadirOf.addActionListener(new ActionListener() {
 
