@@ -30,59 +30,34 @@ import javafx.scene.layout.Border;
 public class VentanaPrincipal extends JFrame{
 	
 //Atributos de ventana
-
 	//Paneles
 	private static JPanel pBotonera = new JPanel();
-	private static JPanel pCentral = new JPanel();
 	//Lista y posiciones
 	public static DefaultListModel<Object> dlmSeleccionar;
 	private static JList<Object> lListaBares;
 	private static int posicionActual;
 	private static int posicionSeleccion;
-	//Botones	
-	private static JButton bRanking = new JButton("Ranking");
-	private static JButton bInicio = new JButton("Inicio");
-	private static JButton bMapa= new JButton("Mapa");
-	private static JButton bPerfil = new JButton("Perfil");
-	private static JButton bVolver = new JButton( "Volver" );
 	//Paneles de tab
 	private static JTabbedPane tab = new JTabbedPane(); //Creacion del contenedor de pestañas
 	private static PanelMapa panelMapa = new PanelMapa(); //Pestaña del mapa
 	private static JPanel ajustesLocal = new PanelAjustes(1); //TODO pestaña del usuario
 	private static JPanel ajustesUsuario = new PanelAjustes(0); //TODO pestaña del usuario
 	private static JPanel ranking; //TODO pestaña del ranking
-	private static JPanel inicio = new JPanel(); //TODO pestaña del ranking
-	//Atributos Oferta pulsada
-	private static JPanel pOferta = new JPanel();
-	private static JLabel lNomLocal = new JLabel();
-	private static JLabel lNomOferta = new JLabel();
-	private static JLabel lDescOferta = new JLabel();
-	private static JLabel lPrecio = new JLabel();
-	private static JLabel lFoto = new JLabel();
-	private static JLabel lDistOferta = new JLabel();
-	// Labels para indicación en oferta
-	private static JLabel atr1 = new JLabel("Local: ");
-	private static JLabel atr2 = new JLabel("Oferta: ");
-	private static JLabel atr3 = new JLabel("Descripción: ");
-	private static JLabel atr4 = new JLabel("Precio: ");
-	private static JLabel atr5 = new JLabel("Distancia: ");
+	private static JPanel inicio; //TODO pestaña del ranking
 	
 	public VentanaPrincipal( String nombreUsuario ) throws SQLException{
 	
-	//Aquí configuramos lo básico de la ventana
+	//Configuramos lo básico de la ventana
 	this.setTitle("BilboPintxo");
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setSize(410,600);
 	setLocation(120,0);
 	
 	// Creamos la lista y el modelo de lista
-	
 	dlmSeleccionar = new DefaultListModel<>();
 	lListaBares = new JList<Object>(dlmSeleccionar);
 	
-	// Modificamos la lista para que tenga las características que deseamos
-	
-	
+	// Modificamos la lista para que tenga las características que deseamos	
 	lListaBares.setBackground(Color.LIGHT_GRAY);
 	lListaBares.setFixedCellHeight(50);
 	lListaBares.setFixedCellWidth(390);
@@ -93,7 +68,6 @@ public class VentanaPrincipal extends JFrame{
 	Local l1 = new Local( "Zubialde","bar", "1", 1);
 	Local l2 = new Local("Café","bar", "1", 2);
 	Local l3 = new Local( "Terraza","bar", "1", 3);
-	
 	Local l4 = new Local("Badulaque","bar", "1", 10);
 	Local l5 = new Local("El bar de Moe","bar", "1", 10);
 	Local l6 = new Local( "La tasca","bar", "1", 10);
@@ -113,24 +87,17 @@ public class VentanaPrincipal extends JFrame{
 	l1.anyadirOferta(o2);
 	l2.anyadirOferta(o3);
 	l3.anyadirOferta(o4);
-	
-	//Añadimos los locales a la lista
+	//Añadimos los locales a la lista[MIENTRAS NO LOS SAQUEMOS DE NEO4J]
 	dlmSeleccionar.addElement(l1);
 	dlmSeleccionar.addElement(l2);
 	dlmSeleccionar.addElement(l3);
-	
+	//Creamos los paneles Inicio y Ranking con la lista ya hecha
+	inicio = new PanelInicio(dlmSeleccionar);
 	ranking = new PanelRanking(dlmSeleccionar);
-	//Añadimos las ofertas a la lista [ASÍ ES COMO DEBIERA SER PERO DE MOMENTO VAMOS A DEJARLO COMO ESTABA HASTA QUE TENGAMOS EL ListCellRenderer
-//	dlmSeleccionar.addElement(l1.getListaOfertas().get(0));
-//	dlmSeleccionar.addElement(l2.getListaOfertas().get(0));
-//	dlmSeleccionar.addElement(l3.getListaOfertas().get(0));
 
-	//Asignamos la lista al panel central y añadimos en el contenedor de pestañas
-	pCentral.add(lListaBares);	
-	JScrollPane spListas = new JScrollPane(pCentral);
-	inicio.add(spListas);
-	tab.addTab("Inicio", null, inicio, "Lista de bares en tiempo real");
-	tab.addTab("Ranking", null, ranking, "No hace nada");
+	//Añadimos en el contenedor de pestañas y el propio contenedor a la ventana
+	tab.addTab("Inicio", null, inicio, "Lista de locales en tiempo real");
+	tab.addTab("Ranking", null, ranking, "Top Locales");
 	tab.addTab("Mapa", null, panelMapa, "Mapa de Deusto");
 	if (new BDMongo().obtenerCategoria(nombreUsuario).equals("local")){
 		tab.addTab("Ajustes", null, ajustesLocal, "Ajustes de local");
@@ -138,91 +105,24 @@ public class VentanaPrincipal extends JFrame{
 		tab.addTab("Ajustes", null, ajustesUsuario, "Ajustes de usuario");
 		//TODO meter panel ajustes de usuario normal
 	}
-
-	this.getContentPane().add(tab);
-	
-	
-		// Eventos de JList
-	lListaBares.addMouseListener(new MouseAdapter() {
-
-	@Override
-	public void mouseClicked(java.awt.event.MouseEvent e) {
-
-		if (e.getClickCount()==1){
-			posicionSeleccion = lListaBares.locationToIndex(e.getPoint());
-		}
-		if (e.getClickCount()==2){
-			if (lListaBares.getSelectedIndex()!= -1) {
-				posicionActual = lListaBares.locationToIndex(e.getPoint());
-				abrirOferta(posicionActual, VentanaPrincipal.inicio); // abre Oferta seleccionada 
-			}
-		}
+	this.getContentPane().add(tab);		
 	}
-	});	
-		
-// Vuelve desde la oferta al panel inicio
-	bVolver.addActionListener(new ActionListener(){
-		@Override
-		public void actionPerformed(ActionEvent e) {	
-			pCentral.removeAll();
-			inicio.remove(pCentral);
-			pCentral.add(lListaBares);
-			inicio.add(pCentral, BorderLayout.CENTER);
-			inicio.revalidate();	
-			inicio.repaint();
-		}
-	});
-		
-	}
-	
-	/** Método que abre el local y la oferta correspondiente en la ventana 
-	 * @param posActual recibe la posiciónActual de la JList en la que se clica 2 veces
+
+	/** Método temporal mientras la lista no salga de neo4J
+	 * @param panel
 	 */
-	public static void abrirOferta( int posActual, JPanel panel ){
-		if (dlmSeleccionar.getElementAt(posActual) instanceof Local){
-			Local l = (Local) dlmSeleccionar.getElementAt(posActual);
-			// preparamos panel Oferta
-			lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
-			lDescOferta.setText(l.getListaOfertas().get(0).getDescripcion());
-			lPrecio.setText(l.getListaOfertas().get(0).getPrecio()+" €");
-			// FALTA POR IMPLEMENTAR
-			lDistOferta.setText("'Distancia hasta usuario'");
-			// lDistOferta.setText(getOferta().getDistAUser());
-			// Hacemos el display de la oferta
-			pOferta.setLayout(new GridLayout(6, 2));
-			pOferta.add(atr1);pOferta.add(lNomLocal);
-			pOferta.add(atr2);pOferta.add(lNomOferta);
-			pOferta.add(atr3);pOferta.add(lDescOferta);
-			pOferta.add(atr4);pOferta.add(lPrecio);
-			pOferta.add(atr5);pOferta.add(lDistOferta);
-			pOferta.add(bVolver);
-			// preparamos la foto y el nombre del local
-			lFoto.setIcon((l.getFoto()));
-			lNomLocal.setText(l.getNombre());
-			//Borramos lo que había en el panel
-			pCentral.removeAll();
-			panel.remove(pCentral);
-			//Lo llenamos con nuevo Layout
-			pCentral.setLayout(new GridLayout(2, 1));
-			pCentral.add(lFoto);
-			pCentral.add(pOferta);
-			panel.add(pCentral, BorderLayout.CENTER);
-			panel.revalidate();
-			panel.repaint();	
-		}
+	public static DefaultListModel dameModeloLista(){
+		return dlmSeleccionar;
+		
 	}
 	
 	public static void main(String[] args) throws SQLException {
 		//COMPROBAMOS EL USUARIO ANTES DE INICIAR LA VENTANA
-		boolean correcto = false;
-
-		VentanaPrincipal vp = new VentanaPrincipal("usuario");
+		VentanaPrincipal vp = new VentanaPrincipal("Ander");
 		vp.setVisible(true);
 		
 //		System.out.println("select nombre, contraseña from usuario where "
 //				+ "usuario.nombre = '" + "alvar"+ "'");
-//		
-				
+//					
 	}
-
 }

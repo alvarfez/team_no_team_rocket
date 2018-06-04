@@ -1,27 +1,48 @@
 package team_no_team_rocket;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ListModel;
 import javax.swing.border.LineBorder;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_COLOR_BURNPeer;
 
 public class Util {
-	
+
+	//Atributos Info
+	private static JPanel pInfo = new JPanel();
+	private static JLabel lNomLocal = new JLabel();
+	private static JLabel lNomOferta = new JLabel();
+	private static JLabel lDescOferta = new JLabel();
+	private static JLabel lPrecio = new JLabel();
+	private static JLabel lFoto = new JLabel();
+	private static JLabel lDistOferta = new JLabel();
+	// Labels para indicación en oferta
+	private static JLabel atr1 = new JLabel("Local: ");
+	private static JLabel atr2 = new JLabel("Oferta: ");
+	private static JLabel atr3 = new JLabel("Descripción: ");
+	private static JLabel atr4 = new JLabel("Precio: ");
+	private static JLabel atr5 = new JLabel("Distancia: ");
+
 	private static int numCod = 0;
-	
+
+
 	/** Metodo que comprueba si el numero de caracteres del telefono es correcto y devuelve 
 	 * true. En caso de ser incorrecto devuelve False y en caso de ser null lo completa 
 	 * aleatoriamente como nosotros queremos.
@@ -165,7 +186,8 @@ public class Util {
 	}
 	
 	/** Pasándole un JList convierte el render al deseado dependiendo de si es Inicio o Ranking
-	 * @param lista
+	 * @param lista JList donde está la lista a la q hay q cambiar el render
+	 * @param modelo 1--> modelo para Ranking 0--> modelo para Inicio
 	 */
 	public static void cambiaRenderer(JList<?> lista, int modelo){
 		lista.setCellRenderer(new DefaultListCellRenderer(){
@@ -203,18 +225,21 @@ public class Util {
 
 					//Aquí pone el background a COLOR cuando se selecciona y cuando NO a BLANCO
 					if (isSelected){
-						if (modelo==1){
-							pParaNumero.setBackground(Color.blue);
-							pParaFoto.setBackground(Color.blue);
-							panelPartido.setBackground(Color.blue);
-							p.setBackground(Color.blue);
-						}
+						pParaNumero.setBackground(Color.blue);
+						pParaFoto.setBackground(Color.blue);
+						panelPartido.setBackground(Color.blue);
+						p.setBackground(Color.blue);
 					} else if (!isSelected){
 						if (modelo==1){
 							pParaNumero.setBackground(Color.pink);
 							pParaFoto.setBackground(Color.pink);
 							panelPartido.setBackground(Color.pink);
 							p.setBackground(Color.pink);
+						}else if (modelo==0){
+							pParaNumero.setBackground(Color.white);
+							pParaFoto.setBackground(Color.white);
+							panelPartido.setBackground(Color.white);
+							p.setBackground(Color.white);
 						}
 					}
 					return p;
@@ -254,4 +279,54 @@ public class Util {
 			}
 		});
 	}
+
+	/** Método que abre el local y la oferta correspondiente en la ventana 
+	 * @param posActual recibe la posiciónActual de la JList en la que se clica 2 veces
+	 * @param modelo 1 --> ranking / 0 --> inicio 
+	 */
+	public static void abrirInfo( ListModel dlmSeleccionar, int posActual, JPanel panel, int modelo, JButton bVolver){
+
+		if (dlmSeleccionar.getElementAt(posActual) instanceof Local){
+			Local l = (Local) dlmSeleccionar.getElementAt(posActual);
+			pInfo.removeAll();
+			if (modelo==0){
+				// preparamos panel Oferta
+				lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
+				lDescOferta.setText(l.getListaOfertas().get(0).getDescripcion());
+				lPrecio.setText(l.getListaOfertas().get(0).getPrecio()+" €");
+				// FALTA POR IMPLEMENTAR
+				lDistOferta.setText("'Distancia hasta usuario'");
+				// lDistOferta.setText(getOferta().getDistAUser());
+				// Hacemos el display de la oferta
+				pInfo.setLayout(new GridLayout(6, 2));
+				pInfo.add(atr1);pInfo.add(lNomLocal);
+				pInfo.add(atr2);pInfo.add(lNomOferta);
+				pInfo.add(atr3);pInfo.add(lDescOferta);
+				pInfo.add(atr4);pInfo.add(lPrecio);
+				pInfo.add(atr5);pInfo.add(lDistOferta);
+				pInfo.add(bVolver);
+			}
+			// preparamos la foto y el nombre del local
+			lFoto.setIcon((l.getFoto()));
+			lNomLocal.setText(l.getNombre());
+			//Borramos lo que había en el panel
+			panel.removeAll();
+			//Lo llenamos con nuevo Layout
+			panel.setLayout(new GridLayout(2, 1));
+			panel.add(lFoto);
+			if (modelo == 0){
+				panel.add(pInfo);
+			} else if (modelo == 1) {
+				pInfo.add(lNomLocal);
+				pInfo.add(bVolver);
+				panel.add(pInfo);
+			}
+			panel.revalidate();
+			panel.repaint();
+
+		}		
+	}
+
+
+
 }		

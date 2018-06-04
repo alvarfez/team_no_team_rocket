@@ -7,15 +7,14 @@ import java.awt.event.MouseAdapter;
 import java.util.TreeMap;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 
-public class PanelRanking extends JPanel {
+public class PanelInicio extends JPanel {
 	
-	private static PanelRanking pRanking;
+	private static PanelInicio pInicio;
 	private static JList lpanel;
 	private static JScrollPane spListas;
 	private static TreeMap rankingBares;
@@ -23,24 +22,20 @@ public class PanelRanking extends JPanel {
 	private static int posicionActual;
 	private static int posicionSeleccion;
 	private static JButton bVolver = new JButton( "Volver" );
-
 	
-	public PanelRanking(ListModel<Object> lista){
-
-		pRanking = this;
-		BDMongo bdMongo = new BDMongo();
-		rankingBares = bdMongo.obtenerRankingBares();
-	// AQUÍ CON EL TREEMAP SE SACAN LOS LOCALES DE NEO4J 
+	
+	public PanelInicio(ListModel<Object> lista){
 		
+		pInicio = this;		
 		lpanel = new JList<Object>(lista);
 		lpanel.setBackground(Color.white);
 		lpanel.setFixedCellHeight(50);
 		lpanel.setFixedCellWidth(390);
-		Util.cambiaRenderer(lpanel,1);
+		Util.cambiaRenderer(lpanel,0);
 		spListas = new JScrollPane(lpanel);
-		pRanking.add(spListas);
-		pRanking.validate();
-		pRanking.repaint();
+		pInicio.add(spListas);
+		pInicio.validate();
+		pInicio.repaint();
 		lpanel.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -52,9 +47,9 @@ public class PanelRanking extends JPanel {
 				if (e.getClickCount()==2){
 					if (lpanel.getSelectedIndex()!= -1) {
 						posicionActual = lpanel.locationToIndex(e.getPoint());
-						Util.abrirInfo(lista, posicionActual, pRanking ,1, bVolver); 
-						pRanking.revalidate();
-						pRanking.repaint();
+						Util.abrirInfo(lista, posicionActual, pInicio ,0, bVolver);
+						pInicio.revalidate();
+						pInicio.repaint();
 						// abre Oferta seleccionada 
 					}
 				}
@@ -64,27 +59,27 @@ public class PanelRanking extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
 
-				pRanking.removeAll();
-//				pRanking = new PanelRanking(VentanaPrincipal.dameModeloLista());
-				vuelvePanelRanking(VentanaPrincipal.dameModeloLista());
-				pRanking.revalidate();	
-				pRanking.repaint();
-				System.out.println("Lo borro pero no pinto el panel de nuevo en el tab");
+				pInicio.removeAll();
+//				pInicio = new PanelInicio(VentanaPrincipal.dameModeloLista());
+				vuelvePanelInicio(VentanaPrincipal.dameModeloLista());
+				pInicio.revalidate();	
+				pInicio.repaint();
+				System.out.println("Lo borro pero no vuelvo bien");
 			}
 		});
-		
+
+
 	}
-	public void vuelvePanelRanking(ListModel<Object> lista){
-		lpanel = new JList<Object>(lista);
-		lpanel.setBackground(Color.white);
-		lpanel.setFixedCellHeight(50);
-		lpanel.setFixedCellWidth(390);
-		Util.cambiaRenderer(lpanel,1);
-		spListas.add(lpanel);
-		pRanking.add(spListas);
-		pRanking.validate();
-		pRanking.repaint();
-		
-	}
-	
+		public void vuelvePanelInicio(ListModel<Object> lista){
+			lpanel = new JList<Object>(lista);
+			lpanel.setBackground(Color.white);
+			lpanel.setFixedCellHeight(50);
+			lpanel.setFixedCellWidth(390);
+			Util.cambiaRenderer(lpanel,0);
+			spListas.add(lpanel);
+			pInicio.add(spListas);
+			pInicio.validate();
+			pInicio.repaint();
+			
+		}
 }
