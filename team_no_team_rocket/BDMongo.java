@@ -180,6 +180,17 @@ public class BDMongo {
 		}
 		return array;
 	}
+	
+	/** Metodo que obtiene la puntuacion de un bar mediante su codigo
+	 * @param codLocal codigo del Local a obtener la puntuacion
+	 * @return puntuacion del local
+	 */
+	public Double obtenerPuntuacion(String codLocal){
+		database = mongoClient.getDatabase("Locales");
+		collection = database.getCollection("local");
+		
+		return collection.find(eq("codLocal", codLocal)).first().getDouble("codLocal");
+	}
 		
 	
 	/**

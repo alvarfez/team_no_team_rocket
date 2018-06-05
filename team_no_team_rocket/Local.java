@@ -13,6 +13,7 @@ public class Local implements Comparable {
 	//Atributos de clase
 	private String codLocal;
 	private String nombre;
+	private String propietario;
 	private TipoLocal tipo;
 	private String direccion;
 	private int telefono;
@@ -27,8 +28,9 @@ public class Local implements Comparable {
 	 * @param direccion --> calle y numero = String 
 	 * @param telefono --> tlfno del local
 	 */
-	public Local( String nombre, String tipo, String direccion, int telefono){
+	public Local( String propietario, String nombre, String tipo, String direccion, int telefono){
 		super();
+		this.propietario = propietario;
 		this.codLocal = Util.obtenerCodigo(nombre);
 		this.nombre = nombre;
 		this.tipo = convertirATipoLocal(tipo);
@@ -38,6 +40,14 @@ public class Local implements Comparable {
 		
 	}
 	
+	public String getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(String propietario) {
+		this.propietario = propietario;
+	}
+
 	/** Método que pasa un string a un enum de TipoLocal
 	 * @param tipo --> el tipo en String 
 	 * @return --> devuelve el TipoLocal correspondiente
@@ -169,16 +179,16 @@ public class Local implements Comparable {
 
 	public static void main(String[] args) {
 
-		Local l1 = new Local("Zubialde","bar", "1", 5);
-		Local l2 = new Local("Café","pub", "1", 4);
-		Local l3 = new Local("Terraza","restaurante", "1", 10);
-		
-		System.out.println(l1.toString());
-		System.out.println(l2.toString());
-		System.out.println(l3.toString());
-		l1.puntuacion.sumaPuntuacion(4);
-		l2.puntuacion.sumaPuntuacion(5);
-		System.out.println(l1.compareTo(l2));
+//		Local l1 = new Local("Zubialde","bar", "1", 5);
+//		Local l2 = new Local("Café","pub", "1", 4);
+//		Local l3 = new Local("Terraza","restaurante", "1", 10);
+//		
+//		System.out.println(l1.toString());
+//		System.out.println(l2.toString());
+//		System.out.println(l3.toString());
+//		l1.puntuacion.sumaPuntuacion(4);
+//		l2.puntuacion.sumaPuntuacion(5);
+//		System.out.println(l1.compareTo(l2));
 		
 	}
 
