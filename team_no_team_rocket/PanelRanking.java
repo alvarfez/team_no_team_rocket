@@ -1,12 +1,17 @@
 package team_no_team_rocket;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.util.Date;
 import java.util.TreeMap;
 
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -16,7 +21,8 @@ import javax.swing.ListModel;
 public class PanelRanking extends JPanel {
 	
 	private static PanelRanking pRanking;
-	private static JList lpanel;
+	private static JList lListaRanking;
+	private static JList lListaTemporal;
 	private static JScrollPane spListas;
 	private static TreeMap rankingBares;
 	
@@ -32,26 +38,28 @@ public class PanelRanking extends JPanel {
 		rankingBares = bdMongo.obtenerRankingBares();
 	// AQUÍ CON EL TREEMAP SE SACAN LOS LOCALES DE NEO4J 
 		
-		lpanel = new JList<Object>(lista);
-		lpanel.setBackground(Color.white);
-		lpanel.setFixedCellHeight(50);
-		lpanel.setFixedCellWidth(390);
-		Util.cambiaRenderer(lpanel,1);
-		spListas = new JScrollPane(lpanel);
-		pRanking.add(spListas);
+		lListaTemporal = new JList<Object>(lista);
+		lListaRanking = lListaTemporal;
+		lListaRanking.setBackground(Color.white);
+		lListaRanking.setFixedCellHeight(50);
+		lListaRanking.setFixedCellWidth(390);
+		Util.cambiaRenderer(lListaRanking,1);
+		spListas = new JScrollPane(lListaRanking);
+		pRanking.setLayout(new BorderLayout());
+		pRanking.add(spListas, "Center");
 		pRanking.validate();
 		pRanking.repaint();
-		lpanel.addMouseListener(new MouseAdapter() {
+		lListaRanking.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
 
 				if (e.getClickCount()==1){
-					posicionSeleccion = lpanel.locationToIndex(e.getPoint());
+					posicionSeleccion = lListaRanking.locationToIndex(e.getPoint());
 				}
 				if (e.getClickCount()==2){
-					if (lpanel.getSelectedIndex()!= -1) {
-						posicionActual = lpanel.locationToIndex(e.getPoint());
+					if (lListaRanking.getSelectedIndex()!= -1) {
+						posicionActual = lListaRanking.locationToIndex(e.getPoint());
 						Util.abrirInfo(lista, posicionActual, pRanking ,1, bVolver); 
 						pRanking.revalidate();
 						pRanking.repaint();
@@ -64,27 +72,69 @@ public class PanelRanking extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
 
-				pRanking.removeAll();
 //				pRanking = new PanelRanking(VentanaPrincipal.dameModeloLista());
 				vuelvePanelRanking(VentanaPrincipal.dameModeloLista());
-				pRanking.revalidate();	
-				pRanking.repaint();
-				System.out.println("Lo borro pero no pinto el panel de nuevo en el tab");
 			}
 		});
 		
 	}
 	public void vuelvePanelRanking(ListModel<Object> lista){
-		lpanel = new JList<Object>(lista);
-		lpanel.setBackground(Color.white);
-		lpanel.setFixedCellHeight(50);
-		lpanel.setFixedCellWidth(390);
-		Util.cambiaRenderer(lpanel,1);
-		spListas.add(lpanel);
-		pRanking.add(spListas);
-		pRanking.validate();
-		pRanking.repaint();
+		pRanking.removeAll();
+		lListaRanking = lListaTemporal;
+//		lListaRanking.setBackground(Color.white);
+//		lListaRanking.setFixedCellHeight(50);
+//		lListaRanking.setFixedCellWidth(390);
+//		Util.cambiaRenderer(lListaRanking,1);
+//		spListas.add(lListaRanking);
+		pRanking.setLayout(new BorderLayout());
+		pRanking.add(spListas, "Center");
+//		lListaRanking.revalidate();
+		spListas.revalidate();
+		pRanking.revalidate();
+		pRanking.getParent().revalidate();
+		pRanking.getParent().repaint();
+
 		
 	}
-	
+
+	public static void main(String[] args) {
+		JFrame v = new JFrame();
+		v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		DefaultListModel dlmSeleccionar = new DefaultListModel<>();
+		JList lListaBares = new JList<Object>(dlmSeleccionar);
+		
+		// Modificamos la lista para que tenga las características que deseamos	
+		lListaBares.setBackground(Color.LIGHT_GRAY);
+		lListaBares.setFixedCellHeight(50);
+		lListaBares.setFixedCellWidth(390);
+//		Util.cambiaRenderer(lListaBares, 0);
+
+	// PRUEBA DE JLIST
+		Local l1 = new Local("Ander", "Zubialde","bar", "1", 1);ImageIcon i1 = new ImageIcon("bin/team_no_team_rocket/fotos/3escobas.jpg");		l1.setFoto(i1);
+		Local l2 = new Local("Ander","Café","bar", "1", 2);		ImageIcon i2 = new ImageIcon("bin/team_no_team_rocket/fotos/badulaque.jpg");l2.setFoto(i2);
+		Local l3 = new Local("Ander", "Terraza","bar", "1", 3);	ImageIcon i3 = new ImageIcon("bin/team_no_team_rocket/fotos/barDeMoe.jpg");l3.setFoto(i3);
+		Local l4 = new Local("Ander","Badulaque","bar", "1", 10);
+		Local l5 = new Local("Ander","El bar de Moe","bar", "1", 10);
+		Local l6 = new Local("Ander","La tasca","bar", "1", 10);
+		// Creación y adición de ofertas
+		Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , new Date(), new Date() );
+		Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , new Date(), new Date() );
+		Oferta o3 = new Oferta("2x1", 2.0, "2 pintxos por 1" , new Date(), new Date() );
+		Oferta o4 = new Oferta("PintxoPote", 3.0, "Pintxo + pote" , new Date(), new Date() );
+		l1.anyadirOferta(o1);
+		l1.anyadirOferta(o2);
+		l2.anyadirOferta(o3);
+		l3.anyadirOferta(o4);
+		//Añadimos los locales a la lista[MIENTRAS NO LOS SAQUEMOS DE NEO4J]
+		dlmSeleccionar.addElement(l1);
+		dlmSeleccionar.addElement(l2);
+		dlmSeleccionar.addElement(l3);
+		
+
+		pRanking = new PanelRanking(dlmSeleccionar);
+		v.setSize(410, 600);
+		v.add(pRanking);
+		v.setVisible(true);
+	}
 }
+

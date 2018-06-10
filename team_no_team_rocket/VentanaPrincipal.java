@@ -30,8 +30,6 @@ import javafx.scene.layout.Border;
 public class VentanaPrincipal extends JFrame{
 	
 //Atributos de ventana
-	//Paneles
-	private static JPanel pBotonera = new JPanel();
 	//Lista y posiciones
 	public static DefaultListModel<Object> dlmSeleccionar;
 	private static JList<Object> lListaBares;
@@ -40,10 +38,10 @@ public class VentanaPrincipal extends JFrame{
 	//Paneles de tab
 	private static JTabbedPane tab = new JTabbedPane(); //Creacion del contenedor de pestañas
 	private static PanelMapa panelMapa = new PanelMapa(); //Pestaña del mapa
-	private static JPanel ajustesLocal = new PanelAjustes(1); //TODO pestaña del usuario
-	private static JPanel ajustesUsuario = new PanelAjustes(0); //TODO pestaña del usuario
-	private static JPanel ranking; //TODO pestaña del ranking
-	private static JPanel inicio; //TODO pestaña del ranking
+	private static PanelAjustes ajustesLocal;  //TODO tab del usuario
+	private static PanelAjustes ajustesUsuario; //TODO tab del usuario
+	private static PanelRanking ranking; //TODO tab del ranking
+	private static PanelInicio inicio; //TODO tab del inicio
 	
 	public VentanaPrincipal( String nombreUsuario ) throws SQLException{
 	
@@ -52,7 +50,9 @@ public class VentanaPrincipal extends JFrame{
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setSize(410,600);
 	setLocation(120,0);
-	
+	ajustesLocal = new PanelAjustes(1,nombreUsuario);  //TODO tab del usuario
+	ajustesUsuario = new PanelAjustes(0,nombreUsuario); //TODO tab del usuario
+
 	// Creamos la lista y el modelo de lista
 	dlmSeleccionar = new DefaultListModel<>();
 	lListaBares = new JList<Object>(dlmSeleccionar);
@@ -61,16 +61,16 @@ public class VentanaPrincipal extends JFrame{
 	lListaBares.setBackground(Color.LIGHT_GRAY);
 	lListaBares.setFixedCellHeight(50);
 	lListaBares.setFixedCellWidth(390);
-	Util.cambiaRenderer(lListaBares, 0);
+//	Util.cambiaRenderer(lListaBares, 0);
 
 // PRUEBA DE JLIST
 	// Creación locales
-	Local l1 = new Local( "Zubialde","bar", "1", 1);
-	Local l2 = new Local("Café","bar", "1", 2);
-	Local l3 = new Local( "Terraza","bar", "1", 3);
-	Local l4 = new Local("Badulaque","bar", "1", 10);
-	Local l5 = new Local("El bar de Moe","bar", "1", 10);
-	Local l6 = new Local( "La tasca","bar", "1", 10);
+	Local l1 = new Local("Ander", "Zubialde","bar", "1", 1);
+	Local l2 = new Local("Ander","Café","bar", "1", 2);
+	Local l3 = new Local("Ander", "Terraza","bar", "1", 3);
+	Local l4 = new Local("Ander","Badulaque","bar", "1", 10);
+	Local l5 = new Local("Ander","El bar de Moe","bar", "1", 10);
+	Local l6 = new Local("Ander","La tasca","bar", "1", 10);
 	// Creación imágenes
 	ImageIcon i1 = new ImageIcon("bin/team_no_team_rocket/fotos/3escobas.jpg");
 	ImageIcon i2 = new ImageIcon("bin/team_no_team_rocket/fotos/badulaque.jpg");
@@ -91,10 +91,10 @@ public class VentanaPrincipal extends JFrame{
 	dlmSeleccionar.addElement(l1);
 	dlmSeleccionar.addElement(l2);
 	dlmSeleccionar.addElement(l3);
-	//Creamos los paneles Inicio y Ranking con la lista ya hecha
+	
+//Creamos los paneles Inicio y Ranking con la lista ya hecha
 	inicio = new PanelInicio(dlmSeleccionar);
 	ranking = new PanelRanking(dlmSeleccionar);
-
 	//Añadimos en el contenedor de pestañas y el propio contenedor a la ventana
 	tab.addTab("Inicio", null, inicio, "Lista de locales en tiempo real");
 	tab.addTab("Ranking", null, ranking, "Top Locales");
@@ -105,10 +105,11 @@ public class VentanaPrincipal extends JFrame{
 		tab.addTab("Ajustes", null, ajustesUsuario, "Ajustes de usuario");
 		//TODO meter panel ajustes de usuario normal
 	}
-	this.getContentPane().add(tab);		
+	this.getContentPane().add(tab);
+	this.revalidate();
 	}
 
-	/** Método temporal mientras la lista no salga de neo4J
+	/** Método temporal mientras la lista no salga de neo4J			
 	 * @param panel
 	 */
 	public static DefaultListModel dameModeloLista(){

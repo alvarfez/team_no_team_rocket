@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.ListModel;
 import javax.swing.border.LineBorder;
 
@@ -322,8 +323,6 @@ public class Util {
 				panel.add(pInfo);
 			}
 			panel.revalidate();
-			panel.repaint();
-
 		}		
 	}
 
