@@ -11,7 +11,7 @@ import com.sun.prism.Image;
 public class Local implements Comparable {
 
 	//Atributos de clase
-	private String codLocal;
+	private Integer codLocal;
 	private String nombre;
 	private String propietario;
 	private TipoLocal tipo;
@@ -31,7 +31,7 @@ public class Local implements Comparable {
 	public Local( String propietario, String nombre, String tipo, String direccion, int telefono){
 		super();
 		this.propietario = propietario;
-		this.codLocal = Util.obtenerCodigo(nombre);
+		this.codLocal = BDNeo4j.getCodigoLocal();
 		this.nombre = nombre;
 		this.tipo = convertirATipoLocal(tipo);
 		this.direccion = direccion;
@@ -99,11 +99,11 @@ public class Local implements Comparable {
 	 * 
 	 */
 	
-	public String getCodBar() {
+	public int getCodBar() {
 		return codLocal;
 	}
 
-	public void setCodBar(String codBar) {
+	public void setCodBar(int codBar) {
 		this.codLocal = codBar;
 	}
 	

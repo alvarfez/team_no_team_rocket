@@ -11,7 +11,7 @@ public class Oferta {
 	
 	//C:\Users\ALVAR\git\team_no_team_rocket\team_no_team_rocket\drivers
 	
-	private String codOferta;
+	private Integer codOferta;
 	private String nombre;
 	private double precio;
 	private String descripcion;
@@ -34,7 +34,7 @@ public class Oferta {
 	public Oferta(String nombre, double precio, String descripcion,
 			Date fchaHraInicio, Date fchaHraFin) {
 		super();
-		this.codOferta = Util.obtenerCodigo(nombre);
+		this.codOferta = BDNeo4j.getCodigoOferta();
 		this.nombre = nombre;
 		this.precio = precio;
 		this.descripcion = descripcion;
@@ -63,11 +63,11 @@ public class Oferta {
 		this.precio = precio;
 	}
 
-	public String getCodigo() {
+	public Integer getCodigo() {
 		return codOferta;
 	}
 
-	public void setCodigo(String codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codOferta = codigo;
 	}
 
