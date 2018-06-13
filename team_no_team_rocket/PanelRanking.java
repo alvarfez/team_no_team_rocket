@@ -36,7 +36,10 @@ public class PanelRanking extends JPanel {
 		pRanking = this;
 		BDMongo bdMongo = new BDMongo();
 		rankingBares = bdMongo.obtenerRankingBares();
-	// AQUÍ CON EL TREEMAP SE SACAN LOS LOCALES DE NEO4J 
+	// AQUÍ CON EL TREEMAP SE SACAN LOS LOCALES DE NEO4J
+//		for (Integer s : rankingBares){
+//			
+//		}
 		
 		lListaTemporal = new JList<Object>(lista);
 		lListaRanking = lListaTemporal;
@@ -73,22 +76,16 @@ public class PanelRanking extends JPanel {
 			public void actionPerformed(ActionEvent e) {	
 
 //				pRanking = new PanelRanking(VentanaPrincipal.dameModeloLista());
-				vuelvePanelRanking(VentanaPrincipal.dameModeloLista());
+				vuelvePanelRanking();
 			}
 		});
 		
 	}
-	public void vuelvePanelRanking(ListModel<Object> lista){
+	public void vuelvePanelRanking(){
 		pRanking.removeAll();
 		lListaRanking = lListaTemporal;
-//		lListaRanking.setBackground(Color.white);
-//		lListaRanking.setFixedCellHeight(50);
-//		lListaRanking.setFixedCellWidth(390);
-//		Util.cambiaRenderer(lListaRanking,1);
-//		spListas.add(lListaRanking);
 		pRanking.setLayout(new BorderLayout());
 		pRanking.add(spListas, "Center");
-//		lListaRanking.revalidate();
 		spListas.revalidate();
 		pRanking.revalidate();
 		pRanking.getParent().revalidate();
