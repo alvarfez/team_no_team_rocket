@@ -43,6 +43,8 @@ public class Oferta {
 		this.diasActiva = new boolean[7];
 	}
 	
+	public Oferta(){}
+	
 	/* Getters y setters
 	 * 
 	 */

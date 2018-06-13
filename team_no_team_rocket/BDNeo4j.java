@@ -213,9 +213,28 @@ public class BDNeo4j implements AutoCloseable
 		return local;
 	}
 	
+	/**Metodo que devuelve la lista de ofertas que tiene un Local
+	 * @param codLocal codigo del local que tiene las ofertas
+	 * @return ArrayList con las ofertas del local
+	 */
 	public ArrayList<Oferta> getOfertas(Integer codLocal){
-		return null;
+		StatementResult result = session.run("MATCH (b:Bar)"
+				+"\nWHERE b.codLocal = '"+ codLocal + "'" 
+				+ "\nRETURN o.nombre, o.precio, o.descripcion, o.FechaHraInicio, o.FechaHraFin");
 		
+		ArrayList<Oferta> array = new ArrayList<>();
+		while(result.hasNext()){
+			Oferta oferta =  new Oferta();
+			Record record = result.next();
+			oferta.setNombre(record.get(0).asString());
+			oferta.setPrecio(record.get(1).asDouble());
+			oferta.setDescripcion(record.get(2).asString());
+			oferta.setFchaHraInicio(new Date(record.get(3).asInt()));
+			oferta.setFchaHraFin(new Date(record.get(4).asInt()));
+			
+			array.add(oferta);			
+		}
+		return array;
 	}
 	
 	public static void main(String[] args) throws Exception {
