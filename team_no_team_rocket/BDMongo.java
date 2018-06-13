@@ -90,23 +90,23 @@ public class BDMongo {
 	 * @param puntuacion puntuación del bar
 	 * @return true si no existe previamente y false si existe
 	 */
-	public boolean anyadirLocal(String cod_Local, Double puntuacion){
+	public boolean anyadirLocal(Integer cod_Local, Double puntuacion){
 		database = mongoClient.getDatabase("Locales");
 		collection = database.getCollection("local");
 
-		ArrayList<String> array = new ArrayList<>();
+		ArrayList<Integer> array = new ArrayList<>();
 
 		MongoCursor<Document> cursor = collection.find().iterator();
 		try {
 			while (cursor.hasNext()) {
-				array.add(cursor.next().getString("codigoLocal"));
+				array.add(cursor.next().getInteger("codigoLocal"));
 			}
 		} finally {
 			cursor.close();
 		}
 		System.out.println(array);
 		boolean escribir = true;
-		for(String s : array){
+		for(Integer s : array){
 			if (s.equals(cod_Local)){
 				escribir = false;
 			}
@@ -162,18 +162,18 @@ public class BDMongo {
 	/**Metodo que devuelve un ranking de los bares que hay en la base de Datos
 	 * @return TreeMap<Puntuacion, codigoLocal> ordenador de mayor puntuacion a menor
 	 */
-	public TreeMap<Double, String> obtenerRankingBares(){
+	public TreeMap<Double, Integer> obtenerRankingBares(){
 		database = mongoClient.getDatabase("Locales");
 		collection = database.getCollection("local");
 
-		TreeMap<Double, String> array = new TreeMap<>(Collections.reverseOrder());
+		TreeMap<Double, Integer> array = new TreeMap<>(Collections.reverseOrder());
 
 		MongoCursor<Document> cursor = collection.find().iterator();
 		try {
 			while (cursor.hasNext()) {
 				System.out.println(array);
 				Document mydoc = cursor.next();
-				array.put(mydoc.getDouble("puntuacion"), mydoc.getString("codigoLocal"));
+				array.put(mydoc.getDouble("puntuacion"), mydoc.getInteger("codigoLocal"));
 			}
 		} finally {
 			cursor.close();

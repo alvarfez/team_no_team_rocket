@@ -114,7 +114,6 @@ public class VentanaPrincipal extends JFrame{
 	 */
 	public static DefaultListModel dameModeloLista(){
 		return dlmSeleccionar;
-		
 	}
 	
 	public static void main(String[] args) throws SQLException {

@@ -30,7 +30,6 @@ public class PanelInicio extends JPanel {
 	private static TreeMap rankingBares;
 	
 	private static int posicionActual;
-	private static int posicionSeleccion;
 	private static JButton bVolver = new JButton( "Volver" );
 	
 	
@@ -54,7 +53,7 @@ public class PanelInicio extends JPanel {
 			public void mouseClicked(java.awt.event.MouseEvent e) {
 
 				if (e.getClickCount()==1){
-					posicionSeleccion = lListaLocales.locationToIndex(e.getPoint());
+					lListaLocales.locationToIndex(e.getPoint());
 				}
 				if (e.getClickCount()==2){
 					if (lListaLocales.getSelectedIndex()!= -1) {
@@ -71,31 +70,22 @@ public class PanelInicio extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
 
-				vuelvePanelInicio(VentanaPrincipal.dameModeloLista());
+				vuelvePanelInicio();
 				
 			}
 		});
 
 
 	}
-		public void vuelvePanelInicio(ListModel<Object> lista){
+		public void vuelvePanelInicio(){
 			pInicio.removeAll();
 			lListaLocales = ltemporal;
-//			lListaLocales.setBackground(Color.white);
-//			lListaLocales.setFixedCellHeight(50);
-//			lListaLocales.setFixedCellWidth(390);
-//			Util.cambiaRenderer(lListaLocales,0);
-//			spListas.setViewportView(lListaLocales);
 			pInicio.setLayout(new BorderLayout());
 			pInicio.add(spListas, "Center");
 			spListas.revalidate();
-			pInicio.repaint();
 			pInicio.revalidate();
-			lListaLocales.revalidate();
 			pInicio.getParent().revalidate();
 			pInicio.getParent().repaint();
-//			((JTabbedPane)(pInicio.getParent())).setSelectedIndex(1);
-//			((JTabbedPane)(pInicio.getParent())).setSelectedIndex(0);
 
 			
 		}
