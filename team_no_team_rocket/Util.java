@@ -220,7 +220,7 @@ public class Util {
 					}
 					lFoto.setIcon( l.getFoto());
 					lNomLocal.setText(l.getNombre());
-					lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
+					//lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
 					lDistancia.setText("Distancia a usuario");
 
 
