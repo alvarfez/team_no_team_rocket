@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.TreeMap;
 
 import javax.swing.DefaultListModel;
@@ -17,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
+
 
 public class PanelRanking extends JPanel {
 	
@@ -37,10 +40,15 @@ public class PanelRanking extends JPanel {
 		BDMongo bdMongo = new BDMongo();
 		rankingBares = bdMongo.obtenerRankingBares();
 	// AQUÍ CON EL TREEMAP SE SACAN LOS LOCALES DE NEO4J
-//		for (Integer s : rankingBares){
-//			
-//		}
-		
+	    Collection c = rankingBares.values();
+	    //obtain an Iterator for Collection
+	    Iterator itr = c.iterator();
+	    //iterate through TreeMap values iterator
+	    while(itr.hasNext()){
+	      System.out.println(itr.next());
+	      }
+	    
+	    
 		lListaTemporal = new JList<Object>(lista);
 		lListaRanking = lListaTemporal;
 		lListaRanking.setBackground(Color.white);
