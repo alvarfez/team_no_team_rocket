@@ -40,6 +40,9 @@ public class Local implements Comparable {
 		
 	}
 	
+	public Local(){
+	}
+	
 	public String getPropietario() {
 		return propietario;
 	}

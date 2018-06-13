@@ -10,6 +10,7 @@ import org.neo4j.driver.internal.spi.Connection;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
+import org.neo4j.driver.v1.Record;
 import org.neo4j.driver.v1.Session;
 import org.neo4j.driver.v1.Statement;
 import org.neo4j.driver.v1.StatementResult;
@@ -19,6 +20,10 @@ import org.neo4j.driver.v1.TransactionWork;
 import static org.neo4j.driver.v1.Values.parameters;
 
 
+/**
+ * @author ALVAR
+ *
+ */
 public class BDNeo4j implements AutoCloseable
 {
 	public int n = 1;
@@ -163,18 +168,49 @@ public class BDNeo4j implements AutoCloseable
 		
 	}
 	
-	public void getLocales(String propietario){
+	/** Metodo que obtiene una lista de los locales que tiene un usuario
+	 * @param propietario usuario que tiene los locales
+	 * @return ArrayList de locales
+	 */
+	@SuppressWarnings("null")
+	public ArrayList<Local> getLocales(String propietario){
 		StatementResult result = session.run("MATCH (b:Bar)"
 				+"\nWHERE b.propietario = '"+ propietario + "'" 
-				+ "\nRETURN b");
+				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno");
 		
 		ArrayList<Local> array = new ArrayList<>();
 		while(result.hasNext()){
-			System.out.println("Uno");
+			Local local =  new Local();
+			Record record = result.next();
+			local.setPropietario(record.get(0).asString());
+			local.setNombre(record.get(1).asString());
+			local.setTipo(TipoLocal.BAR_CAFETERIA);
+			local.setDireccion(record.get(3).asString());
+			local.setTelefono(record.get(4).asInt());
 			
-			
-			
+			array.add(local);			
 		}
+		return array;
+	}
+	
+	/**Metodo que obtiene un Local 
+	 * @param codLocal Codigo del local a obtener
+	 * @return Local obtenido
+	 */
+	public Local getLocal(Integer codLocal){
+		StatementResult result = session.run("MATCH (b:Bar)"
+				+"\nWHERE b.codLocal = '"+ codLocal  + "'" 
+				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno");
+		
+		Local local =  new Local();
+		Record record = result.next();
+		local.setPropietario(record.get(0).asString());
+		local.setNombre(record.get(1).asString());
+		local.setTipo(TipoLocal.BAR_CAFETERIA);
+		local.setDireccion(record.get(3).asString());
+		local.setTelefono(record.get(4).asInt());
+		
+		return local;
 	}
 	
 	public ArrayList<Oferta> getOfertas(Integer codLocal){
@@ -214,7 +250,7 @@ public class BDNeo4j implements AutoCloseable
 //		n.borrarOferta(1);
 //		n.borrarOferta(0);
 //		n.getNextCodigo();
-		n.getLocales("Ander");
+		System.out.println(n.getLocales("Ander"));
 	}
 	
 	
