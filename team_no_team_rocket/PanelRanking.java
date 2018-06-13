@@ -39,17 +39,19 @@ public class PanelRanking extends JPanel {
 		pRanking = this;
 		BDMongo bdMongo = new BDMongo();
 		rankingBares = bdMongo.obtenerRankingBares();
-	// AQUÍ CON EL TREEMAP SE SACAN LOS LOCALES DE NEO4J
-	    Collection c = rankingBares.values();
-	    //obtain an Iterator for Collection
-	    Iterator itr = c.iterator();
-	    //iterate through TreeMap values iterator
+
+		Collection c = rankingBares.values(); Iterator itr = c.iterator();
+	    
+		DefaultListModel<Local> dlmLocalesOrd = new DefaultListModel<>();
+	    BDNeo4j bd = new BDNeo4j();
 	    while(itr.hasNext()){
-	      System.out.println(itr.next());
-	      }
+	    	int codigo = Integer.parseInt(itr.next().toString());
+	    	Local l = bd.getLocal(codigo);
+	    	dlmLocalesOrd.addElement(l);
+	    }
 	    
 	    
-		lListaTemporal = new JList<Object>(lista);
+		lListaTemporal = new JList<Local>(dlmLocalesOrd);
 		lListaRanking = lListaTemporal;
 		lListaRanking.setBackground(Color.white);
 		lListaRanking.setFixedCellHeight(50);
@@ -113,7 +115,7 @@ public class PanelRanking extends JPanel {
 		lListaBares.setFixedCellHeight(50);
 		lListaBares.setFixedCellWidth(390);
 //		Util.cambiaRenderer(lListaBares, 0);
-
+		
 	// PRUEBA DE JLIST
 		Local l1 = new Local("Ander", "Zubialde","bar", "1", 1);ImageIcon i1 = new ImageIcon("bin/team_no_team_rocket/fotos/3escobas.jpg");		l1.setFoto(i1);
 		Local l2 = new Local("Ander","Café","bar", "1", 2);		ImageIcon i2 = new ImageIcon("bin/team_no_team_rocket/fotos/badulaque.jpg");l2.setFoto(i2);
@@ -140,6 +142,31 @@ public class PanelRanking extends JPanel {
 		v.setSize(410, 600);
 		v.add(pRanking);
 		v.setVisible(true);
+		
+		 TreeMap treeMap = new TreeMap();
+
+		    //add key value pairs to TreeMap
+		    treeMap.put("1","One");
+		    treeMap.put("2","Two");
+		    treeMap.put("3","Three");
+
+		    /*
+		      get Collection of values contained in TreeMap using
+		      Collection values()        
+		    */
+		    Collection c = treeMap.values();
+
+		    //obtain an Iterator for Collection
+		    Iterator itr = c.iterator();
+
+		    //iterate through TreeMap values iterator
+		    DefaultListModel<Local> dlmLocalesOrd = new DefaultListModel<>();
+		    BDNeo4j bd = new BDNeo4j();
+		    while(itr.hasNext()){
+		    	int codigo = Integer.parseInt(itr.next().toString());
+		    	Local l = bd.getLocal(codigo);
+		    	dlmLocalesOrd.addElement(l);
+		    }
 	}
 }
 

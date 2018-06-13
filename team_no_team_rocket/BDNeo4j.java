@@ -256,7 +256,8 @@ public class BDNeo4j implements AutoCloseable
 		String descripcion = oferta.getDescripcion();
 		Date fchaHraInicio = oferta.getFchaHraInicio();
 		Date fchaHraFin = oferta.getFchaHraFin();
-//		n.anyadirLocal(l2);
+		
+		n.anyadirLocal(l2);
 //		n.anyadirLocal(l2);
 //		
 //		System.out.println("Funciona?");
@@ -265,7 +266,8 @@ public class BDNeo4j implements AutoCloseable
 //		n.borrarLocal(2);
 //		getCodigo();
 //		n.close();
-//		n.anyadirOferta(0, oferta );
+		n.anyadirOferta(0, oferta );
+		
 //		n.borrarOferta(1);
 //		n.borrarOferta(0);
 //		n.getNextCodigo();
