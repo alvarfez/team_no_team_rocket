@@ -237,6 +237,28 @@ public class BDNeo4j implements AutoCloseable
 		return array;
 	}
 	
+	/** Metodo que devuelve todos los Locales de la BD
+	 * @return Locales que hay en la BD
+	 */
+	public ArrayList<Local> getTodosLosLocales(){
+		StatementResult result = session.run("MATCH (b:Bar)"
+				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno");
+
+		ArrayList<Local> array = new ArrayList<>();
+		while(result.hasNext()){
+			Local local =  new Local();
+			Record record = result.next();
+			local.setPropietario(record.get(0).asString());
+			local.setNombre(record.get(1).asString());
+			local.setTipo(TipoLocal.BAR_CAFETERIA);
+			local.setDireccion(record.get(3).asString());
+			local.setTelefono(record.get(4).asInt());
+
+			array.add(local);			
+		}
+		return array;
+	}
+	
 	public static void main(String[] args) throws Exception {
 		
 		
@@ -257,7 +279,7 @@ public class BDNeo4j implements AutoCloseable
 		Date fchaHraInicio = oferta.getFchaHraInicio();
 		Date fchaHraFin = oferta.getFchaHraFin();
 		
-		n.anyadirLocal(l2);
+//		n.anyadirLocal(l2);
 //		n.anyadirLocal(l2);
 //		
 //		System.out.println("Funciona?");
@@ -266,12 +288,16 @@ public class BDNeo4j implements AutoCloseable
 //		n.borrarLocal(2);
 //		getCodigo();
 //		n.close();
-		n.anyadirOferta(0, oferta );
+//		n.anyadirOferta(0, oferta );
 		
+		ArrayList<Local> neh = n.getTodosLosLocales();
+		for(Local l: neh){
+			System.out.println(l);
+		}
 //		n.borrarOferta(1);
 //		n.borrarOferta(0);
 //		n.getNextCodigo();
-		System.out.println(n.getLocales("Ander"));
+//		System.out.println(n.getLocales("Ander"));
 	}
 	
 	
