@@ -291,10 +291,12 @@ public class Util {
 			Local l = (Local) dlmSeleccionar.getElementAt(posActual);
 			pInfo.removeAll();
 			if (modelo==0){
-				// preparamos panel Oferta
-				lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
-				lDescOferta.setText(l.getListaOfertas().get(0).getDescripcion());
-				lPrecio.setText(l.getListaOfertas().get(0).getPrecio()+" €");
+//				// preparamos panel Oferta
+//				
+//				lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
+//				lDescOferta.setText(l.getListaOfertas().get(0).getDescripcion());
+//				lPrecio.setText(l.getListaOfertas().get(0).getPrecio()+" €");
+
 				// FALTA POR IMPLEMENTAR
 				lDistOferta.setText("'Distancia hasta usuario'");
 				// lDistOferta.setText(getOferta().getDistAUser());
@@ -318,6 +320,9 @@ public class Util {
 			if (modelo == 0){
 				panel.add(pInfo);
 			} else if (modelo == 1) {
+				
+				//TRABAJAR AQUI ALVARRRRRRRRRRRRRRRRRRRRRRR
+				
 				pInfo.add(lNomLocal);
 				pInfo.add(bVolver);
 				panel.add(pInfo);

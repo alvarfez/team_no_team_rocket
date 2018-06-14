@@ -176,7 +176,7 @@ public class BDNeo4j implements AutoCloseable
 	public ArrayList<Local> getLocales(String propietario){
 		StatementResult result = session.run("MATCH (b:Bar)"
 				+"\nWHERE b.propietario = '"+ propietario + "'" 
-				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno");
+				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno, b.codLocal");
 		
 		ArrayList<Local> array = new ArrayList<>();
 		while(result.hasNext()){
@@ -187,6 +187,7 @@ public class BDNeo4j implements AutoCloseable
 			local.setTipo(TipoLocal.BAR_CAFETERIA);
 			local.setDireccion(record.get(3).asString());
 			local.setTelefono(record.get(4).asInt());
+			local.setCodBar(Integer.parseInt(record.get(5).asString()));
 			
 			array.add(local);			
 		}
@@ -200,7 +201,7 @@ public class BDNeo4j implements AutoCloseable
 	public Local getLocal(Integer codLocal){
 		StatementResult result = session.run("MATCH (b:Bar)"
 				+"\nWHERE b.codLocal = '"+ codLocal  + "'" 
-				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno");
+				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno, b.codLocal");
 		
 		Local local =  new Local();
 		Record record = result.next();
@@ -209,6 +210,7 @@ public class BDNeo4j implements AutoCloseable
 		local.setTipo(TipoLocal.BAR_CAFETERIA);
 		local.setDireccion(record.get(3).asString());
 		local.setTelefono(record.get(4).asInt());
+		local.setCodBar(Integer.parseInt(record.get(5).asString()));
 		
 		return local;
 	}
@@ -218,7 +220,7 @@ public class BDNeo4j implements AutoCloseable
 	 * @return ArrayList con las ofertas del local
 	 */
 	public ArrayList<Oferta> getOfertas(Integer codLocal){
-		StatementResult result = session.run("MATCH (b:Bar)"
+		StatementResult result = session.run("MATCH (b:Bar)-[:HACE_OFERTA]->(o:Oferta)"
 				+"\nWHERE b.codLocal = '"+ codLocal + "'" 
 				+ "\nRETURN o.nombre, o.precio, o.descripcion, o.FechaHraInicio, o.FechaHraFin");
 		
@@ -227,10 +229,10 @@ public class BDNeo4j implements AutoCloseable
 			Oferta oferta =  new Oferta();
 			Record record = result.next();
 			oferta.setNombre(record.get(0).asString());
-			oferta.setPrecio(record.get(1).asDouble());
+			oferta.setPrecio(Double.parseDouble(record.get(1).asString()));
 			oferta.setDescripcion(record.get(2).asString());
-			oferta.setFchaHraInicio(new Date(record.get(3).asInt()));
-			oferta.setFchaHraFin(new Date(record.get(4).asInt()));
+			oferta.setFchaHraInicio(new Date());
+			oferta.setFchaHraFin(new Date());
 			
 			array.add(oferta);			
 		}
@@ -290,9 +292,18 @@ public class BDNeo4j implements AutoCloseable
 //		n.close();
 //		n.anyadirOferta(0, oferta );
 		
-		ArrayList<Local> neh = n.getTodosLosLocales();
-		for(Local l: neh){
+//		ArrayList<Local> neh = n.getTodosLosLocales();
+//		for(Local l: neh){
+//			System.out.println(l);
+//		}
+		ArrayList<Local> alLocales = n.getLocales("Localito");
+		for(Local l: alLocales){
 			System.out.println(l);
+		}
+	
+		ArrayList<Oferta> off = n.getOfertas(alLocales.get(0).getCodBar());
+		for(Oferta o : off){
+			System.out.println(o);
 		}
 //		n.borrarOferta(1);
 //		n.borrarOferta(0);
