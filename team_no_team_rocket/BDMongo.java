@@ -76,14 +76,9 @@ public class BDMongo {
 			System.out.println("El usuario ya existe");
 			return false;
 		}
-		
-		
-		
-		
+
 	}
-	
-	
-	
+
 	/** Metodo que añade un local en la base de datos de puntuaciones de Mongo si no existe 
 	 * previamente
 	 * @param cod_Local codigo del Local a añadir
@@ -185,13 +180,25 @@ public class BDMongo {
 	 * @param codLocal codigo del Local a obtener la puntuacion
 	 * @return puntuacion del local
 	 */
-	public Double obtenerPuntuacion(String codLocal){
+	public Double obtenerPuntuacion(Integer codLocal){
 		database = mongoClient.getDatabase("Locales");
 		collection = database.getCollection("local");
 		
-		return collection.find(eq("codLocal", codLocal)).first().getDouble("codLocal");
+		return collection.find(eq("codigoLocal", codLocal)).first().getDouble("codigoLocal");
 	}
+	
+	public void actualizarPuntuacion(Integer codLocal, Puntuacion puntuacion){
+		database = mongoClient.getDatabase("Locales");
+		collection = database.getCollection("local");
 		
+		Document mydoc =  collection.find(eq("codigoLocal", codLocal)).first();
+		collection.deleteOne(mydoc);
+		mydoc.replace("puntuacion", puntuacion.getPuntosSobreCinco());
+		
+		collection.insertOne(mydoc);
+		System.out.println(mydoc.get("puntuacion"));
+		
+	}
 	
 	/**
 	 * Main del proyecto.
@@ -218,6 +225,8 @@ public class BDMongo {
 		System.out.println(m.obtenerRankingBares());
 		System.out.println(m.obtenerCategoria("Ander"));
 		System.out.println("");	
+		Puntuacion p = new Puntuacion();
+		m.actualizarPuntuacion(0, p);
 //		m.anyadirLocal(1, 3.0);
 //		m.anyadirLocal(2, 4.0);
 //		m.anyadirLocal(3, 5.0);

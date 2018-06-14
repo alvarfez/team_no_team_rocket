@@ -18,9 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.ListModel;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_COLOR_BURNPeer;
 
@@ -40,6 +43,11 @@ public class Util {
 	private static JLabel atr3 = new JLabel("Descripción: ");
 	private static JLabel atr4 = new JLabel("Precio: ");
 	private static JLabel atr5 = new JLabel("Distancia: ");
+	private static JButton bVotar;
+	private static JSlider js;
+	private static Double cont;
+	
+
 
 	private static int numCod = 0;
 
@@ -320,17 +328,45 @@ public class Util {
 			if (modelo == 0){
 				panel.add(pInfo);
 			} else if (modelo == 1) {
-				
-				//TRABAJAR AQUI ALVARRRRRRRRRRRRRRRRRRRRRRR
+				bVotar = new JButton("Votar");
+				js = new JSlider(JSlider.HORIZONTAL, 0, 5, 2);
+				js.setMajorTickSpacing(5);
+				js.setMinorTickSpacing(0);
+				js.setPaintTicks(true);
+				js.setPaintLabels(true);
 				
 				pInfo.add(lNomLocal);
 				pInfo.add(bVolver);
+				pInfo.add(js);
+				pInfo.add(bVotar);
 				panel.add(pInfo);
+				
+				js.addChangeListener(new ChangeListener() {
+					
+					@Override
+					public void stateChanged(ChangeEvent e) {
+						JSlider source = (JSlider)e.getSource();
+						if (!source.getValueIsAdjusting()) {
+							cont = (double)source.getValue();
+						
+					}
+				}}
+				);
+				
+				bVotar.addActionListener(new ActionListener() {	
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						BDMongo bd = new BDMongo();
+						Puntuacion p = new Puntuacion();
+						p.sumaPuntuacion(cont);
+						bd.actualizarPuntuacion(l.getCodBar(), p);
+						
+						
+					}
+				});
 			}
 			panel.revalidate();
 		}		
 	}
-
-
 
 }		

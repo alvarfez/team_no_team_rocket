@@ -87,7 +87,6 @@ public class PanelAjustes extends JPanel {
 			this.setSize(410,550);
 			BDNeo4j bd = new BDNeo4j();
 			ArrayList<Local> alLocales = bd.getLocales(nomUser);
-			bd.close();
 			if (alLocales.isEmpty()){
 				laNombre.setText("Parece que no tienes ningún local añadido, empieza ahora añadiendo un local");
 				pTuNombre.add(laNombre);
@@ -142,24 +141,24 @@ public class PanelAjustes extends JPanel {
 		pAjustes.revalidate();
 		pAjustes.repaint();
 
-		lOfertas.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-
-				if (e.getClickCount()==1){
-					lOfertas.locationToIndex(e.getPoint());
-				}
-				if (e.getClickCount()==2){
-					if (lOfertas.getSelectedIndex()!= -1) {
-						posicionOferta = lOfertas.locationToIndex(e.getPoint());
-						creaPanelEditarOf(lmOfertas.getElementAt(posicionOferta));
-						pAjustes.revalidate();
-						pAjustes.repaint();
-						// abre Oferta seleccionada 
-					}
-				}
-			}
-			});	
+//		lOfertas.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(java.awt.event.MouseEvent e) {
+//
+//				if (e.getClickCount()==1){
+//					lOfertas.locationToIndex(e.getPoint());
+//				}
+//				if (e.getClickCount()==2){
+//					if (lOfertas.getSelectedIndex()!= -1) {
+//						posicionOferta = lOfertas.locationToIndex(e.getPoint());
+//						creaPanelEditarOf(lmOfertas.getElementAt(posicionOferta));
+//						pAjustes.revalidate();
+//						pAjustes.repaint();
+//						// abre Oferta seleccionada 
+//					}
+//				}
+//			}
+//			});	
 		bAnyadirOf.addActionListener(new ActionListener() {
 
 			@Override
@@ -363,14 +362,14 @@ public class PanelAjustes extends JPanel {
 		JFrame v = new JFrame();
 		v.setSize(410, 600);
 		v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		pAjustes = new PanelAjustes(1,"Ander");
+		pAjustes = new PanelAjustes(1,"Localito");
 		v.setSize(410, 600);
 		v.add(pAjustes);
 		v.setVisible(true);
-		Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , new Date(), new Date() );
-		Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , new Date(), new Date() );
-		Oferta o3 = new Oferta("2x1", 2.0, "2 pintxos por 1" , new Date(), new Date() );
-		Oferta o4 = new Oferta("PintxoPote", 3.0, "Pintxo + pote" , new Date(), new Date() );
+//		Oferta o1 = new Oferta("3x2", 3.0, "3 pintxos por 2" , new Date(), new Date() );
+//		Oferta o2 = new Oferta("Desayuno", 4.0, "3 pintxos por 2" , new Date(), new Date() );
+//		Oferta o3 = new Oferta("2x1", 2.0, "2 pintxos por 1" , new Date(), new Date() );
+//		Oferta o4 = new Oferta("PintxoPote", 3.0, "Pintxo + pote" , new Date(), new Date() );
 //		lmOfertas.addElement(o1);lmOfertas.addElement(o2);lmOfertas.addElement(o3);lmOfertas.addElement(o4);
 	}
 }

@@ -40,7 +40,7 @@ public class Puntuacion {
 		this.puntosSobreCinco = puntosSobreCinco;
 	}
 
-	public int getVecesPuntuado() {
+	public double getVecesPuntuado() {
 		return vecesPuntuado;
 	}
 

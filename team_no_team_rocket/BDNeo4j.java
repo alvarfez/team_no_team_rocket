@@ -244,7 +244,7 @@ public class BDNeo4j implements AutoCloseable
 	 */
 	public ArrayList<Local> getTodosLosLocales(){
 		StatementResult result = session.run("MATCH (b:Bar)"
-				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno");
+				+ "\nRETURN b.propietario, b.nombre, b.tipo, b.direccion, b.tfno, b.codLocal");
 
 		ArrayList<Local> array = new ArrayList<>();
 		while(result.hasNext()){
@@ -255,6 +255,7 @@ public class BDNeo4j implements AutoCloseable
 			local.setTipo(TipoLocal.BAR_CAFETERIA);
 			local.setDireccion(record.get(3).asString());
 			local.setTelefono(record.get(4).asInt());
+			local.setCodBar(Integer.parseInt(record.get(5).asString()));
 
 			array.add(local);			
 		}
