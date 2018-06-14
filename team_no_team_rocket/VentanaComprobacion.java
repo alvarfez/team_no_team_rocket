@@ -119,6 +119,9 @@ public class VentanaComprobacion extends JFrame {
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 					JOptionPane.showMessageDialog(null, "El usuario se ha registrado correctamente");
 				}else{
@@ -143,6 +146,9 @@ public class VentanaComprobacion extends JFrame {
 						
 						
 					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}

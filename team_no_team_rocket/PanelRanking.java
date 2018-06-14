@@ -34,7 +34,7 @@ public class PanelRanking extends JPanel {
 	private static JButton bVolver = new JButton( "Volver" );
 
 	
-	public PanelRanking(ListModel<Object> lista){
+	public PanelRanking(){
 
 		pRanking = this;
 		BDMongo bdMongo = new BDMongo();
@@ -108,15 +108,7 @@ public class PanelRanking extends JPanel {
 	public static void main(String[] args) {
 		JFrame v = new JFrame();
 		v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		DefaultListModel dlmSeleccionar = new DefaultListModel<>();
-		JList lListaBares = new JList<Object>(dlmSeleccionar);
-		
-		// Modificamos la lista para que tenga las características que deseamos	
-		lListaBares.setBackground(Color.LIGHT_GRAY);
-		lListaBares.setFixedCellHeight(50);
-		lListaBares.setFixedCellWidth(390);
-//		Util.cambiaRenderer(lListaBares, 0);
-		
+				
 	// PRUEBA DE JLIST
 //		Local l1 = new Local("Ander", "Zubialde","bar", "1", 1);ImageIcon i1 = new ImageIcon("bin/team_no_team_rocket/fotos/3escobas.jpg");		l1.setFoto(i1);
 //		Local l2 = new Local("Ander","Café","bar", "1", 2);		ImageIcon i2 = new ImageIcon("bin/team_no_team_rocket/fotos/badulaque.jpg");l2.setFoto(i2);
@@ -139,7 +131,7 @@ public class PanelRanking extends JPanel {
 //		dlmSeleccionar.addElement(l3);
 //		
 
-		pRanking = new PanelRanking(dlmSeleccionar);
+		pRanking = new PanelRanking();
 		v.setSize(410, 600);
 		v.add(pRanking);
 		v.setVisible(true);
