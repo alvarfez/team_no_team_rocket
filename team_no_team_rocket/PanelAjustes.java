@@ -76,6 +76,7 @@ public class PanelAjustes extends JPanel {
 	private static JPanel pDesc = new JPanel();
 	private static JPanel pBotones = new JPanel();
 	private static JButton bAnyadir = new JButton("Añadir Oferta");
+	private static JButton bEditar = new JButton("Editar Oferta");
 	private static SliderPanel pSlider = new SliderPanel();
 	
 	private static int posicionOferta;
@@ -206,12 +207,27 @@ public class PanelAjustes extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Oferta " + lmOfertas.getElementAt(posicionOferta).getNombre() + " elminada");
+				BDNeo4j bd = new BDNeo4j();
 				lmOfertas.remove(posicionOferta);
-				//eliminarOf(lmOfertas.getElementAt(posicionOferta));				
+				bd.borrarOferta((lmOfertas.getElementAt(posicionOferta)).getCodigo());				
 				bVolver.doClick();
 			}
 		});
-
+		bEditar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BDNeo4j bd = new BDNeo4j();
+				lmOfertas.remove(posicionOferta);
+				bd.borrarOferta((lmOfertas.getElementAt(posicionOferta)).getCodigo());				
+				Date d1 = new Date();Date d2 = new Date();
+				d1.setHours(pSlider.slider.getValue()+8);
+				d2.setHours(pSlider.sliderM.getValue()+8);
+				Oferta o = new Oferta(tfNom.getText(), Double.parseDouble(tfPrecio.getText()), tfDesc.getText(), d1, d2);
+				bd.anyadirOferta(localElegido.getCodBar(),o);
+				
+			}
+		});
 		bVolver.addActionListener(new ActionListener() {
 		
 		@Override
@@ -309,7 +325,7 @@ public class PanelAjustes extends JPanel {
 		pAjustes.add(datosCuadro);
 		pBotones.setLayout(new GridLayout(1,3));
 		bAnyadir.setText("Editar");
-		pBotones.add(bAnyadir);
+		pBotones.add(bEditar);
 		pBotones.add(bEliminar);
 		pBotones.add(bVolver);
 		pAjustes.add(pBotones);
