@@ -222,7 +222,7 @@ public class BDNeo4j implements AutoCloseable
 	public ArrayList<Oferta> getOfertas(Integer codLocal){
 		StatementResult result = session.run("MATCH (b:Bar)-[:HACE_OFERTA]->(o:Oferta)"
 				+"\nWHERE b.codLocal = '"+ codLocal + "'" 
-				+ "\nRETURN o.nombre, o.precio, o.descripcion, o.FechaHraInicio, o.FechaHraFin");
+				+ "\nRETURN o.nombre, o.precio, o.descripcion, o.FechaHraInicio, o.FechaHraFin, o.codOferta");
 		
 		ArrayList<Oferta> array = new ArrayList<>();
 		while(result.hasNext()){
@@ -233,6 +233,7 @@ public class BDNeo4j implements AutoCloseable
 			oferta.setDescripcion(record.get(2).asString());
 			oferta.setFchaHraInicio(new Date());
 			oferta.setFchaHraFin(new Date());
+			oferta.setCodigo(Integer.parseInt(record.get(5).asString()));
 			
 			array.add(oferta);			
 		}
