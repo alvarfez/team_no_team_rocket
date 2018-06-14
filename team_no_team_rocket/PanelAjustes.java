@@ -192,13 +192,12 @@ public class PanelAjustes extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				if (comprobarInfo()){
-					// método para añadir oferta ALVAR
-					System.out.println("Hola?");
-				} else {
-					laNombre.setText("Faltan datos por rellenar");
-				}
+				BDNeo4j bd = new BDNeo4j();
+				Date d1 = new Date();Date d2 = new Date();
+				d1.setHours(pSlider.slider.getValue()+8);
+				d2.setHours(pSlider.sliderM.getValue()+8);
+				Oferta o = new Oferta(tfNom.getText(), Double.parseDouble(tfPrecio.getText()), tfDesc.getText(), d1, d2);
+				bd.anyadirOferta(localElegido.getCodBar(),o);
 			}
 
 		});
@@ -289,18 +288,21 @@ public class PanelAjustes extends JPanel {
 			datosCuadro = new JPanel();
 			datosCuadro.setLayout(new GridLayout(3,2));
 			pNom.setLayout(new GridLayout(1,2));pPrecio.setLayout(new GridLayout(1,2));pDias.setLayout(new GridLayout(1,2));
-						
+
 			pNom.add(nom);pNom.add(tfNom);
 			pPrecio.add(precio);pPrecio.add(tfPrecio);
-			pDesc.add(desc);pDesc.add(tfDesc);
-			pDias.add(dias);pDias.add(cbDias);
+			pDesc.add(desc); pDesc.add(tfDesc);
+			pDias.setLayout(new GridLayout(4,2));
+			pDias.add(dias);pDias.add(lunes);pDias.add(martes);pDias.add(miercoles);pDias.add(jueves);pDias.add(viernes);pDias.add(sabado);pDias.add(domingo);
 			datosCuadro.add(pNom); datosCuadro.add(pPrecio);
-			datosCuadro.add(pDesc); datosCuadro.add(pDias);
-			datosCuadro.add(pSlider);
+			datosCuadro.add(pDias); datosCuadro.add(pSlider);
+			datosCuadro.add(pDesc);
+
 		}
 		tfNom.setText(o.getNombre());
 		tfPrecio.setText(o.getPrecio()+"");
-
+		tfDesc.setText(o.getDescripcion());
+		
 		pAjustes.setLayout(new GridLayout(3,1));
 		laNombre.setText("Editar Oferta");
 		pAjustes.add(pTuNombre);
