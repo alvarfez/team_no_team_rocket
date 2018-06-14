@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -299,11 +300,16 @@ public class Util {
 			Local l = (Local) dlmSeleccionar.getElementAt(posActual);
 			pInfo.removeAll();
 			if (modelo==0){
-//				// preparamos panel Oferta
-//				
-//				lNomOferta.setText(l.getListaOfertas().get(0).getNombre());
-//				lDescOferta.setText(l.getListaOfertas().get(0).getDescripcion());
-//				lPrecio.setText(l.getListaOfertas().get(0).getPrecio()+" €");
+				// preparamos panel Oferta
+				BDNeo4j bd = new BDNeo4j();
+				ArrayList<Oferta> alOfertas = bd.getOfertas(l.getCodBar());
+				for(Oferta o : alOfertas){ 
+					if (o.isActiva()){
+						lNomOferta.setText(o.getNombre());
+						lDescOferta.setText(o.getDescripcion());
+						lPrecio.setText(o.getPrecio()+" €");
+					}
+				}
 
 				// FALTA POR IMPLEMENTAR
 				lDistOferta.setText("'Distancia hasta usuario'");

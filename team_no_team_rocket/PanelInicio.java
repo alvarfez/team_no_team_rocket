@@ -39,8 +39,18 @@ public class PanelInicio extends JPanel {
 		pInicio = this;		
 	    BDNeo4j bd = new BDNeo4j();
 	    ArrayList<Local> alLocales = bd.getTodosLosLocales();
+	    ArrayList<Oferta> alOfertas;
+	    ArrayList<Oferta> alActivas = new ArrayList<>();
 		DefaultListModel<Local> dlmLocales = new DefaultListModel<>();
-		for(Local l : alLocales) dlmLocales.addElement(l);
+		for(Local l : alLocales){
+			alOfertas = bd.getOfertas(l.getCodBar());
+			for(Oferta o : alOfertas){
+				if (o.isActiva()){
+					alActivas.add(o);
+					dlmLocales.addElement(l);
+				}
+			}
+		}
 		ltemporal = new JList<Local>(dlmLocales);
 		lListaLocales = ltemporal;
 		lListaLocales.setBackground(Color.white);
