@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +40,9 @@ public class PanelAjustes extends JPanel {
 	private static JLabel laNombre = new JLabel();
 	private static JLabel laOferta = new JLabel("Tus Ofertas: 	(2 clicks para editar/eliminar)");
 	private static JList<Oferta> lOfertas;
+	private static JList<Local> lLocales;	
 	private static DefaultListModel<Oferta> lmOfertas;
+	private static DefaultListModel<Local> dlmLocales;
 	private static JButton bAnyadirOf = new JButton("Añadir nueva oferta");
 	private static JButton bVolver = new JButton("Volver");
 	private static JButton bEliminar = new JButton("Eliminar Oferta");
@@ -83,57 +86,80 @@ public class PanelAjustes extends JPanel {
 		pAjustes = this;
 		this.nomUser = nomUsuario;
 		if (nivelAcreditacion == 1){
-//			this.setLayout(new GridLayout(4,1));
+			//this.setLayout(new GridLayout(4,1));
 			this.setSize(410,550);
 			BDNeo4j bd = new BDNeo4j();
 			ArrayList<Local> alLocales = bd.getLocales(nomUser);
+// CUANDO EL USUARIO NO TIENE NINGÚN LOCAL
 			if (alLocales.isEmpty()){
 				laNombre.setText("Parece que no tienes ningún local añadido, empieza ahora añadiendo un local");
 				pTuNombre.add(laNombre);
 				pAjustes.add(pTuNombre);
 				pAjustes.add(bAnyadirLocal);
-				
+//CUANDO EL USUARIO TIENE SOLO UN LOCAL
 			} else if (alLocales.size() == 1){ 
 				localElegido = alLocales.get(0);
 				lmOfertas = new DefaultListModel<>();
-				ArrayList<Oferta> alOfertas = bd.getOfertas(alLocales.get(0).getCodBar());
-				for (Oferta o : alOfertas){
-					lmOfertas.addElement(o);
-				}
-				lOfertas = new JList<Oferta>(lmOfertas);
-				laNombre.setText("Tu Local:      "+"< "+localElegido.getNombre()+" >");
-				pTuNombre.setLayout(new BorderLayout());
-				pTuNombre.add(laNombre, "Center");
-				pTusOfertas.add(laOferta);
-				pAjustes.setLayout(new GridLayout(4,1));
-				pAjustes.add(pTuNombre);
-				pAjustes.add(laOferta);
+				ArrayList<Oferta> alOfertas = bd.getOfertas(localElegido.getCodBar());
+
+				unLocal(alOfertas);
+				
+				
+				lOfertas.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(java.awt.event.MouseEvent e) {
+
+						if (e.getClickCount()==1){
+							lOfertas.locationToIndex(e.getPoint());
+						}
+						if (e.getClickCount()==2){
+							if (lOfertas.getSelectedIndex()!= -1) {
+								posicionOferta = lOfertas.locationToIndex(e.getPoint());
+								creaPanelEditarOf(lmOfertas.getElementAt(posicionOferta));
+								pAjustes.revalidate();
+								pAjustes.repaint();
+								// abre Oferta seleccionada 
+							}
+						}
+					}
+					});	
+
+// CUANDO EL USUARIO TIENE MÁS DE UN LOCAL
+			}else{ 
+				pAjustes.setLayout(new GridLayout(3,1));
+				laNombre.setText("Elige uno de tus locales");
 				pTuNombre.add(laNombre);
-				pAjustes.add(lOfertas);
-				pAjustes.add(bAnyadirOf);
-			
+				pAjustes.add(pTuNombre);
+				for ( Local l : alLocales){
+					dlmLocales.addElement(l);
+				}
+				lLocales = new JList<Local>(dlmLocales);
+				pAjustes.add(lLocales);
+				pAjustes.add(bAnyadirLocal);
+				
+				lLocales.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(java.awt.event.MouseEvent e) {
+
+						if (e.getClickCount()==1){
+							lLocales.locationToIndex(e.getPoint());
+						}
+						if (e.getClickCount()==2){
+							if (lLocales.getSelectedIndex()!= -1) {
+								posicionOferta = lLocales.locationToIndex(e.getPoint());
+								Local l = lLocales.getSelectedValue();
+								unLocal(bd.getOfertas(l.getCodBar()));
+								pAjustes.revalidate();
+								pAjustes.repaint();
+								// abre Oferta seleccionada 
+							}
+						}
+					}
+					
+				});
 			}
-//			else{
-//				laNombre.setText("Elige uno de tus locales");
-//				pTuNombre.add(laNombre);
-//				pAjustes.add(pTuNombre);
-//				 
-//				else{
-//				for ( Local l : alLocales){
-//					
-//					JButton b = new JButton(l.getNombre());
-//					pAjustes.add(b);
-//				}
-//			}
-//			laNombre.setText("Tu Local:      "+"< "+nomUser+" >");
-//			pTuNombre.setLayout(new BorderLayout());
-//			pTuNombre.add(laNombre, "Center");
-//			pTusOfertas.add(laOferta);
-//			pAjustes.add(pTuNombre);
-//			pAjustes.add(laOferta);
-			
 // AQUÍ SOLO ENTRA SI EL USUARIO NO ES UN USUARIO TIPO LOCAL
-		}else{
+		}else{ //nivelAcreditacion == 0
 			laNombre.setText("Tu Usuario:      "+"< "+nomUser+" >");
 			pTuNombre.add(laNombre);
 			pAjustes.add(pTuNombre);
@@ -141,24 +167,6 @@ public class PanelAjustes extends JPanel {
 		pAjustes.revalidate();
 		pAjustes.repaint();
 
-//		lOfertas.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(java.awt.event.MouseEvent e) {
-//
-//				if (e.getClickCount()==1){
-//					lOfertas.locationToIndex(e.getPoint());
-//				}
-//				if (e.getClickCount()==2){
-//					if (lOfertas.getSelectedIndex()!= -1) {
-//						posicionOferta = lOfertas.locationToIndex(e.getPoint());
-//						creaPanelEditarOf(lmOfertas.getElementAt(posicionOferta));
-//						pAjustes.revalidate();
-//						pAjustes.repaint();
-//						// abre Oferta seleccionada 
-//					}
-//				}
-//			}
-//			});	
 		bAnyadirOf.addActionListener(new ActionListener() {
 
 			@Override
@@ -248,6 +256,9 @@ public class PanelAjustes extends JPanel {
 		}
 	});
 	}
+	/** Método que crea el panel necesario para añadir una oferta
+	 * 
+	 */
 	private static void creaPanelAnyadirof() {
 		pAjustes.removeAll();
 		pBotones.removeAll();
@@ -281,6 +292,9 @@ public class PanelAjustes extends JPanel {
 		
 	}
 	
+	/** Dada una oferta, enseña el panel que se necesita para modificar dicha oferta
+	 * @param o
+	 */
 	private static void creaPanelEditarOf( Oferta o) {
 		pAjustes.removeAll();
 		pBotones.removeAll();
@@ -316,6 +330,9 @@ public class PanelAjustes extends JPanel {
 		pAjustes.getParent().repaint();
 		
 	}
+	/** Método que crea el panel para añadir un local
+	 * 
+	 */
 	private static void creaPanelAnyadirLocal(){
 		pAjustes.removeAll();
 		pBotones.removeAll();
@@ -356,6 +373,28 @@ public class PanelAjustes extends JPanel {
 			return true;
 		}
 		return false;
+	}
+	
+	/** Dado un arrayList de ofertas de un local, enseña las ofertas disponibles y permite editar y añadir
+	 * @param alOfertas
+	 */
+	private static void unLocal(ArrayList<Oferta> alOfertas){
+		pAjustes.removeAll();
+		for (Oferta o : alOfertas){
+			lmOfertas.addElement(o);
+		}
+		lOfertas = new JList<Oferta>(lmOfertas);
+		laNombre.setText("Tu Local:      "+"< "+localElegido.getNombre()+" >");
+		pTuNombre.setLayout(new BorderLayout());
+		pTuNombre.add(laNombre, "Center");
+		pTusOfertas.add(laOferta);
+		pAjustes.setLayout(new GridLayout(4,1));
+		pAjustes.add(pTuNombre);
+		pAjustes.add(laOferta);
+		pTuNombre.add(laNombre);
+		pAjustes.add(lOfertas);
+		pAjustes.add(bAnyadirOf);
+
 	}
 
 	public static void main(String[] args) throws Exception {
