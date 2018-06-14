@@ -43,7 +43,7 @@ public class VentanaPrincipal extends JFrame{
 	private static PanelRanking ranking; //TODO tab del ranking
 	private static PanelInicio inicio; //TODO tab del inicio
 	
-	public VentanaPrincipal( String nombreUsuario ) throws SQLException{
+	public VentanaPrincipal( String nombreUsuario ) throws Exception{
 	
 	//Configuramos lo básico de la ventana
 	this.setTitle("BilboPintxo");
@@ -116,7 +116,7 @@ public class VentanaPrincipal extends JFrame{
 		return dlmSeleccionar;
 	}
 	
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws Exception {
 		//COMPROBAMOS EL USUARIO ANTES DE INICIAR LA VENTANA
 		VentanaPrincipal vp = new VentanaPrincipal("Ander");
 		vp.setVisible(true);
