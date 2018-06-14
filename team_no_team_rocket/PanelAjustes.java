@@ -55,8 +55,8 @@ public class PanelAjustes extends JPanel {
 	// Panel para añadir oferta 
 	private static JLabel nom = new JLabel(" Nombre : "); private static JTextField tfNom = new JTextField();
 	private static JLabel precio = new JLabel(" Precio : "); private static JTextField tfPrecio = new JTextField();
-	private static JLabel hora = new JLabel(" Hora : ");	private static JTextField tfHora = new JTextField();
 	private static JLabel dias = new JLabel(" Días activa : "); private static JPopupMenu cbDias = new JPopupMenu();
+	private static JLabel desc = new JLabel(" Descripción : "); private static JTextField tfDesc = new JTextField(); 
 	private static JButton bAnyadirLocal = new JButton("Añadir local");
 	private static JButton bAnyadLoNeo = new JButton("Añadir a la BD");
 	
@@ -69,10 +69,11 @@ public class PanelAjustes extends JPanel {
 	private static JPanel pDir = new JPanel();
 	private static JPanel pTfno = new JPanel();
 	private static JPanel pPrecio = new JPanel();
-	private static JPanel pHora = new JPanel();
 	private static JPanel pDias = new JPanel();	
+	private static JPanel pDesc = new JPanel();
 	private static JPanel pBotones = new JPanel();
 	private static JButton bAnyadir = new JButton("Añadir Oferta");
+	private static SliderPanel pSlider = new SliderPanel();
 	
 	private static int posicionOferta;
 	
@@ -254,18 +255,17 @@ public class PanelAjustes extends JPanel {
 		
 		if (datosCuadro == null){
 			datosCuadro = new JPanel();
-			datosCuadro.setLayout(new GridLayout(2,2));
-			pNom.setLayout(new GridLayout(1,2));pPrecio.setLayout(new GridLayout(1,2));pHora.setLayout(new GridLayout(1,2));pDias.setLayout(new GridLayout(1,2));
-			cbDias.add(lunes);cbDias.add(martes);cbDias.add(miercoles);cbDias.add(jueves);cbDias.add(viernes);
-			cbDias.add(sabado);cbDias.add(domingo);
-			
+			datosCuadro.setLayout(new GridLayout(3,2));
+			pNom.setLayout(new GridLayout(1,2));pPrecio.setLayout(new GridLayout(1,2));pDias.setLayout(new GridLayout(1,2));pDesc.setLayout(new GridLayout(1,2));
+
 			pNom.add(nom);pNom.add(tfNom);
 			pPrecio.add(precio);pPrecio.add(tfPrecio);
-			pHora.add(hora);pHora.add(tfHora);
+			pDesc.add(desc); pDesc.add(tfDesc);
 			pDias.setLayout(new GridLayout(4,2));
 			pDias.add(dias);pDias.add(lunes);pDias.add(martes);pDias.add(miercoles);pDias.add(jueves);pDias.add(viernes);pDias.add(sabado);pDias.add(domingo);
 			datosCuadro.add(pNom); datosCuadro.add(pPrecio);
-			datosCuadro.add(pHora); datosCuadro.add(pDias);
+			datosCuadro.add(pDias); datosCuadro.add(pSlider);
+			datosCuadro.add(pDesc);
 		}
 		pAjustes.setLayout(new GridLayout(3,1));
 		laNombre.setText("Añadir Oferta");
@@ -288,21 +288,19 @@ public class PanelAjustes extends JPanel {
 		
 		if (datosCuadro == null){
 			datosCuadro = new JPanel();
-			datosCuadro.setLayout(new GridLayout(2,2));
-			pNom.setLayout(new GridLayout(1,2));pPrecio.setLayout(new GridLayout(1,2));pHora.setLayout(new GridLayout(1,2));pDias.setLayout(new GridLayout(1,2));
-			cbDias.add(lunes);cbDias.add(martes);cbDias.add(miercoles);cbDias.add(jueves);cbDias.add(viernes);
-			cbDias.add(sabado);cbDias.add(domingo);
+			datosCuadro.setLayout(new GridLayout(3,2));
+			pNom.setLayout(new GridLayout(1,2));pPrecio.setLayout(new GridLayout(1,2));pDias.setLayout(new GridLayout(1,2));
 						
 			pNom.add(nom);pNom.add(tfNom);
 			pPrecio.add(precio);pPrecio.add(tfPrecio);
-			pHora.add(hora);pHora.add(tfHora);
+			pDesc.add(desc);pDesc.add(tfDesc);
 			pDias.add(dias);pDias.add(cbDias);
 			datosCuadro.add(pNom); datosCuadro.add(pPrecio);
-			datosCuadro.add(pHora); datosCuadro.add(pDias);
+			datosCuadro.add(pDesc); datosCuadro.add(pDias);
+			datosCuadro.add(pSlider);
 		}
 		tfNom.setText(o.getNombre());
 		tfPrecio.setText(o.getPrecio()+"");
-		tfHora.setText(o.getDuracion()+"");
 
 		pAjustes.setLayout(new GridLayout(3,1));
 		laNombre.setText("Editar Oferta");
@@ -354,7 +352,7 @@ public class PanelAjustes extends JPanel {
 	}
 	private boolean comprobarInfo() {
 			
-		if ( tfHora.getText()!= null && tfNom.getText()!= null && tfPrecio.getText()!= null ){ // falta la comprobación de q no sea vacío
+		if ( tfNom.getText()!= null && tfPrecio.getText()!= null ){ // falta la comprobación de q no sea vacío
 			
 			return true;
 		}
