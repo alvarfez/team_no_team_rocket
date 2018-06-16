@@ -304,11 +304,11 @@ public class Util {
 				BDNeo4j bd = new BDNeo4j();
 				ArrayList<Oferta> alOfertas = bd.getOfertas(l.getCodBar());
 				for(Oferta o : alOfertas){ 
-					if (o.isActiva()){
+//					if (o.isActiva()){
 						lNomOferta.setText(o.getNombre());
 						lDescOferta.setText(o.getDescripcion());
 						lPrecio.setText(o.getPrecio()+" €");
-					}
+//					}
 				}
 
 				// FALTA POR IMPLEMENTAR

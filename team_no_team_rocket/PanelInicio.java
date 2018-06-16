@@ -45,10 +45,10 @@ public class PanelInicio extends JPanel {
 		for(Local l : alLocales){
 			alOfertas = bd.getOfertas(l.getCodBar());
 			for(Oferta o : alOfertas){
-				if (o.isActiva()){
+//				if (o.isActiva()){
 					alActivas.add(o);
 					dlmLocales.addElement(l);
-				}
+//				}
 			}
 		}
 		ltemporal = new JList<Local>(dlmLocales);

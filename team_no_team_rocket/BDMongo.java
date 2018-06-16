@@ -225,12 +225,8 @@ public class BDMongo {
 		System.out.println(m.obtenerRankingBares());
 		System.out.println(m.obtenerCategoria("Ander"));
 		System.out.println("");	
-		Puntuacion p = new Puntuacion();
-		m.actualizarPuntuacion(0, p);
-//		m.anyadirLocal(1, 3.0);
-//		m.anyadirLocal(2, 4.0);
-//		m.anyadirLocal(3, 5.0);
-		
+
+
 	}
 }
 

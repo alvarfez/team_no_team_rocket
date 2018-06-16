@@ -31,9 +31,12 @@ import javax.swing.event.ListSelectionListener;
  * @author Ander
  *
  */
-public class PanelAjustes extends JPanel {
+public class PanelAjustes  {
 	
-	private static PanelAjustes pAjustes;
+	private static JPanel pAjustes;
+	public static JPanel getPanel() {
+		return pAjustes;
+	}
 	
 	private static JPanel pTuNombre = new JPanel();
 	private static JPanel pTusOfertas = new JPanel();
@@ -41,7 +44,7 @@ public class PanelAjustes extends JPanel {
 	private static JLabel laOferta = new JLabel("Tus Ofertas: 	(2 clicks para editar/eliminar)");
 	private static JList<Oferta> lOfertas;
 	private static JList<Local> lLocales;	
-	private static DefaultListModel<Oferta> lmOfertas;
+	private static DefaultListModel<Oferta> lmOfertas = new DefaultListModel<>();
 	private static DefaultListModel<Local> dlmLocales;
 	private static JButton bAnyadirOf = new JButton("Añadir nueva oferta");
 	private static JButton bVolver = new JButton("Volver");
@@ -81,14 +84,14 @@ public class PanelAjustes extends JPanel {
 	
 	private static int posicionOferta;
 	
-	private String nomUser;
+	private static String nomUser;
 	
-	public PanelAjustes(int nivelAcreditacion, String nomUsuario) throws Exception{ // 1 = Local 0= Usuario
-		pAjustes = this;
-		this.nomUser = nomUsuario;
+	public static void init(int nivelAcreditacion, String nomUsuario) throws Exception{ // 1 = Local 0= Usuario
+		pAjustes = new JPanel();
+		nomUser = nomUsuario;
 		if (nivelAcreditacion == 1){
 			//this.setLayout(new GridLayout(4,1));
-			this.setSize(410,550);
+			pAjustes.setSize(410,550);
 			BDNeo4j bd = new BDNeo4j();
 			ArrayList<Local> alLocales = bd.getLocales(nomUser);
 // CUANDO EL USUARIO NO TIENE NINGÚN LOCAL
@@ -134,6 +137,7 @@ public class PanelAjustes extends JPanel {
 								posicionOferta = lLocales.locationToIndex(e.getPoint());
 								Local l = lLocales.getSelectedValue();
 								localElegido = l;
+								System.out.println(l.getCodBar());
 								unLocal(bd.getOfertas(l.getCodBar()));
 								pAjustes.revalidate();
 								pAjustes.repaint();
@@ -143,7 +147,13 @@ public class PanelAjustes extends JPanel {
 					}
 					
 				});
+				
 			}
+//			for ( Oferta o : bd.getOfertas(localElegido.getCodBar())){
+//				lmOfertas.addElement(o);
+//			} 
+//		}
+
 
 			// AQUÍ SOLO ENTRA SI EL USUARIO NO ES UN USUARIO TIPO LOCAL
 		}else{ //nivelAcreditacion == 0
@@ -151,8 +161,11 @@ public class PanelAjustes extends JPanel {
 			pTuNombre.add(laNombre);
 			pAjustes.add(pTuNombre);
 		}
-		pAjustes.revalidate();
-		pAjustes.repaint();
+		if(lOfertas == null){
+			lOfertas = new JList<>(lmOfertas);
+		}
+		System.out.println(lmOfertas.isEmpty());
+		System.out.println(lOfertas.getParent());
 		lOfertas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -162,6 +175,7 @@ public class PanelAjustes extends JPanel {
 				}
 				if (e.getClickCount()==2){
 					if (lOfertas.getSelectedIndex()!= -1) {
+						System.out.println("dd");
 						posicionOferta = lOfertas.locationToIndex(e.getPoint());
 						creaPanelEditarOf(lmOfertas.getElementAt(posicionOferta));
 						pAjustes.revalidate();
@@ -171,6 +185,11 @@ public class PanelAjustes extends JPanel {
 				}
 			}
 			});	
+
+		pAjustes.revalidate();
+		pAjustes.repaint();
+//		if(lmOfertas == null){
+//			lmOfertas = new DefaultListModel<>();
 		bAnyadirOf.addActionListener(new ActionListener() {
 
 			@Override
@@ -211,6 +230,7 @@ public class PanelAjustes extends JPanel {
 				d2.setHours(pSlider.sliderM.getValue()+8);
 				Oferta o = new Oferta(tfNom.getText(), Double.parseDouble(tfPrecio.getText()), tfDesc.getText(), d1, d2);
 				bd.anyadirOferta(localElegido.getCodBar(),o);
+				bVolver.doClick();
 			}
 
 		});
@@ -287,12 +307,12 @@ public class PanelAjustes extends JPanel {
 	private static void creaPanelAnyadirof() {
 		pAjustes.removeAll();
 		pBotones.removeAll();
-		datosCuadro.removeAll();
 		if (datosCuadro == null){
 			datosCuadro = new JPanel();
 			
 		}
-		datosCuadro.setLayout(new GridLayout(3,2));
+		datosCuadro.removeAll();
+		datosCuadro.setLayout(new GridLayout(2,2));
 		pNom.setLayout(new GridLayout(1,2));pPrecio.setLayout(new GridLayout(1,2));pDias.setLayout(new GridLayout(1,2));pDesc.setLayout(new GridLayout(1,2));
 
 		pNom.add(nom);pNom.add(tfNom);
@@ -301,12 +321,12 @@ public class PanelAjustes extends JPanel {
 		pDias.setLayout(new GridLayout(4,2));
 		pDias.add(dias);pDias.add(lunes);pDias.add(martes);pDias.add(miercoles);pDias.add(jueves);pDias.add(viernes);pDias.add(sabado);pDias.add(domingo);
 		datosCuadro.add(pNom); datosCuadro.add(pPrecio);
-		datosCuadro.add(pDias); datosCuadro.add(pSlider);
-		datosCuadro.add(pDesc);
-		pAjustes.setLayout(new GridLayout(3,1));
+		datosCuadro.add(pDias); datosCuadro.add(pDesc);
+		pAjustes.setLayout(new GridLayout(4,1));
 		laNombre.setText("Añadir Oferta");
 		pAjustes.add(pTuNombre);
 		pAjustes.add(datosCuadro);
+		pAjustes.add(pSlider);
 		pBotones.setLayout(new GridLayout(1,2));
 		bAnyadir.setText("Añadir Oferta");
 		pBotones.add(bAnyadir);
@@ -333,18 +353,18 @@ public class PanelAjustes extends JPanel {
 			pNom.add(nom);pNom.add(tfNom);
 			pPrecio.add(precio);pPrecio.add(tfPrecio);
 			pDesc.add(desc); pDesc.add(tfDesc);
-			pDias.setLayout(new GridLayout(4,2));
+			pDias.setLayout(new GridLayout(2,2));
 			pDias.add(dias);pDias.add(lunes);pDias.add(martes);pDias.add(miercoles);pDias.add(jueves);pDias.add(viernes);pDias.add(sabado);pDias.add(domingo);
 			datosCuadro.add(pNom); datosCuadro.add(pPrecio);
-			datosCuadro.add(pDias); datosCuadro.add(pSlider);
-			datosCuadro.add(pDesc);
+			datosCuadro.add(pDias);datosCuadro.add(pDesc);
+			
 
 		}
 		tfNom.setText(o.getNombre());
 		tfPrecio.setText(o.getPrecio()+"");
 		tfDesc.setText(o.getDescripcion());
 		
-		pAjustes.setLayout(new GridLayout(3,1));
+		pAjustes.setLayout(new GridLayout(4,1));
 		laNombre.setText("Editar Oferta");
 		pAjustes.add(pTuNombre);
 		pAjustes.add(datosCuadro);
@@ -353,6 +373,7 @@ public class PanelAjustes extends JPanel {
 		pBotones.add(bEditar);
 		pBotones.add(bEliminar);
 		pBotones.add(bVolver);
+		pAjustes.add(pSlider);
 		pAjustes.add(pBotones);
 		pAjustes.revalidate();
 		pAjustes.getParent().revalidate();
@@ -427,6 +448,27 @@ public class PanelAjustes extends JPanel {
 		pAjustes.add(lOfertas);
 		pAjustes.add(bAnyadirOf);
 		
+		lOfertas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+
+				if (e.getClickCount()==1){
+					lOfertas.locationToIndex(e.getPoint());
+				}
+				if (e.getClickCount()==2){
+					if (lOfertas.getSelectedIndex()!= -1) {
+						System.out.println("dd");
+						posicionOferta = lOfertas.locationToIndex(e.getPoint());
+						creaPanelEditarOf(lmOfertas.getElementAt(posicionOferta));
+						pAjustes.revalidate();
+						pAjustes.repaint();
+						// abre Oferta seleccionada 
+					}
+				}
+			}
+			});	
+
+		
 	
 
 	}
@@ -435,7 +477,7 @@ public class PanelAjustes extends JPanel {
 		JFrame v = new JFrame();
 		v.setSize(410, 600);
 		v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		pAjustes = new PanelAjustes(1,"LocalPrueba");
+		init(1,"Ander");
 		v.setSize(410, 600);
 		v.add(pAjustes);
 		v.setVisible(true);

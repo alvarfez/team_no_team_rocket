@@ -52,8 +52,6 @@ public class VentanaPrincipal extends JFrame{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(410,600);
 		setLocation(120,0);
-		ajustesLocal = new PanelAjustes(1,nombreUsuario);  //TODO tab del usuario
-		ajustesUsuario = new PanelAjustes(0,nombreUsuario); //TODO tab del usuario
 
 		//Creamos los paneles Inicio y Ranking con la lista ya hecha
 		inicio = new PanelInicio();
@@ -63,13 +61,24 @@ public class VentanaPrincipal extends JFrame{
 		tab.addTab("Ranking", null, ranking, "Top Locales");
 		tab.addTab("Mapa", null, panelMapa, "Mapa de Deusto");
 		if (new BDMongo().obtenerCategoria(nombreUsuario).equals("local")){
-			tab.addTab("Ajustes", null, ajustesLocal, "Ajustes de local");
+			PanelAjustes.init(1, nombreUsuario); //TODO tab del usuario
+			tab.addTab("Ajustes", null, PanelAjustes.getPanel(), "Ajustes de local");
 		}else{
-			tab.addTab("Ajustes", null, ajustesUsuario, "Ajustes de usuario");
-			//TODO meter panel ajustes de usuario normal
+			PanelAjustes.init(0, nombreUsuario); 
+			tab.addTab("Ajustes", null, PanelAjustes.getPanel(), "Ajustes de usuario");
+			//meter panel ajustes de usuario normal
 		}
 		this.getContentPane().add(tab);
 		this.revalidate();
+		tab.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				tab.revalidate();
+				tab.repaint();
+				
+			}
+		});
 
 	}
 	public static void main(String[] args) throws Exception {
